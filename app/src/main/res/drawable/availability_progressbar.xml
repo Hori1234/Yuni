@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Define the background properties like color etc -->
+    <item android:id="@+id/background1"
+        android:width="8dp"
+        android:top="12dp">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorAccent"/>
+        </shape>
+    </item>
+
+    <item android:id="@+id/background2"
+        android:left="13dp"
+        android:width="8dp"
+        android:top="8dp">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorAccent"/>
+        </shape>
+    </item>
+
+    <item android:id="@+id/background3"
+        android:left="26dp"
+        android:width="8dp"
+        android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorAccent"/>
+        </shape>
+    </item>
+
+    <item android:id="@+id/background4"
+        android:left="39dp"
+        android:width="8dp"
+        android:top="0dp">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorAccent"/>
+        </shape>
+    </item>
+</layer-list>
