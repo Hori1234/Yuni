@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
             add(new ProductReview(1, "Tastes like trash", 0.5f));
             add(new ProductReview(1, "I've never had a hot chocolate taste this good!!", 5.0f));
         }}));
-        products.add(new Product(3, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee, null));
+        products.add(new Product(3, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee, new ArrayList<ProductReview>(){{
+            add(new ProductReview(0, "This thing is nasty and costs way too much, STOP SELLING THIS!", 0.0f));
+        }}));
         products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea, null));
         products.add(new Product(5, "Pulled pork sandwich", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
         ProductsListView productsListView = new ProductsListView(this, (ListView)findViewById(R.id.productsList), products);

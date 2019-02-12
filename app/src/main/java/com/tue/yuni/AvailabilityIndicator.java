@@ -50,21 +50,21 @@ public class AvailabilityIndicator extends View {
         }
         else if (availability <= 25) {
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(Color.LTGRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.LTGRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
          }
         else if (availability <= 50) {
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.LTGRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
         }
         else if (availability <= 75) {
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
         }
         else if (availability <= 100) {
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
