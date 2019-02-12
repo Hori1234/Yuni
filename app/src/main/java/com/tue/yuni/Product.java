@@ -1,8 +1,5 @@
 package com.tue.yuni;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 import java.util.List;
 
 public class Product {
@@ -12,7 +9,7 @@ public class Product {
     public float Price;
     public int Availability;
     public int Picture;
-    public List<String> Reviews;
+    public List<ProductReview> Reviews;
 
     public Product(int ID, String name, float rating, int availability, float price) {
         this.ID = ID;
@@ -22,7 +19,7 @@ public class Product {
         Price = price;
     }
 
-    public Product(int ID, String name, float rating, int availability, float price,int picture, List<String> reviews) {
+    public Product(int ID, String name, float rating, int availability, float price,int picture, List<ProductReview> reviews) {
         this.ID = ID;
         Name = name;
         Rating = rating;

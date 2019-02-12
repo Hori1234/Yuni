@@ -3,6 +3,7 @@ package com.tue.yuni;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -35,11 +36,17 @@ public class AvailabilityIndicator extends View {
         super.onDraw(canvas);
         LayerDrawable d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
 
-        if (availability <= 0) {
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(Color.GRAY);
+        if (availability == 0) {
+            Paint p = new Paint();
+            p.setColor(Color.GRAY);
+            p.setStyle(Paint.Style.FILL);
+            p.setTextSize(45);
+            canvas.drawText("Out Of Stock", 0, 45, p);
+            return;
+            /*((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(Color.GRAY);
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(Color.GRAY);
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);
+            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);*/
         }
         else if (availability <= 25) {
             ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));

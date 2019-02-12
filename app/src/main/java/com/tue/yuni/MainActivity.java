@@ -47,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
         List<Product> products = new ArrayList<>();
         products.add(new Product(0, "Coffee", 3, 55, 0.99f, R.drawable.coffee, null));
         products.add(new Product(1, "Tea", 4, 20, 0.50f, R.drawable.tea, null));
-        products.add(new Product(2, "Hot Chocolate", 4.5f, 80, 1.49f, R.drawable.hot_chocolate, null));
+        products.add(new Product(2, "Hot Chocolate", 4.5f, 80, 1.49f, R.drawable.hot_chocolate, new ArrayList<ProductReview>(){{
+            add(new ProductReview(0, "Tasty and filling but not enough veggies", 3.5f));
+            add(new ProductReview(1, "Rip off, way too expensive", 1.5f));
+            add(new ProductReview(1, "Tastes like trash", 0.5f));
+            add(new ProductReview(1, "I've never had a hot chocolate taste this good!!", 5.0f));
+        }}));
+        products.add(new Product(3, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee, null));
+        products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea, null));
+        products.add(new Product(5, "Pulled pork sandwich", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
         ProductsListView productsListView = new ProductsListView(this, (ListView)findViewById(R.id.productsList), products);
 
 
