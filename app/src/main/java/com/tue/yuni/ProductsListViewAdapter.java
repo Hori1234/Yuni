@@ -113,24 +113,13 @@ public class ProductsListViewAdapter extends BaseAdapter {
                 }
                 // Display View More button if there are more than 2 reviews
                 if (products.get(position).Reviews.size() > 2) {
-                    Button viewMoreReviews = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
-                    // Focus Settings necessary to keep list item clickable
-                    viewMoreReviews.setFocusable(false);
-                    viewMoreReviews.setFocusableInTouchMode(false);
-                    // Setup Button Text
-                    viewMoreReviews.setText("View more");
-                    // Add button to the layout
-                    reviewsContainer.addView(viewMoreReviews);
-                    // Setup Button On Click
-                    viewMoreReviews.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ReviewsDialog(products.get(position));
-                        }
-                    });
+                    instantiateButtons(products.get(position), reviewsContainer, true, true);
+                } else {
+                    instantiateButtons(products.get(position), reviewsContainer, true, false);
                 }
             } else {
                 reviewsContainer.addView(createTextView(ctx, "No Reviews Available!"));
+                instantiateButtons(products.get(position), reviewsContainer, true, false);
             }
         }
 
@@ -176,6 +165,49 @@ public class ProductsListViewAdapter extends BaseAdapter {
         alertDialog.setAdapter(new ProductReviewsListViewAdapter(ctx, product), null);
         // Show Dialog
         alertDialog.show();
+    }
+
+    private void instantiateButtons(final Product product, final LinearLayout container, boolean displayFeedback, boolean displayViewMore){
+        LinearLayout linearLayout = new LinearLayout(ctx);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        if (displayFeedback) {
+            Button leaveReview = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
+            leaveReview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+            // Focus Settings necessary to keep list item clickable
+            leaveReview.setFocusable(false);
+            leaveReview.setFocusableInTouchMode(false);
+            // Setup Button Text
+            leaveReview.setText("Feedback");
+            // Add button to the layout
+            linearLayout.addView(leaveReview);
+            // Setup Button On Click
+            leaveReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ReviewsDialog(product);
+                }
+            });
+        }
+        if (displayViewMore) {
+            Button viewMoreReviews = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
+            viewMoreReviews.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+            // Focus Settings necessary to keep list item clickable
+            viewMoreReviews.setFocusable(false);
+            viewMoreReviews.setFocusableInTouchMode(false);
+            // Setup Button Text
+            viewMoreReviews.setText("View more");
+            // Add button to the layout
+            linearLayout.addView(viewMoreReviews);
+            // Setup Button On Click
+            viewMoreReviews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ReviewsDialog(product);
+                }
+            });
+        }
+        container.addView(linearLayout);
     }
 
     private TextView createTextView(Context ctx, String text) {
