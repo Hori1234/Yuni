@@ -32,4 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/retractView"
+        android:layout_below="@+id/productReviews"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:src="@android:drawable/arrow_up_float"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -35,42 +35,16 @@ public class AvailabilityIndicator extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         LayerDrawable d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
+        GradientDrawable circle = (GradientDrawable)d.findDrawableByLayerId(R.id.availability);
 
-        if (availability == 0) {
-            Paint p = new Paint();
-            p.setColor(Color.GRAY);
-            p.setStyle(Paint.Style.FILL);
-            p.setTextSize(45);
-            canvas.drawText("Out Of Stock", 0, 45, p);
-            return;
-            /*((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.GRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.GRAY);*/
-        }
-        else if (availability <= 25) {
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(Color.LTGRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.LTGRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
+        if (availability <= 25) {
+            circle.setColor(Color.argb(255, 205, 23, 23));
          }
         else if (availability <= 50) {
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(Color.LTGRAY);
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
-        }
-        else if (availability <= 75) {
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(Color.LTGRAY);
+            circle.setColor(Color.YELLOW);
         }
         else if (availability <= 100) {
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background1)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background2)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background3)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            ((GradientDrawable)d.findDrawableByLayerId(R.id.background4)).setColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
+            circle.setColor(Color.argb(255, 12, 183, 18));
         }
 
         d.setBounds(0, 0, getWidth(), getHeight());

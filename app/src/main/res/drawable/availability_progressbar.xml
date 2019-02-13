@@ -2,42 +2,18 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Define the background properties like color etc -->
-    <item android:id="@+id/background1"
-        android:width="8dp"
-        android:top="12dp">
-        <shape android:shape="rectangle">
+    <item android:id="@+id/availability"
+        android:start="1dp"
+        android:width="20dp"
+        android:height="20dp">
+        <shape
+            android:shape="oval"
+            android:innerRadius="15dp">
             <solid
                 android:color="@color/colorAccent"/>
-        </shape>
-    </item>
-
-    <item android:id="@+id/background2"
-        android:left="13dp"
-        android:width="8dp"
-        android:top="8dp">
-        <shape android:shape="rectangle">
-            <solid
-                android:color="@color/colorAccent"/>
-        </shape>
-    </item>
-
-    <item android:id="@+id/background3"
-        android:left="26dp"
-        android:width="8dp"
-        android:top="4dp">
-        <shape android:shape="rectangle">
-            <solid
-                android:color="@color/colorAccent"/>
-        </shape>
-    </item>
-
-    <item android:id="@+id/background4"
-        android:left="39dp"
-        android:width="8dp"
-        android:top="0dp">
-        <shape android:shape="rectangle">
-            <solid
-                android:color="@color/colorAccent"/>
+            <stroke
+                android:color="#504B4B"
+                android:width="1dp"/>
         </shape>
     </item>
 </layer-list>

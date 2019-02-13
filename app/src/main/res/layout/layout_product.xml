@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/firstRow"
         android:layout_alignParentStart="true"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/productName"
@@ -18,34 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:layout_weight="1"
             android:text="Product Name" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:orientation="horizontal">
-
-            <com.tue.yuni.AvailabilityIndicator
-                android:id="@+id/productAvailability"
-                android:layout_marginStart="2dp"
-                android:layout_width="104dp"
-                android:layout_height="18dp"
-                android:progress="00"
-                android:max="100"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/rightBlock"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical">
 
         <RatingBar
             android:id="@+id/productRating"
@@ -56,23 +31,49 @@
             android:layout_height="wrap_content"
             android:stepSize="0.5"
             android:numStars="5" />
-
-        <TextView
-            android:id="@+id/productPrice"
-            android:textSize="20sp"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="0.00€"/>
-
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/firstRow"
+        android:id="@+id/secondRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="1dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.tue.yuni.AvailabilityIndicator
+                android:id="@+id/productAvailability"
+                android:layout_width="21dp"
+                android:layout_height="20dp"
+                android:max="100"
+                android:progress="0" />
+            <TextView
+                android:layout_marginStart="1dp"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Availability" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/extendView"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:src="@android:drawable/arrow_down_float"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/extendedDetails"
         android:orientation="vertical"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/rightBlock"
+        android:layout_below="@+id/secondRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>

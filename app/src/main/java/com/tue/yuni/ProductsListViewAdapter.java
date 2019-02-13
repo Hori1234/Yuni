@@ -81,9 +81,15 @@ public class ProductsListViewAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.productName)).setText(products.get(position).Name);
         ((RatingBar) convertView.findViewById(R.id.productRating)).setRating(products.get(position).Rating);
         ((AvailabilityIndicator) convertView.findViewById(R.id.productAvailability)).setAvailability(products.get(position).Availability);
-        ((TextView) convertView.findViewById(R.id.productPrice)).setText(String.format("%.2f€", products.get(position).Price));
+        if (convertView.findViewById(R.id.extendView).getVisibility() == View.INVISIBLE && position != extendedViewItem) {
+            convertView.findViewById(R.id.extendView).setVisibility(View.VISIBLE);
+        }
         // Extended View
         if (position == extendedViewItem) {
+            // Retract Symbol
+            if (convertView.findViewById(R.id.extendView).getVisibility() == View.VISIBLE ) {
+                convertView.findViewById(R.id.extendView).setVisibility(View.INVISIBLE);
+            }
             // Item Image
             ImageView imageView = convertView.findViewById(R.id.productImage);
             imageView.setTag(products.get(position).ID);

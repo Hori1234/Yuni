@@ -59,6 +59,7 @@ public class ProductsListView {
                 v.onTouchEvent(event);
                 return true;
             }
+
         });
     }
 }
