@@ -3,12 +3,8 @@ package com.tue.yuni;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -53,6 +49,7 @@ public class AvailabilityIndicator extends View {
 
     public void setAvailability(int availability){
         this.availability = availability;
+        invalidate();
     }
 
     public int getAvailability() {

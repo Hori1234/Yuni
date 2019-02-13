@@ -63,14 +63,13 @@ public class ProductsListViewAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product, parent, false);
             // Check if the current list Item needs to the extended view
             if (position == extendedViewItem) {   // Default Layout
-                LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
-                extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_product_extended, null,false));
+                extendedListItem(position, convertView, parent);
             }
         } else {
             LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
             // Check if the current list Item needs to be a Default or Extended Layout
             if (position == extendedViewItem && extensionLayout.getChildCount() == 0) {
-                extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_product_extended, null,false));
+                extendedListItem(position, convertView, parent);
             } else if (position != extendedViewItem && extensionLayout.getChildCount() > 0){
                 extensionLayout.removeAllViews();
             }
@@ -84,47 +83,49 @@ public class ProductsListViewAdapter extends BaseAdapter {
         if (convertView.findViewById(R.id.extendView).getVisibility() == View.INVISIBLE && position != extendedViewItem) {
             convertView.findViewById(R.id.extendView).setVisibility(View.VISIBLE);
         }
-        // Extended View
-        if (position == extendedViewItem) {
-            // Retract Symbol
-            if (convertView.findViewById(R.id.extendView).getVisibility() == View.VISIBLE ) {
-                convertView.findViewById(R.id.extendView).setVisibility(View.INVISIBLE);
-            }
-            // Item Image
-            ImageView imageView = convertView.findViewById(R.id.productImage);
-            imageView.setTag(products.get(position).ID);
-            new AsyncImageViewLoader(ctx, products.get(position), imageView).execute();
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageDialog(products.get(position));
-                }
-            });
-            // Reviews List
-            LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
-            // Check whether or not there is at least 1 review to display
-            if (products.get(position).Reviews != null && products.get(position).Reviews.size() > 0) {
-                // Display at most 2 Reviews
-                for (int i = 0; i < Math.min(2, products.get(position).Reviews.size()); i++) {
-                    View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review_mini, null);
-                    ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).Reviews.get(i).Text);
-                    ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).Reviews.get(i).Rating);
-                    reviewsContainer.addView(view);
-                }
-                // Display View More button if there are more than 2 reviews
-                if (products.get(position).Reviews.size() > 2) {
-                    instantiateButtons(products.get(position), reviewsContainer, true, true);
-                } else {
-                    instantiateButtons(products.get(position), reviewsContainer, true, false);
-                }
-            } else {
-                reviewsContainer.addView(createTextView(ctx, "No Reviews Available!"));
-                instantiateButtons(products.get(position), reviewsContainer, true, false);
-            }
-        }
 
         // Return the instantiated row
         return convertView;
+    }
+
+    private void extendedListItem(final int position, View convertView, ViewGroup parent){
+        LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
+        extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_product_extended, null,false));
+        // Retract Symbol
+        if (convertView.findViewById(R.id.extendView).getVisibility() == View.VISIBLE ) {
+            convertView.findViewById(R.id.extendView).setVisibility(View.INVISIBLE);
+        }
+        // Item Image
+        ImageView imageView = convertView.findViewById(R.id.productImage);
+        imageView.setTag(products.get(position).ID);
+        new AsyncImageViewLoader(ctx, products.get(position), imageView).execute();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageDialog(products.get(position));
+            }
+        });
+        // Reviews List
+        LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
+        // Check whether or not there is at least 1 review to display
+        if (products.get(position).Reviews != null && products.get(position).Reviews.size() > 0) {
+            // Display at most 2 Reviews
+            for (int i = 0; i < Math.min(2, products.get(position).Reviews.size()); i++) {
+                View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review_mini, null);
+                ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).Reviews.get(i).Text);
+                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).Reviews.get(i).Rating);
+                reviewsContainer.addView(view);
+            }
+            // Display View More button if there are more than 2 reviews
+            if (products.get(position).Reviews.size() > 2) {
+                instantiateButtons(products.get(position), reviewsContainer, true, true);
+            } else {
+                instantiateButtons(products.get(position), reviewsContainer, true, false);
+            }
+        } else {
+            reviewsContainer.addView(createTextView(ctx, "No Reviews Available!"));
+            instantiateButtons(products.get(position), reviewsContainer, true, false);
+        }
     }
 
     private void ImageDialog(Product product){
@@ -158,21 +159,12 @@ public class ProductsListViewAdapter extends BaseAdapter {
         });
     }
 
-    private void ReviewsDialog(Product product) {
-        // Create Alert Dialog
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
-        // Setup List Adapter
-        alertDialog.setAdapter(new ProductReviewsListViewAdapter(ctx, product), null);
-        // Show Dialog
-        alertDialog.show();
-    }
-
     private void instantiateButtons(final Product product, final LinearLayout container, boolean displayFeedback, boolean displayViewMore){
         LinearLayout linearLayout = new LinearLayout(ctx);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         if (displayFeedback) {
-            Button leaveReview = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
+            Button leaveReview = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Colored);
             leaveReview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
             // Focus Settings necessary to keep list item clickable
             leaveReview.setFocusable(false);
@@ -185,12 +177,17 @@ public class ProductsListViewAdapter extends BaseAdapter {
             leaveReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReviewsDialog(product);
+                    new FeedbackDialog(ctx).show(new FeedbackDialog.DialogContent() {
+                        @Override
+                        public void onSendReview(float rating, String reviewText) {
+                            // Handle Review Contents
+                        }
+                    });
                 }
             });
         }
         if (displayViewMore) {
-            Button viewMoreReviews = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
+            Button viewMoreReviews = new Button(ctx,null, 0, R.style.Widget_AppCompat_Button_Colored);
             viewMoreReviews.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
             // Focus Settings necessary to keep list item clickable
             viewMoreReviews.setFocusable(false);
@@ -203,7 +200,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
             viewMoreReviews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReviewsDialog(product);
+                    new ReviewsDialog(ctx, product.Reviews).show();
                 }
             });
         }

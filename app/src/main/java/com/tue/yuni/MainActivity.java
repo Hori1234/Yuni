@@ -50,14 +50,34 @@ public class MainActivity extends AppCompatActivity {
         products.add(new Product(2, "Hot Chocolate", 4.5f, 50, 1.49f, R.drawable.hot_chocolate, new ArrayList<ProductReview>(){{
             add(new ProductReview(0, "Tasty and filling but not enough veggies", 3.5f));
             add(new ProductReview(1, "Rip off, way too expensive", 1.5f));
-            add(new ProductReview(1, "Tastes like trash", 0.5f));
-            add(new ProductReview(1, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(2, "Tastes like trash", 0.5f));
+            add(new ProductReview(3, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(4, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(5, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(6, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(7, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(8, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(9, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(10, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(11, "I've never had a hot chocolate taste this good!!", 5.0f));
+            add(new ProductReview(12, "I've never had a hot chocolate taste this good!!", 5.0f));
         }}));
         products.add(new Product(3, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee, new ArrayList<ProductReview>(){{
             add(new ProductReview(0, "This thing is nasty and costs way too much, STOP SELLING THIS!", 0.0f));
         }}));
-        products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea, null));
-        products.add(new Product(5, "Pulled pork sandwich", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea, new ArrayList<ProductReview>(){{
+            add(new ProductReview(0, "Review 1", 0.0f));
+            add(new ProductReview(0, "Review 2", 0.0f));
+            add(new ProductReview(0, "Review 3", 0.0f));
+        }}));
+        products.add(new Product(5, "Sample 1", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(6, "Sample 2", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(7, "Sample 3", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(8, "Sample 4", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(9, "Sample 5", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(10, "Sample 6", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(11, "Sample 7", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
+        products.add(new Product(12, "Sample 8", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
         ProductsListView productsListView = new ProductsListView(this, (ListView)findViewById(R.id.productsList), products);
 
 
