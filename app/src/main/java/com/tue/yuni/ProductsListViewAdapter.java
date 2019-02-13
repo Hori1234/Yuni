@@ -1,12 +1,12 @@
 package com.tue.yuni;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Base64;
-import android.util.TypedValue;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -88,13 +88,19 @@ public class ProductsListViewAdapter extends BaseAdapter {
             ImageView imageView = convertView.findViewById(R.id.productImage);
             imageView.setTag(products.get(position).ID);
             new AsyncImageViewLoader(ctx, products.get(position), imageView).execute();
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageDialog(products.get(position));
+                }
+            });
             // Reviews List
             LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
             // Check whether or not there is at least 1 review to display
             if (products.get(position).Reviews != null && products.get(position).Reviews.size() > 0) {
                 // Display at most 2 Reviews
                 for (int i = 0; i < Math.min(2, products.get(position).Reviews.size()); i++) {
-                    View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, null);
+                    View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review_mini, null);
                     ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).Reviews.get(i).Text);
                     ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).Reviews.get(i).Rating);
                     reviewsContainer.addView(view);
@@ -109,6 +115,13 @@ public class ProductsListViewAdapter extends BaseAdapter {
                     viewMoreReviews.setText("View more");
                     // Add button to the layout
                     reviewsContainer.addView(viewMoreReviews);
+                    // Setup Button On Click
+                    viewMoreReviews.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ReviewsDialog(products.get(position));
+                        }
+                    });
                 }
             } else {
                 reviewsContainer.addView(createTextView(ctx, "No Reviews Available!"));
@@ -117,6 +130,46 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
         // Return the instantiated row
         return convertView;
+    }
+
+    private void ImageDialog(Product product){
+        // Create Alert Dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+        // Inflate Alert Dialog View
+        final View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_image_dialog, null);
+        alertDialog.setView(view);
+        // Load Image
+        ImageView imageView = view.findViewById(R.id.imageContainer);
+        imageView.setTag(product.ID);
+        new AsyncImageViewLoader(ctx, product, imageView).execute();
+        // Show Alert Dialog
+        final AlertDialog dialog = alertDialog.show();
+        // Setup Alert Dialog Layout Params
+        int size;
+        if (Resources.getSystem().getDisplayMetrics().widthPixels > Resources.getSystem().getDisplayMetrics().heightPixels)
+            size = Resources.getSystem().getDisplayMetrics().heightPixels - 100;
+        else
+            size = Resources.getSystem().getDisplayMetrics().widthPixels - 100;
+        dialog.getWindow().setLayout(size, size);
+        // Make Alert Dialog Background Invisible
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // Make Dialog Close on Touch
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                dialog.dismiss();
+                return false;
+            }
+        });
+    }
+
+    private void ReviewsDialog(Product product) {
+        // Create Alert Dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+        // Setup List Adapter
+        alertDialog.setAdapter(new ProductReviewsListViewAdapter(ctx, product), null);
+        // Show Dialog
+        alertDialog.show();
     }
 
     private TextView createTextView(Context ctx, String text) {
