@@ -45,7 +45,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <com.tue.yuni.AvailabilityIndicator
+            <com.tue.yuni.Components.AvailabilityIndicator
                 android:id="@+id/productAvailability"
                 android:layout_width="21dp"
                 android:layout_height="20dp"

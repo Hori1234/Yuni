@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tue.yuni.ListView_Adapters.ProductsListViewAdapter;
+
 import java.util.List;
 
 public class ProductsListView {
@@ -35,6 +37,8 @@ public class ProductsListView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listAdapter.setExtendedViewItem(position);
+                // Ensure the extended item will fully be in view
+                listView.smoothScrollToPosition(position);
             }
         });
         // Fix Scrolling of Reviews List inside List View Item

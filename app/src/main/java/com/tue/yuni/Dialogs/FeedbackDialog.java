@@ -1,13 +1,16 @@
-package com.tue.yuni;
+package com.tue.yuni.Dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.tue.yuni.R;
 
 public class FeedbackDialog {
     private Context ctx;
@@ -29,21 +32,22 @@ public class FeedbackDialog {
         // Handle the rating text
         final TextView ratingText = view.findViewById(R.id.reviewRatingText);
         final RatingBar ratingBar = view.findViewById(R.id.reviewRating);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        ratingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rating == 0)
+            public boolean onTouch(View v, MotionEvent event) {
+                if (ratingBar.getRating() == 0)
                     ratingText.setText("Avoid");
-                else if (rating <= 1)
+                else if (ratingBar.getRating() <= 1)
                     ratingText.setText("Very Bad");
-                else if (rating <= 2)
+                else if (ratingBar.getRating() <= 2)
                     ratingText.setText("Bad");
-                else if (rating <= 3)
+                else if (ratingBar.getRating() <= 3)
                     ratingText.setText("Good");
-                else if (rating <= 4)
+                else if (ratingBar.getRating() <= 4)
                     ratingText.setText("Great");
                 else
                     ratingText.setText("Awesome, loved it");
+                return false;
             }
         });
         // Send Feedback Button
@@ -57,7 +61,7 @@ public class FeedbackDialog {
         });
     }
 
-    interface DialogContent {
+    public interface DialogContent {
         void onSendReview(float rating, String reviewText);
     }
 }

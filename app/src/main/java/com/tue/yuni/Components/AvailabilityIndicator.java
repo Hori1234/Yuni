@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.Components;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.tue.yuni.R;
 
 public class AvailabilityIndicator extends View {
     private int availability = 0;

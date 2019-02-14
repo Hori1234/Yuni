@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.ListView_Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.tue.yuni.ProductReview;
+import com.tue.yuni.R;
 
 import java.util.List;
 

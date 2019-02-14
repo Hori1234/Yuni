@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         }}));
         products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea, new ArrayList<ProductReview>(){{
             add(new ProductReview(0, "Review 1", 0.0f));
-            add(new ProductReview(0, "Review 2", 0.0f));
-            add(new ProductReview(0, "Review 3", 0.0f));
+            add(new ProductReview(1, "Review 2", 0.0f));
+            add(new ProductReview(2, "Review 3", 0.0f));
         }}));
         products.add(new Product(5, "Sample 1", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));
         products.add(new Product(6, "Sample 2", 3.5f, 80, 4.09f, R.drawable.hot_chocolate, null));

@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.ListView_Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.tue.yuni.AsyncImageViewLoader;
+import com.tue.yuni.Components.AvailabilityIndicator;
+import com.tue.yuni.Dialogs.FeedbackDialog;
+import com.tue.yuni.Dialogs.ReviewsDialog;
+import com.tue.yuni.Product;
+import com.tue.yuni.R;
 
 import java.util.List;
 
