@@ -1,9 +1,15 @@
 package com.tue.yuni;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -11,26 +17,21 @@ import com.tue.yuni.ListView_Adapters.ProductsListViewAdapter;
 
 import java.util.List;
 
-public class ProductsListView {
-    private List<Product> products;
+public class ProductsListView extends Fragment {
     private ListView listView;
-    private Context ctx;
-
     private ProductsListViewAdapter listAdapter;
+    private List<Product> products;
 
-    public ProductsListView(Context ctx, ListView listView, List<Product> products) {
-        this.ctx = ctx;
-        this.listView = listView;
-        this.products = products;
-        setupListView();
-    }
-
-    private void setupListView(){
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout_products, container, false);
+        // Get ListView
+        listView = view.findViewById(R.id.productsList);
         // General ListView Settings
         listView.setFastScrollEnabled(false);
         listView.setFastScrollAlwaysVisible(false);
         // List View Adapter
-        listAdapter = new ProductsListViewAdapter(ctx, products);
+        listAdapter = new ProductsListViewAdapter(getContext(), products);
         listView.setAdapter(listAdapter);
         // List Item Click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,7 +46,6 @@ public class ProductsListView {
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Products List View", "OnTouch: " + v.getId());
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         listView.requestDisallowInterceptTouchEvent(false);
@@ -57,7 +57,11 @@ public class ProductsListView {
                 v.onTouchEvent(event);
                 return true;
             }
-
         });
+        return view;
+    }
+
+    public void setup(List<Product> products) {
+        this.products = products;
     }
 }
