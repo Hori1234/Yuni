@@ -1,5 +1,6 @@
 package com.tue.yuni.Dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ public class FeedbackDialog {
         this.ctx = ctx;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void show(final DialogContent onClick){
         // Create Alert Dialog
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -36,17 +38,17 @@ public class FeedbackDialog {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (ratingBar.getRating() == 0)
-                    ratingText.setText("Avoid");
+                    ratingText.setText(ctx.getString(R.string.stars_0));
                 else if (ratingBar.getRating() <= 1)
-                    ratingText.setText("Very Bad");
+                    ratingText.setText(ctx.getString(R.string.stars_1));
                 else if (ratingBar.getRating() <= 2)
-                    ratingText.setText("Bad");
+                    ratingText.setText(ctx.getString(R.string.stars_2));
                 else if (ratingBar.getRating() <= 3)
-                    ratingText.setText("Good");
+                    ratingText.setText(ctx.getString(R.string.stars_3));
                 else if (ratingBar.getRating() <= 4)
-                    ratingText.setText("Great");
+                    ratingText.setText(ctx.getString(R.string.stars_4));
                 else
-                    ratingText.setText("Awesome, loved it");
+                    ratingText.setText(ctx.getString(R.string.stars_5));
                 return false;
             }
         });

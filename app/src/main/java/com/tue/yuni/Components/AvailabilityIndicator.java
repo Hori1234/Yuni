@@ -11,6 +11,7 @@ import android.view.View;
 import com.tue.yuni.R;
 
 public class AvailabilityIndicator extends View {
+    private LayerDrawable d;
     private int availability = 0;
 
     public AvailabilityIndicator(Context context) {
@@ -32,7 +33,8 @@ public class AvailabilityIndicator extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        LayerDrawable d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
+        if (d == null)
+            d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
         GradientDrawable circle = (GradientDrawable)d.findDrawableByLayerId(R.id.availability);
 
         if (availability <= 25) {
@@ -56,5 +58,12 @@ public class AvailabilityIndicator extends View {
 
     public int getAvailability() {
         return availability;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (d == null)
+            d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
+        setMeasuredDimension(d.getIntrinsicWidth(), d.getIntrinsicHeight());
     }
 }

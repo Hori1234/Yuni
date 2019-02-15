@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.tue.yuni.AsyncImageViewLoader;
 import com.tue.yuni.Components.AvailabilityIndicator;
 import com.tue.yuni.Dialogs.FeedbackDialog;
-import com.tue.yuni.Dialogs.ReviewsDialog;
+import com.tue.yuni.Dialogs.ReviewsPage;
 import com.tue.yuni.Product;
 import com.tue.yuni.R;
 
@@ -207,7 +207,10 @@ public class ProductsListViewAdapter extends BaseAdapter {
             viewMoreReviews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ReviewsDialog(ctx, product.Reviews).show();
+                    // Create Alert Dialog
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+                    alertDialog.setView(new ReviewsPage(ctx, product.Reviews).getView());
+                    alertDialog.show();
                 }
             });
         }

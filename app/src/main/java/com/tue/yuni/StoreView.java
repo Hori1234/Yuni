@@ -31,7 +31,9 @@ public class StoreView extends Fragment {
         // Setup Tabs
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.removeAllTabs();
-        tabLayout.addTab(tabLayout.newTab().setText("Info"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.info)));
+        // Caused by: java.lang.NullPointerException on productCategories: Attempt to invoke interface method 'int java.util.List.size()' on a null object reference
+        // Fix by implementing save instance
         for (int i = 0; i < productCategories.size(); i++){
             tabLayout.addTab(tabLayout.newTab().setText(productCategories.get(i)));
         }
@@ -47,7 +49,7 @@ public class StoreView extends Fragment {
                 switch(i){
                     case 0:
                         // Info Page
-                        return new Fragment();
+                        return new StoreInfo();
                     default:
                         ProductsListView productsListView = new ProductsListView();
                         productsListView.setup(productsByCategory.get(i - 1));
@@ -59,13 +61,18 @@ public class StoreView extends Fragment {
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position){
-                    case 0: return "Info";
+                    case 0: return getString(R.string.info);
                     default: return productCategories.get(position - 1);
                 }
             }
         });
         // Return view
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     public void setup(List<String> productCategories, List<List<Product>> productsByCategory) {

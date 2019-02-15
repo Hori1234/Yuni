@@ -4,8 +4,8 @@
     <!-- Define the background properties like color etc -->
     <item android:id="@+id/availability"
         android:start="1dp"
-        android:width="20dp"
-        android:height="20dp">
+        android:width="17dp"
+        android:height="17dp">
         <shape
             android:shape="oval"
             android:innerRadius="15dp">
