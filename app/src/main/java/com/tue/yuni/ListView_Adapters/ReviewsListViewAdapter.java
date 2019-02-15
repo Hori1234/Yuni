@@ -8,17 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.tue.yuni.ProductReview;
+import com.tue.yuni.Review;
 import com.tue.yuni.R;
 
 import java.util.List;
 
 public class ReviewsListViewAdapter extends BaseAdapter {
     private Context ctx;
-    private List<ProductReview> reviews;
+    private List<Review> reviews;
     private int startItem, itemsToList;
 
-    public ReviewsListViewAdapter(Context ctx, List<ProductReview> reviews, int itemsToList) {
+    public ReviewsListViewAdapter(Context ctx, List<Review> reviews, int itemsToList) {
         this.ctx = ctx;
         this.reviews = reviews;
         this.itemsToList = itemsToList;

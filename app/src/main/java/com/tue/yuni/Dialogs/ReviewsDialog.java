@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.tue.yuni.ProductReview;
+import com.tue.yuni.Review;
 import com.tue.yuni.R;
 import com.tue.yuni.ListView_Adapters.ReviewsListViewAdapter;
 
@@ -18,12 +18,12 @@ import java.util.List;
 public class ReviewsDialog {
     private Context ctx;
     private AlertDialog dialog;
-    private List<ProductReview> reviews;
+    private List<Review> reviews;
     private ReviewsListViewAdapter adapter;
     private ListView reviewsListView;
     private Button prev, next;
 
-    public ReviewsDialog(Context ctx, List<ProductReview> reviews) {
+    public ReviewsDialog(Context ctx, List<Review> reviews) {
         this.ctx = ctx;
         this.reviews = reviews;
     }
