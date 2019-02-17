@@ -1,4 +1,38 @@
 <resources>
     <string name="app_name">Yuni</string>
     <string name="action_settings">Settings</string>
+
+    <!--ProductsListView Related-->
+    <string name="availability">Availability</string>
+    <string name="feedback">Feedback</string>
+    <string name="view_more">View More</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
+    <string name="no_reviews">No Reviews Available!</string>
+
+    <!--Feedback Dialog Related-->
+    <string name="stars_0">Avoid</string>
+    <string name="stars_1">Very Bad</string>
+    <string name="stars_2">Bad</string>
+    <string name="stars_3">Good</string>
+    <string name="stars_4">Great</string>
+    <string name="stars_5">Awesome, loved it</string>
+    <string name="hintFeedback">Tell us what you thought</string>
+    <string name="sendFeedback">Send Feedback</string>
+    <string name="Feedback">Feedback</string>
+
+    <!--Info Page-->
+    <string name="info">Info</string>
+    <string name="openingHours">Opening Hours</string>
+    <string name="busyness">Busyness</string>
+    <string name="busy">Busy</string>
+    <string name="quiet">Quiet</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
 </resources>
