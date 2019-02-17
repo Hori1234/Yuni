@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.R;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreView extends Fragment {
-    View view;
+    private View view;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
-    private List<String> productCategories;             // Might be needed for future use
+    private List<String> productCategories;
     private List<List<Product>> productsByCategory;
 
     @Nullable
@@ -32,8 +35,6 @@ public class StoreView extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.info)));
-        // Caused by: java.lang.NullPointerException on productCategories: Attempt to invoke interface method 'int java.util.List.size()' on a null object reference
-        // Fix by implementing save instance
         for (int i = 0; i < productCategories.size(); i++){
             tabLayout.addTab(tabLayout.newTab().setText(productCategories.get(i)));
         }
@@ -51,8 +52,12 @@ public class StoreView extends Fragment {
                         // Info Page
                         return new StoreInfo();
                     default:
+                        // Create Arguments
+                        Bundle arguments = new Bundle();
+                        arguments.putParcelableArrayList("productsByCategory", (ArrayList<Product>) productsByCategory.get(i - 1));
+                        // Instantiate Fragment and Pass Arguments
                         ProductsListView productsListView = new ProductsListView();
-                        productsListView.setup(productsByCategory.get(i - 1));
+                        productsListView.setArguments(arguments);
                         return productsListView;
                 }
             }
@@ -71,12 +76,17 @@ public class StoreView extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    public void setup(List<String> productCategories, List<List<Product>> productsByCategory) {
-        this.productCategories = productCategories;
-        this.productsByCategory = productsByCategory;
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        // Read Arguments From Bundle
+        if (args != null) {
+            if (args.containsKey("productCategories")) {
+                productCategories = args.getStringArrayList("productCategories");
+                productsByCategory = new ArrayList<>();
+                for (int i = 0; i < productCategories.size(); i++) {
+                    productsByCategory.add(args.<Product>getParcelableArrayList("productsByCategory" + i));
+                }
+            }
+        }
     }
 }

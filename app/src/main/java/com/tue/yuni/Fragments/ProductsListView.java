@@ -1,5 +1,6 @@
-package com.tue.yuni;
+package com.tue.yuni.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tue.yuni.ListView_Adapters.ProductsListViewAdapter;
+import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.R;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class ProductsListView extends Fragment {
     private ProductsListViewAdapter listAdapter;
     private List<Product> products;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_products, container, false);
@@ -59,7 +63,13 @@ public class ProductsListView extends Fragment {
         return view;
     }
 
-    public void setup(List<Product> products) {
-        this.products = products;
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        // Read Arguments From Bundle
+        if (args != null) {
+            if (args.containsKey("productsByCategory"))
+                products = args.getParcelableArrayList("productsByCategory");
+        }
     }
 }

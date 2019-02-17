@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.tue.yuni.Review;
+import com.tue.yuni.DataStructures.Review;
 import com.tue.yuni.R;
 
 import java.util.List;

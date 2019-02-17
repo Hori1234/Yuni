@@ -19,6 +19,7 @@
     <string name="stars_5">Awesome, loved it</string>
     <string name="hintFeedback">Tell us what you thought</string>
     <string name="sendFeedback">Send Feedback</string>
+    <string name="Feedback">Feedback</string>
 
     <!--Info Page-->
     <string name="info">Info</string>

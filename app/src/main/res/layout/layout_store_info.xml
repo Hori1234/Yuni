@@ -34,26 +34,34 @@
             android:paddingBottom="8dp"
             android:layout_below="@+id/imageContainer"
             android:background="@drawable/layout_bottom_stroke"
-            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textAlignment="center"
                 android:textSize="16sp"
                 android:text="@string/busyness"
                 android:layout_height="wrap_content" />
-            <com.tue.yuni.Components.AvailabilityIndicator
-                android:id="@+id/busyness"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/busynessText"
-                android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/busy"
-                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <com.tue.yuni.Components.AvailabilityIndicator
+                    android:id="@+id/busyness"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/busynessText"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/busy"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -208,13 +216,41 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/reviewsContainer"
+            android:id="@+id/descriptionContainer"
             android:layout_below="@+id/openingHoursContainer"
             android:background="@drawable/layout_bottom_stroke"
-            android:orientation="vertical"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <TextView
+                android:id="@+id/descriptionStore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/reviewRatingContainer"
+            android:layout_below="@+id/descriptionContainer"
+            android:layout_width="match_parent"
+            android:background="@drawable/layout_bottom_stroke"
+            android:layout_height="wrap_content">
+            <RatingBar
+                android:id="@+id/reviewRating"
+                android:isIndicator="true"
+                android:layout_centerHorizontal="true"
+                android:stepSize="0.5"
+                android:rating="3"
+                android:numStars="5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/reviewsContainer"
+                android:layout_below="@+id/reviewRating"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

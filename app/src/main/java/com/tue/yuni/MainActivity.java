@@ -1,7 +1,6 @@
 package com.tue.yuni;
 
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.DataStructures.Review;
+import com.tue.yuni.Fragments.StoreView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,10 +72,17 @@ public class MainActivity extends AppCompatActivity {
         productsByCategory.add(products);
         productCategories.add("Sandwich");
 
-        //Fragment Load
+        // Create Fragment Transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // Setup Fragment Arguments
+        Bundle args = new Bundle();
+        args.putStringArrayList("productCategories", (ArrayList<String>)productCategories);
+        for (int i = 0; i < productCategories.size(); i++)
+            args.putParcelableArrayList("productsByCategory" + i, (ArrayList<Product>) productsByCategory.get(i));
+        // Create Fragment Itself
         StoreView storeView = new StoreView();
-        storeView.setup(productCategories, productsByCategory);
+        storeView.setArguments(args);
+        // Transition to Fragment
         ft.add(R.id.content, storeView);
         ft.commit();
 }

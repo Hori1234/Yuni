@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.tue.yuni.DataStructures.Product;
+
 /**
  * To Be Improved upon, potentially handle image downloading.
  */

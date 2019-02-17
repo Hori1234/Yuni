@@ -20,7 +20,7 @@ import com.tue.yuni.AsyncImageViewLoader;
 import com.tue.yuni.Components.AvailabilityIndicator;
 import com.tue.yuni.Dialogs.FeedbackDialog;
 import com.tue.yuni.Dialogs.ReviewsPage;
-import com.tue.yuni.Product;
+import com.tue.yuni.DataStructures.Product;
 import com.tue.yuni.R;
 
 import java.util.List;
@@ -177,7 +177,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
             leaveReview.setFocusable(false);
             leaveReview.setFocusableInTouchMode(false);
             // Setup Button Text
-            leaveReview.setText("Feedback");
+            leaveReview.setText(ctx.getString(R.string.Feedback));
             // Add button to the layout
             linearLayout.addView(leaveReview);
             // Setup Button On Click
@@ -200,7 +200,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
             viewMoreReviews.setFocusable(false);
             viewMoreReviews.setFocusableInTouchMode(false);
             // Setup Button Text
-            viewMoreReviews.setText("View more");
+            viewMoreReviews.setText(ctx.getString(R.string.view_more));
             // Add button to the layout
             linearLayout.addView(viewMoreReviews);
             // Setup Button On Click

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.tue.yuni.Review;
+import com.tue.yuni.DataStructures.Review;
 import com.tue.yuni.R;
 import com.tue.yuni.ListView_Adapters.ReviewsListViewAdapter;
 
@@ -22,6 +22,7 @@ public class ReviewsPage {
     private ReviewsListViewAdapter adapter;
     private ListView reviewsListView;
     private Button prev, next;
+    private View.OnClickListener onPageChanged;
 
     public ReviewsPage(Context ctx, List<Review> reviews) {
         this.ctx = ctx;
@@ -57,6 +58,8 @@ public class ReviewsPage {
                     next.setVisibility(View.VISIBLE);
                     if (adapter.getStartItem() == 0)
                         prev.setVisibility(View.INVISIBLE);
+                    // Notify Page has changed
+                    onPageChanged.onClick(reviewsListView);
                 }
             });
             next.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +70,20 @@ public class ReviewsPage {
                     prev.setVisibility(View.VISIBLE);
                     if ((reviews.size() - adapter.getStartItem()) < 10)
                         next.setVisibility(View.INVISIBLE);
+                    // Notify Page has changed
+                    onPageChanged.onClick(reviewsListView);
                 }
             });
         }
         // Return View
         return view;
+    }
+
+    public ListView getReviewsListView() {
+        return reviewsListView;
+    }
+
+    public void setOnPageChanged(View.OnClickListener onPageChanged) {
+        this.onPageChanged = onPageChanged;
     }
 }
