@@ -56,7 +56,7 @@ public class StoreView extends Fragment {
                         Bundle arguments = new Bundle();
                         arguments.putParcelableArrayList("productsByCategory", (ArrayList<Product>) productsByCategory.get(i - 1));
                         // Instantiate Fragment and Pass Arguments
-                        ProductsListView productsListView = new ProductsListView();
+                        StoreProductsList productsListView = new StoreProductsList();
                         productsListView.setArguments(arguments);
                         return productsListView;
                 }

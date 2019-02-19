@@ -1,10 +1,13 @@
 package com.tue.yuni.Fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.tue.yuni.Dialogs.FeedbackDialog;
@@ -30,7 +34,7 @@ public class StoreInfo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_store_info, null);
+        final View view = inflater.inflate(R.layout.layout_store_info, null);
         dayHoursTextView[0] = view.findViewById(R.id.mondayHours);
         dayHoursTextView[1] = view.findViewById(R.id.tuesdayHours);
         dayHoursTextView[2] = view.findViewById(R.id.wednesdayHours);
@@ -53,21 +57,28 @@ public class StoreInfo extends Fragment {
         ReviewsPage reviews = new ReviewsPage(
                 getContext(),
                 new ArrayList<Review>(){{
-                    add(new Review(0, "Hello 1", 1.5f));
-                    add(new Review(0, "Hello 2", 1.5f));
-                    add(new Review(0, "Hello 3", 1.5f));
-                    add(new Review(0, "Hello 4", 1.5f));
-                    add(new Review(0, "Hello 5", 1.5f));
-                    add(new Review(0, "Hello 6", 1.5f));
-                    add(new Review(0, "Hello 7", 1.5f));
-                    add(new Review(0, "Hello 8", 1.5f));
-                    add(new Review(0, "Hello 9", 1.5f));
-                    add(new Review(0, "Hello 10", 1.5f));
-                    add(new Review(0, "Hello 11", 1.5f));
-                    add(new Review(0, "Hello 12", 1.5f));
-                    add(new Review(0, "Hello 13", 1.5f));
-                    add(new Review(0, "Hello 14", 1.5f));
-                    add(new Review(0, "Hello 15", 1.5f));
+                    add(new Review(0, "Hello 1\naaijfoiahjfohjaophjf", 1.5f));
+                    add(new Review(1, "Hello 2", 1.5f));
+                    add(new Review(2, "Hello 3", 1.5f));
+                    add(new Review(3, "Hello 4", 1.5f));
+                    add(new Review(4, "Hello 5", 1.5f));
+                    add(new Review(5, "Hello 6", 1.5f));
+                    add(new Review(6, "Hello 7", 1.5f));
+                    add(new Review(7, "Hello 8", 1.5f));
+                    add(new Review(8, "Hello 9", 1.5f));
+                    add(new Review(9, "Hello 10", 1.5f));
+                    add(new Review(10, "Hello 11", 1.5f));
+                    add(new Review(11, "Hello 12\noiahwaopyhgtpoawerh", 1.5f));
+                    add(new Review(12, "Hello 13", 1.5f));
+                    add(new Review(13, "Hello 14\nhfoeahfpoawohpo\nafjhaoi[fjh", 1.5f));
+                    add(new Review(14, "Hello 15", 1.5f));
+                    add(new Review(15, "Hello 16 what is this sourcery this is so weird but it works hell yea what is this funkyness test test test", 1.5f)); // This breaks listView height
+                    add(new Review(16, "Hello 17", 1.5f));
+                    add(new Review(17, "Hello 18", 1.5f));
+                    add(new Review(18, "Hello 19\nouwpahgoruhgpo", 1.5f));
+                    add(new Review(19, "Hello 20", 1.5f));
+                    add(new Review(20, "Hello 21", 1.5f));
+                    add(new Review(21, "Hello 22", 1.5f));
                 }});
         View viewReviews = reviews.getView();
         final ListView reviewsListView = reviews.getReviewsListView();
@@ -81,7 +92,7 @@ public class StoreInfo extends Fragment {
         // Make Sure ListView Shows all items without scrolling
         View.OnClickListener onPageChanged = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 // Resize ListView To Show All Items when page is changed
                 final int UNBOUNDED = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                 int height = 0;
@@ -91,11 +102,20 @@ public class StoreInfo extends Fragment {
                     height += child.getMeasuredHeight();
                 }
                 reviewsListView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + 10));
+                // Scroll to top of the list if view argument is valid
+                if (v != null) {
+                    reviewsListView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((ScrollView) view).smoothScrollTo(0, reviewsListView.getTop() + view.getHeight());
+                        }
+                    });
+                }
             }
         };
         reviews.setOnPageChanged(onPageChanged);
-        // Initial Resize
-        onPageChanged.onClick(reviewsListView);
+        // Initial ListView resize therefore do not scroll to list
+        onPageChanged.onClick(null);
         // Add view to the layout
         ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(viewReviews);
         // Add Feedback button to layout

@@ -59,6 +59,12 @@ public class ReviewsListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+            convertView.setTag(reviews.get(startItem + position).ID);
+        } else {
+            if ((int)convertView.getTag() != reviews.get(startItem + position).ID) {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+                convertView.setTag(reviews.get(startItem + position).ID);
+            }
         }
 
         ((TextView)  convertView.findViewById(R.id.reviewText)).setText(reviews.get(startItem + position).Text);

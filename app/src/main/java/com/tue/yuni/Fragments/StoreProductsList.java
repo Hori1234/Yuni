@@ -18,7 +18,7 @@ import com.tue.yuni.R;
 
 import java.util.List;
 
-public class ProductsListView extends Fragment {
+public class StoreProductsList extends Fragment {
     private ListView listView;
     private ProductsListViewAdapter listAdapter;
     private List<Product> products;

@@ -55,6 +55,7 @@ public class ReviewsPage {
                 public void onClick(View v) {
                     adapter.setStartItem(adapter.getStartItem() - 10);
                     adapter.notifyDataSetChanged();
+                    reviewsListView.smoothScrollToPosition(0);
                     next.setVisibility(View.VISIBLE);
                     if (adapter.getStartItem() == 0)
                         prev.setVisibility(View.INVISIBLE);
@@ -67,6 +68,7 @@ public class ReviewsPage {
                 public void onClick(View v) {
                     adapter.setStartItem(adapter.getStartItem() + 10);
                     adapter.notifyDataSetChanged();
+                    reviewsListView.smoothScrollToPosition(0);
                     prev.setVisibility(View.VISIBLE);
                     if ((reviews.size() - adapter.getStartItem()) < 10)
                         next.setVisibility(View.INVISIBLE);
