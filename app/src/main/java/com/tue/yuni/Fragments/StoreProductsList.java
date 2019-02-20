@@ -44,7 +44,7 @@ public class StoreProductsList extends Fragment {
                 listView.smoothScrollToPosition(position);
             }
         });
-        // Fix Scrolling of Reviews List inside List View Item
+        // Fix Scrolling of reviews List inside List View Item
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

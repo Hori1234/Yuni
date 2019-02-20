@@ -39,7 +39,7 @@ public class AvailabilityIndicator extends View {
 
         if (availability <= 25) {
             circle.setColor(Color.argb(255, 205, 23, 23));
-         }
+        }
         else if (availability <= 50) {
             circle.setColor(Color.YELLOW);
         }
