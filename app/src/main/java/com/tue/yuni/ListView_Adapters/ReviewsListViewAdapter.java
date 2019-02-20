@@ -51,7 +51,7 @@ public class ReviewsListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return reviews.get(startItem + position).ID;
+        return reviews.get(startItem + position).id;
     }
 
     @Override
@@ -59,10 +59,16 @@ public class ReviewsListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+            convertView.setTag(reviews.get(startItem + position).id);
+        } else {
+            if ((int)convertView.getTag() != reviews.get(startItem + position).id) {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+                convertView.setTag(reviews.get(startItem + position).id);
+            }
         }
 
-        ((TextView)  convertView.findViewById(R.id.reviewText)).setText(reviews.get(startItem + position).Text);
-        ((RatingBar) convertView.findViewById(R.id.reviewRating)).setRating(reviews.get(startItem + position).Rating);
+        ((TextView)  convertView.findViewById(R.id.reviewText)).setText(reviews.get(startItem + position).text);
+        ((RatingBar) convertView.findViewById(R.id.reviewRating)).setRating(reviews.get(startItem + position).rating);
 
         return convertView;
     }

@@ -30,7 +30,7 @@ public class AsyncImageViewLoader extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(Void... voids) {
-        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), product.Picture);
+        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), product.picture);
         return bitmap;
     }
 

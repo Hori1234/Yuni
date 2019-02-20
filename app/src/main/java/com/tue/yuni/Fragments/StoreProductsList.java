@@ -18,7 +18,7 @@ import com.tue.yuni.R;
 
 import java.util.List;
 
-public class ProductsListView extends Fragment {
+public class StoreProductsList extends Fragment {
     private ListView listView;
     private ProductsListViewAdapter listAdapter;
     private List<Product> products;
@@ -44,7 +44,7 @@ public class ProductsListView extends Fragment {
                 listView.smoothScrollToPosition(position);
             }
         });
-        // Fix Scrolling of Reviews List inside List View Item
+        // Fix Scrolling of reviews List inside List View Item
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

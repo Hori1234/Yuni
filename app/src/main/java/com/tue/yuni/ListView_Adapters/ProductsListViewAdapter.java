@@ -59,7 +59,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return products.get(position).ID;
+        return products.get(position).id;
     }
 
     @Override
@@ -84,9 +84,9 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
         // Setup the Item parameters
         // Default View
-        ((TextView) convertView.findViewById(R.id.productName)).setText(products.get(position).Name);
-        ((RatingBar) convertView.findViewById(R.id.productRating)).setRating(products.get(position).Rating);
-        ((AvailabilityIndicator) convertView.findViewById(R.id.productAvailability)).setAvailability(products.get(position).Availability);
+        ((TextView) convertView.findViewById(R.id.productName)).setText(products.get(position).name);
+        ((RatingBar) convertView.findViewById(R.id.productRating)).setRating(products.get(position).rating);
+        ((AvailabilityIndicator) convertView.findViewById(R.id.productAvailability)).setAvailability(products.get(position).availability);
         if (convertView.findViewById(R.id.extendView).getVisibility() == View.INVISIBLE && position != extendedViewItem) {
             convertView.findViewById(R.id.extendView).setVisibility(View.VISIBLE);
         }
@@ -104,7 +104,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         }
         // Item Image
         ImageView imageView = convertView.findViewById(R.id.productImage);
-        imageView.setTag(products.get(position).ID);
+        imageView.setTag(products.get(position).id);
         new AsyncImageViewLoader(ctx, products.get(position), imageView).execute();
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,25 +112,25 @@ public class ProductsListViewAdapter extends BaseAdapter {
                 ImageDialog(products.get(position));
             }
         });
-        // Reviews List
+        // reviews List
         LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
         // Check whether or not there is at least 1 review to display
-        if (products.get(position).Reviews != null && products.get(position).Reviews.size() > 0) {
-            // Display at most 2 Reviews
-            for (int i = 0; i < Math.min(2, products.get(position).Reviews.size()); i++) {
+        if (products.get(position).reviews != null && products.get(position).reviews.size() > 0) {
+            // Display at most 2 reviews
+            for (int i = 0; i < Math.min(2, products.get(position).reviews.size()); i++) {
                 View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review_mini, null);
-                ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).Reviews.get(i).Text);
-                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).Reviews.get(i).Rating);
+                ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).reviews.get(i).text);
+                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).reviews.get(i).rating);
                 reviewsContainer.addView(view);
             }
             // Display View More button if there are more than 2 reviews
-            if (products.get(position).Reviews.size() > 2) {
+            if (products.get(position).reviews.size() > 2) {
                 instantiateButtons(products.get(position), reviewsContainer, true, true);
             } else {
                 instantiateButtons(products.get(position), reviewsContainer, true, false);
             }
         } else {
-            reviewsContainer.addView(createTextView(ctx, "No Reviews Available!"));
+            reviewsContainer.addView(createTextView(ctx, "No reviews Available!"));
             instantiateButtons(products.get(position), reviewsContainer, true, false);
         }
     }
@@ -143,7 +143,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         alertDialog.setView(view);
         // Load Image
         ImageView imageView = view.findViewById(R.id.imageContainer);
-        imageView.setTag(product.ID);
+        imageView.setTag(product.id);
         new AsyncImageViewLoader(ctx, product, imageView).execute();
         // Show Alert Dialog
         final AlertDialog dialog = alertDialog.show();
@@ -176,7 +176,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
             // Focus Settings necessary to keep list item clickable
             leaveReview.setFocusable(false);
             leaveReview.setFocusableInTouchMode(false);
-            // Setup Button Text
+            // Setup Button text
             leaveReview.setText(ctx.getString(R.string.Feedback));
             // Add button to the layout
             linearLayout.addView(leaveReview);
@@ -199,7 +199,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
             // Focus Settings necessary to keep list item clickable
             viewMoreReviews.setFocusable(false);
             viewMoreReviews.setFocusableInTouchMode(false);
-            // Setup Button Text
+            // Setup Button text
             viewMoreReviews.setText(ctx.getString(R.string.view_more));
             // Add button to the layout
             linearLayout.addView(viewMoreReviews);
@@ -209,7 +209,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     // Create Alert Dialog
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
-                    alertDialog.setView(new ReviewsPage(ctx, product.Reviews).getView());
+                    alertDialog.setView(new ReviewsPage(ctx, product.reviews).getView());
                     alertDialog.show();
                 }
             });
