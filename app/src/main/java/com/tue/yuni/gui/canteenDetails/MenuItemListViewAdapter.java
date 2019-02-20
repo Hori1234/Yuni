@@ -1,4 +1,4 @@
-package com.tue.yuni.ListView_Adapters;
+package com.tue.yuni.gui.canteenDetails;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,21 +16,21 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.tue.yuni.AsyncImageViewLoader;
-import com.tue.yuni.Components.AvailabilityIndicator;
-import com.tue.yuni.Dialogs.FeedbackDialog;
-import com.tue.yuni.Dialogs.ReviewsPage;
-import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.gui.util.AsyncImageViewLoader;
+import com.tue.yuni.gui.util.AvailabilityIndicator;
+import com.tue.yuni.gui.review.FeedbackDialog;
+import com.tue.yuni.gui.review.ReviewBox;
+import com.tue.yuni.models.Product;
 import com.tue.yuni.R;
 
 import java.util.List;
 
-public class ProductsListViewAdapter extends BaseAdapter {
+public class MenuItemListViewAdapter extends BaseAdapter {
     private Context ctx;
     private List<Product> products;
     private int extendedViewItem = -1;
 
-    public ProductsListViewAdapter(Context ctx, List<Product> products) {
+    public MenuItemListViewAdapter(Context ctx, List<Product> products) {
         this.ctx = ctx;
         this.products = products;
     }
@@ -67,7 +67,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             // Default Layout
-            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product, parent, false);
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item, parent, false);
             // Check if the current list Item needs to the extended view
             if (position == extendedViewItem) {   // Default Layout
                 extendedListItem(position, convertView, parent);
@@ -97,7 +97,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
 
     private void extendedListItem(final int position, View convertView, ViewGroup parent){
         LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
-        extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_product_extended, null,false));
+        extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_extension, null,false));
         // Retract Symbol
         if (convertView.findViewById(R.id.extendView).getVisibility() == View.VISIBLE ) {
             convertView.findViewById(R.id.extendView).setVisibility(View.INVISIBLE);
@@ -118,7 +118,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         if (products.get(position).reviews != null && products.get(position).reviews.size() > 0) {
             // Display at most 2 reviews
             for (int i = 0; i < Math.min(2, products.get(position).reviews.size()); i++) {
-                View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review_mini, null);
+                View view = LayoutInflater.from(ctx).inflate(R.layout.layout_review_mini, null);
                 ((TextView) view.findViewById(R.id.reviewText)).setText(products.get(position).reviews.get(i).text);
                 ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(products.get(position).reviews.get(i).rating);
                 reviewsContainer.addView(view);
@@ -139,7 +139,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
         // Create Alert Dialog
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
         // Inflate Alert Dialog View
-        final View view = LayoutInflater.from(ctx).inflate(R.layout.layout_product_image_dialog, null);
+        final View view = LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_image_dialog, null);
         alertDialog.setView(view);
         // Load Image
         ImageView imageView = view.findViewById(R.id.imageContainer);
@@ -209,7 +209,7 @@ public class ProductsListViewAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     // Create Alert Dialog
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
-                    alertDialog.setView(new ReviewsPage(ctx, product.reviews).getView());
+                    alertDialog.setView(new ReviewBox(ctx, product.reviews).getView());
                     alertDialog.show();
                 }
             });

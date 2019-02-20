@@ -1,6 +1,5 @@
-package com.tue.yuni.Dialogs;
+package com.tue.yuni.gui.review;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,22 +8,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.tue.yuni.DataStructures.Review;
+import com.tue.yuni.models.Review;
 import com.tue.yuni.R;
-import com.tue.yuni.ListView_Adapters.ReviewsListViewAdapter;
 
 import java.util.List;
 
-public class ReviewsPage {
+public class ReviewBox {
     private Context ctx;
-    private AlertDialog dialog;
     private List<Review> reviews;
-    private ReviewsListViewAdapter adapter;
+    private ReviewListViewAdapter adapter;
     private ListView reviewsListView;
     private Button prev, next;
     private View.OnClickListener onPageChanged;
 
-    public ReviewsPage(Context ctx, List<Review> reviews) {
+    public ReviewBox(Context ctx, List<Review> reviews) {
         this.ctx = ctx;
         this.reviews = reviews;
     }
@@ -34,7 +31,7 @@ public class ReviewsPage {
         final View view = LayoutInflater.from(ctx).inflate(R.layout.layout_reviews, null);
         // List View
         reviewsListView = view.findViewById(R.id.reviewsList);
-        adapter = new ReviewsListViewAdapter(ctx, reviews, 10);
+        adapter = new ReviewListViewAdapter(ctx, reviews, 10);
         reviewsListView.setAdapter(adapter);
         // Buttons
         if (reviews != null && reviews.size() > 10) {

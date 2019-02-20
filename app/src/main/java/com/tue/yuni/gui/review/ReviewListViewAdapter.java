@@ -1,4 +1,4 @@
-package com.tue.yuni.ListView_Adapters;
+package com.tue.yuni.gui.review;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,17 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.tue.yuni.DataStructures.Review;
+import com.tue.yuni.models.Review;
 import com.tue.yuni.R;
 
 import java.util.List;
 
-public class ReviewsListViewAdapter extends BaseAdapter {
+public class ReviewListViewAdapter extends BaseAdapter {
     private Context ctx;
     private List<Review> reviews;
     private int startItem, itemsToList;
 
-    public ReviewsListViewAdapter(Context ctx, List<Review> reviews, int itemsToList) {
+    public ReviewListViewAdapter(Context ctx, List<Review> reviews, int itemsToList) {
         this.ctx = ctx;
         this.reviews = reviews;
         this.itemsToList = itemsToList;
@@ -58,11 +58,11 @@ public class ReviewsListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Inflate Layout for each list row
         if (convertView == null) {
-            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_review, parent, false);
             convertView.setTag(reviews.get(startItem + position).id);
         } else {
             if ((int)convertView.getTag() != reviews.get(startItem + position).id) {
-                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_product_review, parent, false);
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_review, parent, false);
                 convertView.setTag(reviews.get(startItem + position).id);
             }
         }

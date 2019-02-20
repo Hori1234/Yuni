@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.gui.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.models.Product;
 
 /**
  * To Be Improved upon, potentially handle image downloading.

@@ -1,13 +1,10 @@
-package com.tue.yuni.Fragments;
+package com.tue.yuni.gui.canteenDetails;
 
 import android.annotation.SuppressLint;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,14 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.tue.yuni.Dialogs.FeedbackDialog;
-import com.tue.yuni.Dialogs.ReviewsPage;
+import com.tue.yuni.gui.review.FeedbackDialog;
+import com.tue.yuni.gui.review.ReviewBox;
 import com.tue.yuni.R;
-import com.tue.yuni.DataStructures.Review;
+import com.tue.yuni.models.Review;
 
 import java.util.ArrayList;
 
-public class StoreInfo extends Fragment {
+public class CanteenInfoTab extends Fragment {
     private TextView[] dayHoursTextView = new TextView[7];
     private TextView descriptionTextView;
 
@@ -34,7 +31,7 @@ public class StoreInfo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.layout_store_info, null);
+        final View view = inflater.inflate(R.layout.layout_canteen_info, null);
         dayHoursTextView[0] = view.findViewById(R.id.mondayHours);
         dayHoursTextView[1] = view.findViewById(R.id.tuesdayHours);
         dayHoursTextView[2] = view.findViewById(R.id.wednesdayHours);
@@ -54,7 +51,7 @@ public class StoreInfo extends Fragment {
         );
 
         // These will have to be passed as arguments for each different store
-        ReviewsPage reviews = new ReviewsPage(
+        ReviewBox reviews = new ReviewBox(
                 getContext(),
                 new ArrayList<Review>(){{
                     add(new Review(0, "Hello 1\naaijfoiahjfohjaophjf", 1.5f));

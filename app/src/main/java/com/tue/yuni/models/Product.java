@@ -1,4 +1,4 @@
-package com.tue.yuni.DataStructures;
+package com.tue.yuni.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

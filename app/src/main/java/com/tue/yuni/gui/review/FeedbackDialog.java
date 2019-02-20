@@ -1,4 +1,4 @@
-package com.tue.yuni.Dialogs;
+package com.tue.yuni.gui.review;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

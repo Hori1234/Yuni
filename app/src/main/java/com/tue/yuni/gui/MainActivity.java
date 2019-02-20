@@ -1,4 +1,4 @@
-package com.tue.yuni;
+package com.tue.yuni.gui;
 
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -11,9 +11,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.tue.yuni.DataStructures.Product;
-import com.tue.yuni.DataStructures.Review;
-import com.tue.yuni.Fragments.StoreView;
+import com.tue.yuni.models.Product;
+import com.tue.yuni.models.Review;
+import com.tue.yuni.R;
+import com.tue.yuni.gui.canteenDetails.CanteenView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < productCategories.size(); i++)
             args.putParcelableArrayList("productsByCategory" + i, (ArrayList<Product>) productsByCategory.get(i));
         // Create Fragment Itself
-        StoreView storeView = new StoreView();
+        CanteenView storeView = new CanteenView();
         storeView.setArguments(args);
         // Transition to Fragment
         ft.add(R.id.content, storeView);
