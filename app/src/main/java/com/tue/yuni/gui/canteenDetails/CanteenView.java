@@ -1,4 +1,4 @@
-package com.tue.yuni.Fragments;
+package com.tue.yuni.gui.canteenDetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.models.Product;
 import com.tue.yuni.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StoreView extends Fragment {
+public class CanteenView extends Fragment {
     private View view;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -28,7 +28,7 @@ public class StoreView extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.layout_store, null);
+        view = inflater.inflate(R.layout.layout_canteen, null);
         tabLayout = view.findViewById(R.id.tabSelector);
         viewPager = view.findViewById(R.id.viewPager);
         // Setup Tabs
@@ -50,13 +50,13 @@ public class StoreView extends Fragment {
                 switch(i){
                     case 0:
                         // Info Page
-                        return new StoreInfo();
+                        return new CanteenInfoTab();
                     default:
                         // Create Arguments
                         Bundle arguments = new Bundle();
                         arguments.putParcelableArrayList("productsByCategory", (ArrayList<Product>) productsByCategory.get(i - 1));
                         // Instantiate Fragment and Pass Arguments
-                        StoreProductsList productsListView = new StoreProductsList();
+                        MenuItemListTab productsListView = new MenuItemListTab();
                         productsListView.setArguments(arguments);
                         return productsListView;
                 }

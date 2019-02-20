@@ -1,4 +1,4 @@
-package com.tue.yuni.Fragments;
+package com.tue.yuni.gui.canteenDetails;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,15 +12,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.tue.yuni.ListView_Adapters.ProductsListViewAdapter;
-import com.tue.yuni.DataStructures.Product;
+import com.tue.yuni.models.Product;
 import com.tue.yuni.R;
 
 import java.util.List;
 
-public class StoreProductsList extends Fragment {
+public class MenuItemListTab extends Fragment {
     private ListView listView;
-    private ProductsListViewAdapter listAdapter;
+    private MenuItemListViewAdapter listAdapter;
     private List<Product> products;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -33,7 +32,7 @@ public class StoreProductsList extends Fragment {
         listView.setFastScrollEnabled(false);
         listView.setFastScrollAlwaysVisible(false);
         // List View Adapter
-        listAdapter = new ProductsListViewAdapter(getContext(), products);
+        listAdapter = new MenuItemListViewAdapter(getContext(), products);
         listView.setAdapter(listAdapter);
         // List Item Click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,4 +1,4 @@
-package com.tue.yuni.Components;
+package com.tue.yuni.gui.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
