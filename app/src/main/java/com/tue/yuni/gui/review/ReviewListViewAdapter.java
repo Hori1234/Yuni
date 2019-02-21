@@ -1,10 +1,14 @@
 package com.tue.yuni.gui.review;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -67,9 +71,32 @@ public class ReviewListViewAdapter extends BaseAdapter {
             }
         }
 
-        ((TextView)  convertView.findViewById(R.id.reviewText)).setText(reviews.get(startItem + position).text);
+        TextView reviewTextView = convertView.findViewById(R.id.reviewText);
+        reviewTextView.setText(reviews.get(startItem + position).text);
+        reviewTextView.setLines(
+                calculateNumberOfTextLines(
+                        reviewTextView.getPaint(),
+                        reviews.get(startItem + position).text,
+                        parent.getWidth())
+        );
+
         ((RatingBar) convertView.findViewById(R.id.reviewRating)).setRating(reviews.get(startItem + position).rating);
 
         return convertView;
+    }
+
+    private int calculateNumberOfTextLines(Paint paint, String text, int width){
+        String[] splits = text.split("\\r?\\n");
+        if (width > 0) {
+            int numberOfLines = 0;
+
+            for (int i = 0; i < splits.length; i++) {
+                numberOfLines += (int) Math.ceil(paint.measureText(splits[i]) / (float) width);
+            }
+
+            return numberOfLines;
+        } else {
+            return splits.length;
+        }
     }
 }
