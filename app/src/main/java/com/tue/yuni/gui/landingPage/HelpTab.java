@@ -14,7 +14,7 @@ public class HelpTab extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_main, null);  // Place Holder
+        View view = inflater.inflate(R.layout.layout_landing_page_canteen_map, null);  // Place Holder
         return view;
     }
 }
