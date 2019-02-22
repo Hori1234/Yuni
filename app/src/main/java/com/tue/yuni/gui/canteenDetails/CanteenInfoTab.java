@@ -117,7 +117,7 @@ public class CanteenInfoTab extends Fragment {
         ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(viewReviews);
         // Add Feedback button to layout
         Button leaveReview = new Button(getContext(),null, 0, R.style.Widget_AppCompat_Button_Colored);
-        leaveReview.setText(getContext().getString(R.string.Feedback));
+        leaveReview.setText(getContext().getString(R.string.feedback));
         leaveReview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         leaveReview.setOnClickListener(new View.OnClickListener() {
             @Override

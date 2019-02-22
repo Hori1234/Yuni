@@ -177,7 +177,7 @@ public class MenuItemListViewAdapter extends BaseAdapter {
             leaveReview.setFocusable(false);
             leaveReview.setFocusableInTouchMode(false);
             // Setup Button text
-            leaveReview.setText(ctx.getString(R.string.Feedback));
+            leaveReview.setText(ctx.getString(R.string.feedback));
             // Add button to the layout
             linearLayout.addView(leaveReview);
             // Setup Button On Click

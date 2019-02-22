@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.models.Product;
 import com.tue.yuni.models.Review;
 import com.tue.yuni.R;
@@ -76,15 +77,16 @@ public class MainActivity extends AppCompatActivity {
         // Create Fragment Transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Setup Fragment Arguments
-        Bundle args = new Bundle();
-        args.putStringArrayList("productCategories", (ArrayList<String>)productCategories);
-        for (int i = 0; i < productCategories.size(); i++)
-            args.putParcelableArrayList("productsByCategory" + i, (ArrayList<Product>) productsByCategory.get(i));
+        //Bundle args = new Bundle();
+        //args.putStringArrayList("productCategories", (ArrayList<String>)productCategories);
+        //for (int i = 0; i < productCategories.size(); i++)
+        //    args.putParcelableArrayList("productsByCategory" + i, (ArrayList<Product>) productsByCategory.get(i));
         // Create Fragment Itself
-        CanteenView storeView = new CanteenView();
-        storeView.setArguments(args);
+        //CanteenView storeView = new CanteenView();
+        //storeView.setArguments(args);
         // Transition to Fragment
-        ft.add(R.id.content, storeView);
+        //ft.add(R.id.content, storeView);
+        ft.add(R.id.content, new LandingView());
         ft.commit();
 }
 
