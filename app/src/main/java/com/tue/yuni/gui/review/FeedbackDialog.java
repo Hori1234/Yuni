@@ -52,7 +52,7 @@ public class FeedbackDialog implements View.OnClickListener, View.OnTouchListene
     }
 
     public void dimiss() {
-        // Dimiss Dialog only if it exists
+        // Dismiss Dialog only if it exists
         if (dialog != null) {
             dialog.dismiss();
             dialog = null;

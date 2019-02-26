@@ -1,5 +1,6 @@
 package com.tue.yuni.gui.review;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
         itemsToList = 10;
     }
 
+    @SuppressWarnings({"all"})
     public View getView(){
         // Inflate Alert Dialog View
         View view = LayoutInflater.from(ctx).inflate(R.layout.layout_reviews, null);
@@ -116,6 +118,7 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // Must Disable ListView scrolling if it is inside a ScrollView

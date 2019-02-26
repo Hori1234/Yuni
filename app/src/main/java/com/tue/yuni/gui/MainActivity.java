@@ -12,13 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tue.yuni.gui.landingPage.LandingView;
-import com.tue.yuni.models.Product;
-import com.tue.yuni.models.Review;
 import com.tue.yuni.R;
-import com.tue.yuni.gui.canteenDetails.CanteenView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
