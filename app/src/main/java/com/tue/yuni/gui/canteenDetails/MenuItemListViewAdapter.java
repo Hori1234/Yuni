@@ -72,7 +72,6 @@ public class MenuItemListViewAdapter extends BaseAdapter {
             }
             // ViewHolder
             viewHolder = new ViewHolder();
-            viewHolder.ID = -1;
             viewHolder.productName = convertView.findViewById(R.id.productName);
             viewHolder.productRating = convertView.findViewById(R.id.productRating);
             viewHolder.productAvailability = convertView.findViewById(R.id.productAvailability);
@@ -105,7 +104,6 @@ public class MenuItemListViewAdapter extends BaseAdapter {
     Required for Performance Optimization
      */
     private static class ViewHolder {
-        private int ID;
         private TextView productName;
         private RatingBar productRating;
         private AvailabilityIndicator productAvailability;
