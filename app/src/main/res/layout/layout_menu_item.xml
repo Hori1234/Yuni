@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_width="match_parent"
@@ -49,8 +49,9 @@
                 android:id="@+id/productAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="0" />
+                app:lowThreshold="10"
+                app:mediumThreshold="25"
+                app:highThreshold="50"/>
             <TextView
                 android:layout_marginStart="1dp"
                 android:id="@+id/textView"
