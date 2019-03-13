@@ -19,7 +19,6 @@
     <string name="stars_5">Awesome, loved it</string>
     <string name="hintFeedback">Tell us what you thought</string>
     <string name="sendFeedback">Send Feedback</string>
-    <string name="Feedback">Feedback</string>
 
     <!--Info Page-->
     <string name="info">Info</string>
@@ -34,5 +33,10 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+
+    <!--Canteens page-->
+    <string name="map">Map</string>
+    <string name="list">List</string>
+    <string name="help">Help</string>
 
 </resources>
