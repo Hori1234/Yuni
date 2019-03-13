@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.tue.yuni.R;
@@ -53,11 +54,15 @@ public class AvailabilityIndicator extends View {
             d = (LayerDrawable)getResources().getDrawable(R.drawable.availability_progressbar, null);
         GradientDrawable circle = (GradientDrawable)d.findDrawableByLayerId(R.id.availability);
 
-        for (byte i = 0; i < 3; i++){
-            if (availability <= threshold[i])
-                circle.setColor(color[i]);
-            else
-                break;
+        int i = 0;
+        circle.setColor(color[0]);
+
+        if (0 <= availability && availability <= threshold[0]) {
+            circle.setColor(color[0]);
+        } else if (threshold[0] < availability && availability <= threshold[1]) {
+            circle.setColor(color[1]);
+        } else if (threshold[1] < availability && availability <= threshold[2]) {
+            circle.setColor(color[2]);
         }
 
         d.setBounds(0, 0, getWidth(), getHeight());
