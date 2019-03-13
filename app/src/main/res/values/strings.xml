@@ -19,7 +19,6 @@
     <string name="stars_5">Awesome, loved it</string>
     <string name="hintFeedback">Tell us what you thought</string>
     <string name="sendFeedback">Send Feedback</string>
-    <string name="Feedback">Feedback</string>
 
     <!--Info Page-->
     <string name="info">Info</string>
@@ -38,6 +37,12 @@
     <string name="textview">TextView</string>
     <string name="name">Name</string>
 
+    <!--Canteens page-->
+    <string name="map">Map</string>
+    <string name="list">List</string>
+    <string name="help">Help</string>
+
+    <!-- Thijs -->
     <string-array name="canteen_array">
         <item>Atlas canteen</item>
         <item>Atlas sateh place</item>
