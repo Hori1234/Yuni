@@ -11,9 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.canteenDetails.MenuItemListViewAdapter;
+import com.tue.yuni.models.canteen.Canteen;
 
 public class CanteenListTab extends Fragment implements AdapterView.OnItemClickListener {
     private ListView listView;
+    private CanteenListAdapter listAdapter;
 
     @Nullable
     @Override
@@ -21,6 +24,12 @@ public class CanteenListTab extends Fragment implements AdapterView.OnItemClickL
         View view = inflater.inflate(R.layout.layout_landing_page_canteen_list, null);  // Place Holder
         // Get ListView
         listView = view.findViewById(R.id.canteenList);
+        // General ListView Settings
+        listView.setFastScrollEnabled(false);
+        listView.setFastScrollAlwaysVisible(false);
+        // List View Adapter
+        //listAdapter = new CanteenListAdapter(getContext(), null);
+        //listView.setAdapter(listAdapter);
         return view;
     }
 

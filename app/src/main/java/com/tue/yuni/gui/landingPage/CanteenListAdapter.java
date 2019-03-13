@@ -5,7 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.tue.yuni.R;
+import com.tue.yuni.gui.canteenDetails.MenuItemListViewAdapter;
+import com.tue.yuni.gui.util.AvailabilityIndicator;
 import com.tue.yuni.models.canteen.Canteen;
 
 import java.util.ArrayList;
@@ -30,9 +37,13 @@ public class CanteenListAdapter extends BaseAdapter {
         }
         listItem = new ArrayList<>();
         for (int i = 0; i < locations.size(); i++) {
-
+            listItem.add(new Item(locations.get(0), -1));
+            for (int u = 0; u < canteens.size(); u++){
+                if (canteens.get(u).getLocation().toString().equals(locations.get(0))){
+                    listItem.add(new Item(null, u));
+                }
+            }
         }
-
     }
 
     @Override
@@ -52,8 +63,70 @@ public class CanteenListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //convertView = LayoutInflater.from(ctx).inflate()
-        return null;
+        ViewHolder viewHolder;
+        // Inflate Layout for each list row
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            // Check if Item is a Location or a Canteen
+            if (listItem.get(position).isCanteen()){
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item, parent, false);
+                viewHolder.textView1 = convertView.findViewById(R.id.canteenName);
+                viewHolder.textView2 = convertView.findViewById(R.id.canteenOpenOrClosed);
+                viewHolder.canteenFavs = convertView.findViewById(R.id.canteenFavs);
+                viewHolder.canteenBusyness = convertView.findViewById(R.id.canteenBusyness);
+                viewHolder.canteenRating = convertView.findViewById(R.id.canteenRating);
+            } else {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item_header, parent, false);
+                viewHolder.textView1 = convertView.findViewById(R.id.locationName);
+                viewHolder.textView2 = convertView.findViewById(R.id.locationDistance);
+            }
+            convertView.setTag(convertView);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
+            // Check if the View needs to change type
+            if (!viewHolder.isCanteen() && listItem.get(position).isCanteen()) {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item, parent, false);
+                viewHolder.textView1 = convertView.findViewById(R.id.canteenName);
+                viewHolder.textView2 = convertView.findViewById(R.id.canteenOpenOrClosed);
+                viewHolder.canteenFavs = convertView.findViewById(R.id.canteenFavs);
+                viewHolder.canteenBusyness = convertView.findViewById(R.id.canteenBusyness);
+                viewHolder.canteenRating = convertView.findViewById(R.id.canteenRating);
+            } else if (viewHolder.isCanteen() && !listItem.get(position).isCanteen()) {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item_header, parent, false);
+                viewHolder.textView1 = convertView.findViewById(R.id.locationName);
+                viewHolder.textView2 = convertView.findViewById(R.id.locationDistance);
+            }
+            convertView.setTag(convertView);
+        }
+        // Setup the Item parameters
+        if (viewHolder.isCanteen()) {
+            viewHolder.textView1.setText(canteens.get(listItem.get(position).canteenPosition).getName());
+            // viewHolder.textView2.setText(canteens.get(listItem.get(position).canteenPosition).getOperatingTimes()); Further Processing Required
+            // Solution for Favs Required
+            // Solution for Busyness Required
+            // Solution for Canteen Rating Required
+        } else {
+            viewHolder.textView1.setText(listItem.get(position).getLocation());
+            // Solution for Distance Required
+        }
+
+        return convertView;
+    }
+
+    /*
+    Required for Performance Optimization
+     */
+    private static class ViewHolder {
+        private TextView textView1;         // Either canteenName or locationName
+        private TextView textView2;         // Either canteenOpenOrClosed or locationDistance
+        private TextView canteenFavs;
+        private TextView canteenBusyness;
+        private RatingBar canteenRating;
+
+        private boolean isCanteen(){
+            if (canteenFavs == null) return true;
+            return false;
+        }
     }
 
     protected class Item{
