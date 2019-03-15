@@ -5,16 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.tue.yuni.gui.review.ReviewListViewAdapter;
 import com.tue.yuni.gui.util.AvailabilityIndicator;
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.models.Product;
 import com.tue.yuni.R;
+import com.tue.yuni.storage.FavouriteStorage;
 
 import java.util.List;
 
@@ -60,7 +63,7 @@ public class MenuItemListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         // Inflate Layout for each list row
         if (convertView == null) {
@@ -77,6 +80,7 @@ public class MenuItemListViewAdapter extends BaseAdapter {
             viewHolder.productAvailability = convertView.findViewById(R.id.productAvailability);
             viewHolder.extendButton = convertView.findViewById(R.id.extendView);
             viewHolder.extensionLayout = convertView.findViewById(R.id.extendedDetails);
+            viewHolder.favoriteButton = convertView.findViewById(R.id.buttonFavorite);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -96,6 +100,17 @@ public class MenuItemListViewAdapter extends BaseAdapter {
         if (viewHolder.extendButton .getVisibility() == View.INVISIBLE && position != extendedViewItem) {
             viewHolder.extendButton .setVisibility(View.VISIBLE);
         }
+        viewHolder.favoriteButton.setChecked(FavouriteStorage.get().checkFavorite(products.get(position).id));
+        viewHolder.favoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    FavouriteStorage.get().setFavorite(products.get(position).id);
+                } else {
+                    FavouriteStorage.get().removeFavorite(products.get(position).id);
+                }
+            }
+        });
 
         // Return the instantiated row
         return convertView;
@@ -109,5 +124,6 @@ public class MenuItemListViewAdapter extends BaseAdapter {
         private AvailabilityIndicator productAvailability;
         private ImageView extendButton;
         private LinearLayout extensionLayout;
+        private ToggleButton favoriteButton;
     }
 }

@@ -28,6 +28,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
     private View imageDialogView;
     private Product product;
     private ImageView imageView;
+    private TextView productDescription;
     private Button leaveReview;
     private Button viewMoreReviews;
     private FeedbackDialog.DialogContent parent;
@@ -51,6 +52,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         imageView.setTag(product.id);
         new AsyncImageViewLoader(ctx, product, imageView).execute();
         imageView.setOnClickListener(this);
+        // Item Description
+        productDescription = convertView.findViewById(R.id.productDescription);
+        productDescription.setText(product.description);
         // Reviews List
         LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
         // Check whether or not there is at least 1 review to display
