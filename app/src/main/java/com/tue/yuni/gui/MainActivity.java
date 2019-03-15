@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.R;
+import com.tue.yuni.storage.FavouriteStorage;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.content, new LandingView());
             ft.commit();
+            // Instantiate Favorite Storage
+            FavouriteStorage.initialize(getApplicationContext());
         }
 }
 

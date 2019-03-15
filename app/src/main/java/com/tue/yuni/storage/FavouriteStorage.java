@@ -8,18 +8,41 @@ import java.util.List;
 import java.util.Map;
 
 public class FavouriteStorage {
+    private static FavouriteStorage favouriteStorage = null;
 
     private String preferenceStorage;
     private SharedPreferences preferences;
+
 
     /**
      * create a favorite storage handler
      *
      * @param context current context
      */
-    public FavouriteStorage(Context context) {
+    private FavouriteStorage(Context context) {
         this.preferenceStorage = "favoritesYuni";
         this.preferences = context.getSharedPreferences(preferenceStorage, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * ToDo
+     * @return
+     */
+    public static void initialize(Context ctx){
+        if (favouriteStorage == null) {
+            synchronized (FavouriteStorage.class){
+                favouriteStorage = new FavouriteStorage(ctx);
+            }
+        }
+    }
+
+    /**
+     * ToDo
+     * @return
+     */
+    public static FavouriteStorage get(){
+        if (favouriteStorage == null) throw new IllegalStateException("FavouriteStorage not Initialized");
+        return favouriteStorage;
     }
 
     /**

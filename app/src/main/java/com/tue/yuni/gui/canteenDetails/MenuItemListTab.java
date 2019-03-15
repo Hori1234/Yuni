@@ -39,6 +39,11 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
         listView.setOnItemClickListener(this);
         // Fix Scrolling of reviews List inside List View Item
         listView.setOnTouchListener(this);
+        // Restore List State
+        if (savedInstanceState != null){
+            listAdapter.setExtendedViewItem(savedInstanceState.getInt("ExtendedItem"));
+            listView.scrollTo(0, savedInstanceState.getInt("ScrollY"));
+        }
         return view;
     }
 
@@ -77,5 +82,12 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onSendReview(float rating, String reviewText) {
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("ScrollY", listView.getScrollY());
+        outState.putInt("ExtendedItem", listAdapter.getExtendedViewItem());
     }
 }

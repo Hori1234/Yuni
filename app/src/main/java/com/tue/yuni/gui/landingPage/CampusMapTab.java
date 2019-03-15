@@ -50,10 +50,10 @@ public class CampusMapTab extends Fragment {
                 productCategories.add("Drinks");
                 // Sandwich
                 products = new ArrayList<>();
-                products.add(new Product(3, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee,"test", new ArrayList<Review>(){{
+                products.add(new Product(8, "Tuna sandwich", 1, 0, 3.99f, R.drawable.coffee,"test", new ArrayList<Review>(){{
                     add(new Review(0, "This thing is nasty and costs way too much, STOP SELLING THIS!", 0.0f));
                 }}));
-                products.add(new Product(4, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea,"test", new ArrayList<Review>(){{
+                products.add(new Product(9, "Chicken Sandwich", 2.5f, 75, 2.50f, R.drawable.tea,"test", new ArrayList<Review>(){{
                     add(new Review(0, "Review 1", 0.0f));
                     add(new Review(1, "Review 2", 4.0f));
                     add(new Review(2, "Review 3", 2.0f));
