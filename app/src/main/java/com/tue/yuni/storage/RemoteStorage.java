@@ -2,9 +2,12 @@ package com.tue.yuni.storage;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tue.yuni.models.Location;
 import com.tue.yuni.models.MenuItem;
@@ -15,7 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RemoteStorage {
 
@@ -106,27 +111,61 @@ public class RemoteStorage {
         return null;
     }
 
-    /*
-     * Owner (authenticated) methods
+    /**
+     * @param password            Password
+     * @param authenticateHandler Authentication handler
+     * @param errorHandler        Error handler
      */
-
-    public boolean checkAuthentication(String password) {
-        // TODO: Implement method body
-
-        return false;
+    public void authenticate(
+            String password,
+            AuthenticateHandler authenticateHandler,
+            ErrorHandler errorHandler
+    ) {
+        authenticatedObjectRequest(
+                Request.Method.GET,
+                BASE_URL + "/authenticate",
+                null,
+                response -> {
+                    try {
+                        authenticateHandler.onReceive(response.getBoolean("authenticated"));
+                    } catch (JSONException e) {
+                        errorHandler.onError(e);
+                    }
+                },
+                errorHandler::onError,
+                password
+        );
     }
 
-    public void updateAvailability(
-            int menuId,
-            boolean availableOnMonday,
-            boolean availableOnTuesday,
-            boolean availableOnWednesday,
-            boolean availableOnThursday,
-            boolean availableOnFriday,
-            boolean availableOnSaturday,
-            boolean availableOnSunday
+    /**
+     * Performs an authenticated request by setting the X-api-key header in the request.
+     *
+     * @param method        HTTP method
+     * @param url           Url
+     * @param data          Post data
+     * @param listener      Success listener
+     * @param errorListener Error listener
+     * @param password      Password (api-key)
+     */
+    private void authenticatedObjectRequest(
+            int method,
+            String url,
+            JSONObject data,
+            Response.Listener<JSONObject> listener,
+            Response.ErrorListener errorListener,
+            String password
     ) {
-        // TODO: Implement method body
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url, data, listener, errorListener) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("X-api-key", password);
+
+                return headers;
+            }
+        };
+
+        queue.add(jsonObjectRequest);
     }
 
     public interface ErrorHandler {
@@ -135,5 +174,9 @@ public class RemoteStorage {
 
     public interface CanteenDataHandler {
         public void onReceive(List<Canteen> canteens);
+    }
+
+    public interface AuthenticateHandler {
+        public void onReceive(boolean authenticated);
     }
 }
