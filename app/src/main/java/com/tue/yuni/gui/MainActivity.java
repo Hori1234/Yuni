@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.tue.yuni.R;
 import com.tue.yuni.gui.canteenDetails.CanteenView;
 import com.tue.yuni.models.Product;
 import com.tue.yuni.models.Review;
-import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 vibrator.vibrate(150);
             }
         });
-
-        // TEST
-        RemoteStorage.get(this).getCanteens(
-                canteens -> {
-
-                },
-                error -> {
-                    Log.d("abcd", "dit dus: " + error.getMessage());
-                }
-        );
-        // TEST
 
         // Products List View Example
         List<String> productCategories = new ArrayList<>();

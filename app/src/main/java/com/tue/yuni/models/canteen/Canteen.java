@@ -9,6 +9,7 @@ public class Canteen {
     private String description;
     private OperatingTimes operatingTimes;
     private Location location;
+    private String building;
     private int imageResourceId;
 
     public Canteen(
@@ -17,6 +18,7 @@ public class Canteen {
             String description,
             OperatingTimes operatingTimes,
             Location location,
+            String building,
             int imageResourceId
     ) {
         this.id = id;
@@ -24,6 +26,7 @@ public class Canteen {
         this.description = description;
         this.operatingTimes = operatingTimes;
         this.location = location;
+        this.building = building;
         this.imageResourceId = imageResourceId;
     }
 
@@ -45,6 +48,10 @@ public class Canteen {
 
     public Location getLocation() {
         return location;
+    }
+
+    public String getBuilding() {
+        return building;
     }
 
     public int getImageResourceId() {
