@@ -1,7 +1,5 @@
 package com.tue.yuni.models;
 
-import java.util.List;
-
 public enum Day {
     MONDAY("MONDAY"),
     TUESDAY("TUESDAY"),
