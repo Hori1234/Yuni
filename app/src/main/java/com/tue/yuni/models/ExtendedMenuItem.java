@@ -9,10 +9,12 @@ public class ExtendedMenuItem extends MenuItem {
             String name,
             String description,
             String category,
+            float rating,
+            int availability,
             int menuId,
             Schedule schedule
     ) {
-        super(id, name, description, category);
+        super(id, name, description, category, rating, availability);
         this.menuId = menuId;
         this.schedule = schedule;
     }
