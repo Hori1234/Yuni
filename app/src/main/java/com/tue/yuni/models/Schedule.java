@@ -1,58 +1,26 @@
 package com.tue.yuni.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Schedule {
 
-    private boolean availableOnMonday;
-    private boolean availableOnTuesday;
-    private boolean availableOnWednesday;
-    private boolean availableOnThursday;
-    private boolean availableOnFriday;
-    private boolean availableOnSaturday;
-    private boolean availableOnSunday;
+    private Map<Day, Boolean> schedule;
 
-    public Schedule(
-            boolean availableOnMonday,
-            boolean availableOnTuesday,
-            boolean availableOnWednesday,
-            boolean availableOnThursday,
-            boolean availableOnFriday,
-            boolean availableOnSaturday,
-            boolean availableOnSunday
-    ) {
-        this.availableOnMonday = availableOnMonday;
-        this.availableOnTuesday = availableOnTuesday;
-        this.availableOnWednesday = availableOnWednesday;
-        this.availableOnThursday = availableOnThursday;
-        this.availableOnFriday = availableOnFriday;
-        this.availableOnSaturday = availableOnSaturday;
-        this.availableOnSunday = availableOnSunday;
+    public Schedule(Map<Day, Boolean> schedule) {
+        this.schedule = schedule;
     }
 
-    public boolean isAvailableOnMonday() {
-        return availableOnMonday;
-    }
+    public static Schedule fromStorage(JSONObject data) throws JSONException {
+        Map<Day, Boolean> schedule = new HashMap<>();
 
-    public boolean isAvailableOnTuesday() {
-        return availableOnTuesday;
-    }
+        for (Day day : Day.values()) {
+            schedule.put(day, data.getBoolean(day.name()));
+        }
 
-    public boolean isAvailableOnWednesday() {
-        return availableOnWednesday;
-    }
-
-    public boolean isAvailableOnThursday() {
-        return availableOnThursday;
-    }
-
-    public boolean isAvailableOnFriday() {
-        return availableOnFriday;
-    }
-
-    public boolean isAvailableOnSaturday() {
-        return availableOnSaturday;
-    }
-
-    public boolean isAvailableOnSunday() {
-        return availableOnSunday;
+        return new Schedule(schedule);
     }
 }
