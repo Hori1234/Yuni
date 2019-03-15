@@ -76,48 +76,13 @@ public class CanteenInfoTab extends Fragment {
                     add(new Review(19, "Hello 20", 1.5f));
                     add(new Review(20, "Hello 21", 1.5f));
                     add(new Review(21, "Hello 22", 1.5f));
-                }});
+                }}, (ScrollView)view);
         View viewReviews = reviews.getView();
-        final ListView reviewsListView = reviews.getReviewsListView();
-        // Disable ListView Scrolling
-        reviewsListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
-        // Make Sure ListView Shows all items without scrolling
-        View.OnClickListener onPageChanged = new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                // Resize ListView To Show All Items when page is changed
-                final int UNBOUNDED = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                int height = 0;
-                for (int i = 0; i < reviewsListView.getCount(); i++) {
-                    View child = reviewsListView.getAdapter().getView(i, null, reviewsListView);
-                    child.measure(UNBOUNDED, UNBOUNDED);
-                    height += child.getMeasuredHeight();
-                }
-                reviewsListView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + 10));
-                // Scroll to top of the list if view argument is valid
-                if (v != null) {
-                    reviewsListView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((ScrollView) view).smoothScrollTo(0, reviewsListView.getTop() + view.getHeight());
-                        }
-                    });
-                }
-            }
-        };
-        reviews.setOnPageChanged(onPageChanged);
-        // Initial ListView resize therefore do not scroll to list
-        onPageChanged.onClick(null);
         // Add view to the layout
         ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(viewReviews);
         // Add Feedback button to layout
         Button leaveReview = new Button(getContext(),null, 0, R.style.Widget_AppCompat_Button_Colored);
-        leaveReview.setText(getContext().getString(R.string.Feedback));
+        leaveReview.setText(getContext().getString(R.string.feedback));
         leaveReview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         leaveReview.setOnClickListener(new View.OnClickListener() {
             @Override
