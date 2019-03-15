@@ -4,13 +4,15 @@ import com.tue.yuni.models.Location;
 
 public class Canteen {
 
-    private int id;
-    private String name;
-    private String description;
-    private OperatingTimes operatingTimes;
-    private Location location;
-    private String building;
-    private int imageResourceId;
+    private final int id;
+    private final String name;
+    private final String description;
+    private final OperatingTimes operatingTimes;
+    private final Location location;
+    private final String building;
+    private final int imageResourceId;
+    private final float rating;
+    private final int busyness;
 
     public Canteen(
             int id,
@@ -19,7 +21,9 @@ public class Canteen {
             OperatingTimes operatingTimes,
             Location location,
             String building,
-            int imageResourceId
+            int imageResourceId,
+            float rating,
+            int busyness
     ) {
         this.id = id;
         this.name = name;
@@ -28,6 +32,8 @@ public class Canteen {
         this.location = location;
         this.building = building;
         this.imageResourceId = imageResourceId;
+        this.rating = rating;
+        this.busyness = busyness;
     }
 
     public int getId() {
@@ -52,6 +58,14 @@ public class Canteen {
 
     public String getBuilding() {
         return building;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public int getBusyness() {
+        return busyness;
     }
 
     public int getImageResourceId() {

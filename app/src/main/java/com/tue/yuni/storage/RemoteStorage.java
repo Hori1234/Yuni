@@ -82,7 +82,9 @@ public class RemoteStorage {
                                             OperatingTimes.fromStorage(canteenObject.getJSONObject("operating_times")),
                                             new Location(), // TODO: Location
                                             canteenObject.getString("building"),
-                                            0 // TODO: Image resource id
+                                            0, // TODO: Image resource id
+                                            2.5f,
+                                            3
                                     );
 
                                     canteens.add(canteen);
