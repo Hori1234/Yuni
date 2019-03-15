@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.models.Product;
 import com.tue.yuni.R;
 
 import java.util.List;
 
-public class MenuItemListTab extends Fragment {
+public class MenuItemListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, FeedbackDialog.DialogContent {
     private ListView listView;
     private MenuItemListViewAdapter listAdapter;
     private List<Product> products;
@@ -32,34 +33,35 @@ public class MenuItemListTab extends Fragment {
         listView.setFastScrollEnabled(false);
         listView.setFastScrollAlwaysVisible(false);
         // List View Adapter
-        listAdapter = new MenuItemListViewAdapter(getContext(), products);
+        listAdapter = new MenuItemListViewAdapter(getContext(), products, this);
         listView.setAdapter(listAdapter);
         // List Item Click
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listAdapter.setExtendedViewItem(position);
-                // Ensure the extended item will fully be in view
-                listView.smoothScrollToPosition(position);
-            }
-        });
+        listView.setOnItemClickListener(this);
         // Fix Scrolling of reviews List inside List View Item
-        listView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        listView.requestDisallowInterceptTouchEvent(false);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        listView.requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
+        listView.setOnTouchListener(this);
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        listAdapter.setExtendedViewItem(position);
+        // Ensure the extended item will fully be in view
+        listView.smoothScrollToPosition(position);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                listView.requestDisallowInterceptTouchEvent(false);
+                break;
+            case MotionEvent.ACTION_UP:
+                listView.requestDisallowInterceptTouchEvent(false);
+                break;
+        }
+        v.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -70,5 +72,10 @@ public class MenuItemListTab extends Fragment {
             if (args.containsKey("productsByCategory"))
                 products = args.getParcelableArrayList("productsByCategory");
         }
+    }
+
+    @Override
+    public void onSendReview(float rating, String reviewText) {
+
     }
 }

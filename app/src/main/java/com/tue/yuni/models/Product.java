@@ -12,6 +12,7 @@ public class Product implements Parcelable {
     public float price;
     public int availability;
     public int picture;
+    public String description;
     public List<Review> reviews;
 
     public Product(int ID, String name, float rating, int availability, float price) {
@@ -22,13 +23,14 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public Product(int ID, String name, float rating, int availability, float price,int picture, List<Review> reviews) {
+    public Product(int ID, String name, float rating, int availability, float price, int picture, String description, List<Review> reviews) {
         this.id = ID;
         this.name = name;
         this.rating = rating;
         this.availability = availability;
         this.price = price;
         this.picture = picture;
+        this.description = description;
         this.reviews = reviews;
     }
 
@@ -45,6 +47,7 @@ public class Product implements Parcelable {
         dest.writeFloat(price);
         dest.writeInt(availability);
         dest.writeInt(picture);
+        dest.writeString(description);
         dest.writeTypedList(reviews);
     }
 
@@ -55,6 +58,7 @@ public class Product implements Parcelable {
         this.price = in.readFloat();
         this.availability = in.readInt();
         this.picture = in.readInt();
+        this.description = in.readString();
         in.readTypedList(reviews, Review.CREATOR);
     }
 
