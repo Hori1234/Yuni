@@ -5,14 +5,13 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.tue.yuni.models.Location;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.canteen.Canteen;
-import com.tue.yuni.models.canteen.OperatingTimes;
+import com.tue.yuni.storage.parser.CanteenParser;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +60,10 @@ public class RemoteStorage {
     /**
      * Gets a list of all canteens.
      *
-     * @param canteenDataHandler Success handler
-     * @param errorHandler       Error handler
+     * @param canteensDataHandler Success handler
+     * @param errorHandler        Error handler
      */
-    public void getCanteens(final CanteenDataHandler canteenDataHandler, final ErrorHandler errorHandler) {
+    public void getCanteens(final CanteensDataHandler canteensDataHandler, final ErrorHandler errorHandler) {
         queue.add(
                 new JsonArrayRequest(
                         Request.Method.GET,
@@ -74,23 +73,35 @@ public class RemoteStorage {
                             List<Canteen> canteens = new ArrayList<>();
                             try {
                                 for (int i = 0; i < response.length(); i++) {
-                                    JSONObject canteenObject = response.getJSONObject(i);
-                                    Canteen canteen = new Canteen(
-                                            canteenObject.getInt("id"),
-                                            canteenObject.getString("name"),
-                                            canteenObject.getString("description"),
-                                            OperatingTimes.fromStorage(canteenObject.getJSONObject("operating_times")),
-                                            new Location(), // TODO: Location
-                                            canteenObject.getString("building"),
-                                            0, // TODO: Image resource id
-                                            2.5f,
-                                            3
-                                    );
-
-                                    canteens.add(canteen);
+                                    canteens.add(CanteenParser.parse(response.getJSONObject(i)));
                                 }
 
-                                canteenDataHandler.onReceive(canteens);
+                                canteensDataHandler.onReceive(canteens);
+                            } catch (JSONException e) {
+                                errorHandler.onError(e);
+                            }
+                        },
+                        errorHandler::onError
+                )
+        );
+    }
+
+    /**
+     * Gets a specific canteen.
+     *
+     * @param id           Id
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void getCanteen(int id, CanteenDataHandler handler, ErrorHandler errorHandler) {
+        queue.add(
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        BASE_URL + "/canteens/" + id,
+                        null,
+                        response -> {
+                            try {
+                                handler.onReceive(CanteenParser.parse(response));
                             } catch (JSONException e) {
                                 errorHandler.onError(e);
                             }
@@ -133,7 +144,11 @@ public class RemoteStorage {
         public void onError(Exception e);
     }
 
-    public interface CanteenDataHandler {
+    public interface CanteensDataHandler {
         public void onReceive(List<Canteen> canteens);
+    }
+
+    public interface CanteenDataHandler {
+        public void onReceive(Canteen canteen);
     }
 }
