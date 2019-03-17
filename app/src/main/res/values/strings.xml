@@ -33,10 +33,28 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="button">Button</string>
+    <string name="textview">TextView</string>
+    <string name="name">Name</string>
 
     <!--Canteens page-->
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="help">Help</string>
 
+    <!-- Thijs -->
+    <string-array name="canteen_array">
+        <item>Atlas canteen</item>
+        <item>Atlas sateh place</item>
+        <item>Atlas veggie shop</item>
+        <item>Auditorium canteen</item>
+        <item>Auditorium grillz</item>
+        <item>Flux canteen</item>
+        <item>Gemini canteen</item>
+        <item>Helix canteen</item>
+        <item>Laplace canteen</item>
+        <item>Metaforum canteen</item>
+        <item>Traverse canteen</item>
+        <item>Vertigo canteen</item>
+    </string-array>
 </resources>

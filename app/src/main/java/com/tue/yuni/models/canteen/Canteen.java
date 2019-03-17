@@ -1,6 +1,9 @@
 package com.tue.yuni.models.canteen;
 
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Location;
+
+import java.util.List;
 
 public class Canteen {
 
@@ -14,6 +17,8 @@ public class Canteen {
     private final float rating;
     private final int busyness;
 
+    private final List<ExtendedMenuItem> menuItems;
+
     public Canteen(
             int id,
             String name,
@@ -23,7 +28,8 @@ public class Canteen {
             String building,
             int imageResourceId,
             float rating,
-            int busyness
+            int busyness,
+            List<ExtendedMenuItem> menuItems
     ) {
         this.id = id;
         this.name = name;
@@ -34,6 +40,7 @@ public class Canteen {
         this.imageResourceId = imageResourceId;
         this.rating = rating;
         this.busyness = busyness;
+        this.menuItems = menuItems;
     }
 
     public int getId() {
@@ -70,5 +77,9 @@ public class Canteen {
 
     public int getImageResourceId() {
         return imageResourceId;
+    }
+
+    public List<ExtendedMenuItem> getMenuItems() {
+        return menuItems;
     }
 }
