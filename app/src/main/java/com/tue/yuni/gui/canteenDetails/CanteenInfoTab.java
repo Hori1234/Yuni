@@ -6,32 +6,42 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.gui.review.ReviewBox;
 import com.tue.yuni.R;
+import com.tue.yuni.gui.util.AvailabilityIndicator;
+import com.tue.yuni.models.Day;
 import com.tue.yuni.models.Review;
+import com.tue.yuni.models.canteen.Canteen;
 
 import java.util.ArrayList;
 
+
 public class CanteenInfoTab extends Fragment {
+    private Canteen canteen;
+    private AvailabilityIndicator busyness;
+    private TextView busynessText;
     private TextView[] dayHoursTextView = new TextView[7];
     private TextView descriptionTextView;
+    private RatingBar ratingBar;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Instantiate View
         final View view = inflater.inflate(R.layout.layout_canteen_info, null);
+        // Find All UI Elements
+        busyness = view.findViewById(R.id.busyness);
+        busynessText = view.findViewById(R.id.busynessText);
         dayHoursTextView[0] = view.findViewById(R.id.mondayHours);
         dayHoursTextView[1] = view.findViewById(R.id.tuesdayHours);
         dayHoursTextView[2] = view.findViewById(R.id.wednesdayHours);
@@ -40,17 +50,44 @@ public class CanteenInfoTab extends Fragment {
         dayHoursTextView[5] = view.findViewById(R.id.saturdayHours);
         dayHoursTextView[6] = view.findViewById(R.id.sundayHours);
         descriptionTextView = view.findViewById(R.id.descriptionStore);
+        ratingBar = view.findViewById(R.id.reviewRating);
 
-        // Place Holder Description
-        descriptionTextView.setText(
-                "The Auditorium canteen has a good selection of daily plates for hungry students." +
-                        "There are also plenty of smaller dishes. Together with small grocery items" +
-                        "and a coffee maker, everybody should find something for their taste here." +
-                        "With plenty of spoots in the auditorium area you are guaranteed to find a " +
-                        "place to seat."
-        );
+        // Busyness
+        int busynessVal = 100 - canteen.getBusyness();
+        busyness.setAvailability(busynessVal);
+        if (0 <= busynessVal && busynessVal < busyness.getThreshold(0)) {
+            busynessText.setText(getContext().getString(R.string.busy));
+        } else if (busyness.getThreshold(0) <= busynessVal && busynessVal < busyness.getThreshold(1)) {
+            busynessText.setText(getContext().getString(R.string.moderate));
+        } else if (busyness.getThreshold(1) <= busynessVal && busynessVal < busyness.getThreshold(2)) {
+            busynessText.setText(getContext().getString(R.string.quiet));
+        }
+        // Opening Hours
+        for (int i = 0; i < 7; i++) {
+            // Check if Canteen is open on day i
+            if (canteen.getOperatingTimes().isOpen(Day.values()[i])){
+                // Parse Time
+                int openTime = Integer.parseInt(canteen.getOperatingTimes().getOpeningTime(Day.values()[i]));
+                int closeTime = Integer.parseInt(canteen.getOperatingTimes().getClosingTime(Day.values()[i]));
+                int hOpen = openTime / 100;
+                int mOpen = openTime % 100;
+                int hClose = closeTime / 100;
+                int mClose = openTime % 100;
+                String open, close;
+                open = (hOpen > 12) ? (hOpen - 12) + ":" + String.format("%02d", mOpen) + " PM" : hOpen + ":" + String.format("%02d", mOpen) + " AM";
+                close = (hClose > 12) ? (hClose - 12) + ":" + String.format("%02d", mClose) + " PM" : hClose + ":" + String.format("%02d", mClose) + " AM";
+                // Display Time
+                dayHoursTextView[i].setText(open + " - " + close);
+            } else {
+                dayHoursTextView[i].setText(getContext().getString(R.string.closed));
+            }
+        }
+        // Description
+        descriptionTextView.setText(canteen.getDescription());
+        // Overall Canteen Rating
+        ratingBar.setRating(canteen.getRating());
 
-        // These will have to be passed as arguments for each different store
+        // Reviews ToDo
         ReviewBox reviews = new ReviewBox(
                 getContext(),
                 new ArrayList<Review>(){{
@@ -98,5 +135,19 @@ public class CanteenInfoTab extends Fragment {
         // Add Feedback button to the layout
         ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(leaveReview);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // ToDO ListView Position and Reviews page
+    }
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        if (args != null && args.containsKey("Canteen")) {
+            canteen = args.getParcelable("Canteen");
+        }
     }
 }

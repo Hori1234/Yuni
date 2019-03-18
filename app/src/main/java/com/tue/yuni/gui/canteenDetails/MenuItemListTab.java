@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tue.yuni.gui.review.FeedbackDialog;
-import com.tue.yuni.models.Product;
+import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.R;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 public class MenuItemListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, FeedbackDialog.DialogContent {
     private ListView listView;
     private MenuItemListViewAdapter listAdapter;
-    private List<Product> products;
+    private List<MenuItem> menuItems;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -33,7 +33,7 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
         listView.setFastScrollEnabled(false);
         listView.setFastScrollAlwaysVisible(false);
         // List View Adapter
-        listAdapter = new MenuItemListViewAdapter(getContext(), products, this);
+        listAdapter = new MenuItemListViewAdapter(getContext(), menuItems, this);
         listView.setAdapter(listAdapter);
         // List Item Click
         listView.setOnItemClickListener(this);
@@ -73,9 +73,8 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         // Read Arguments From Bundle
-        if (args != null) {
-            if (args.containsKey("productsByCategory"))
-                products = args.getParcelableArrayList("productsByCategory");
+        if (args != null && args.containsKey("menuItemsByCategory")) {
+            menuItems = args.getParcelableArrayList("menuItemsByCategory");
         }
     }
 

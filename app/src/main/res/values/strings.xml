@@ -24,8 +24,6 @@
     <string name="info">Info</string>
     <string name="openingHours">Opening Hours</string>
     <string name="busyness">Busyness</string>
-    <string name="busy">Busy</string>
-    <string name="quiet">Quiet</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -37,10 +35,24 @@
     <string name="textview">TextView</string>
     <string name="name">Name</string>
 
+    <!-- Favorites -->
+    <string name="favoritesAbbreviation">Favs</string>
+
     <!--Canteens page-->
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="help">Help</string>
+
+    <!--Busyness Ratings-->
+    <string name="busy">Busy</string>
+    <string name="moderate">Moderate</string>
+    <string name="quiet">Quiet</string>
+    <string name="unknown">Unknown</string>
+
+    <!--Operating Status-->
+    <string name="open">Open</string>
+    <string name="closing">Closing</string>
+    <string name="closed">Closed</string>
 
     <!-- Thijs -->
     <string-array name="canteen_array">
