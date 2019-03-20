@@ -53,6 +53,7 @@
     <string name="open">Open</string>
     <string name="closing">Closing</string>
     <string name="closed">Closed</string>
+    <string name="nameDescrition" />
 
     <!-- Thijs -->
     <string-array name="canteen_array">
