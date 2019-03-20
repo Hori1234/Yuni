@@ -10,6 +10,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.models.Schedule;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.MenuItemReview;
@@ -290,6 +291,66 @@ public class RemoteStorage {
                         errorHandler.onError(e);
                     }
                 },
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Removes an item from a canteens menu. Note that this method needs the menu id instead of the
+     * menu item id.
+     *
+     * @param menuId       Menu id
+     * @param password     Owner password
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void removeItemFromMenu(
+            int menuId,
+            String password,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        authenticatedObjectRequest(
+                Request.Method.DELETE,
+                BASE_URL + "/menu/" + menuId,
+                null,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Update the schedule of a menu item.
+     *
+     * @param password     Owner password
+     * @param menuId       Menu id (note, not menu item id)
+     * @param schedule     Schedule
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void updateMenuItemSchedule(
+            String password,
+            int menuId,
+            Schedule schedule,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build patch data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("schedule", schedule.toBitmask());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+        }
+
+        // Send request
+        authenticatedObjectRequest(
+                Request.Method.PATCH,
+                BASE_URL + "/menu/" + menuId + "/schedule",
+                data,
+                response -> handler.onCompleted(),
                 errorHandler::onError,
                 password
         );
