@@ -76,6 +76,14 @@ public class PasswordStorage {
     }
 
     /**
+     * get the pasword
+     */
+
+    public String getPassword() {
+        return passwordSharedPreference.getString("password","");
+    }
+
+    /**
      * clear the Password
      */
     public void resetPassword() {

@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5sp"
             android:maxLines="1"
-            android:text="Atlas Canteen"
+            android:text=""
             android:textSize="36sp" />
 
         <Button
