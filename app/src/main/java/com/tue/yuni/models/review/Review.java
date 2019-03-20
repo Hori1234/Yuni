@@ -3,7 +3,7 @@ package com.tue.yuni.models.review;
 public class Review {
 
     protected final int id;
-    protected final int rating;
+    protected final float rating;
     protected final String description;
     protected final String createdAt;
 
@@ -13,7 +13,7 @@ public class Review {
      * @param description Description
      * @param createdAt   Created at
      */
-    public Review(int id, int rating, String description, String createdAt) {
+    public Review(int id, float rating, String description, String createdAt) {
         this.id = id;
         this.rating = rating;
         this.description = description;
@@ -24,7 +24,7 @@ public class Review {
         return id;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 

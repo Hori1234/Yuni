@@ -2,7 +2,6 @@ package com.tue.yuni.gui.review;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.tue.yuni.models.Review;
+import com.tue.yuni.models.review.Review;
 import com.tue.yuni.R;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return reviews.get(startItem + position).id;
+        return reviews.get(startItem + position).getId();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_review, parent, false);
-            convertView.setTag(reviews.get(startItem + position).id);
+            convertView.setTag(reviews.get(startItem + position).getId());
             // View Holder
             viewHolder = new ViewHolder();
             viewHolder.ID = -1;
@@ -73,16 +72,16 @@ public class ReviewListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        if (viewHolder.ID != reviews.get(startItem + position).id) {
-            viewHolder.ID = reviews.get(startItem + position).id;
-            viewHolder.reviewText.setText(reviews.get(startItem + position).text);
+        if (viewHolder.ID != reviews.get(startItem + position).getId()) {
+            viewHolder.ID = reviews.get(startItem + position).getId();
+            viewHolder.reviewText.setText(reviews.get(startItem + position).getDescription());
             viewHolder.reviewText.setLines(
                     calculateNumberOfTextLines(
                             viewHolder.reviewText.getPaint(),
-                            reviews.get(startItem + position).text,
+                            reviews.get(startItem + position).getDescription(),
                             parent.getWidth())
             );
-            viewHolder.reviewRating.setRating(reviews.get(startItem + position).rating);
+            viewHolder.reviewRating.setRating(reviews.get(startItem + position).getRating());
         }
 
         return convertView;

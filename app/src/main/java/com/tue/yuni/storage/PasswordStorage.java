@@ -4,18 +4,40 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PasswordStorage {
+    private static PasswordStorage passwordStorage = null;
 
     private String passwordStorageName;
-    private SharedPreferences passwordStorage;
+    private SharedPreferences passwordSharedPreference;
 
     /**
      * create a password storage handler
      *
      * @param context current context
      */
-    public PasswordStorage(Context context) {
+    private PasswordStorage(Context context) {
         this.passwordStorageName = "passwordEmployeeYuni";
-        this.passwordStorage = context.getSharedPreferences(passwordStorageName, Context.MODE_PRIVATE);
+        this.passwordSharedPreference = context.getSharedPreferences(passwordStorageName, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * ToDo
+     * @return
+     */
+    public static void initialize(Context ctx){
+        if (passwordStorage == null) {
+            synchronized (FavouriteStorage.class){
+                passwordStorage = new PasswordStorage(ctx);
+            }
+        }
+    }
+
+    /**
+     * ToDo
+     * @return
+     */
+    public static PasswordStorage get(){
+        if (passwordStorage == null) throw new IllegalStateException("FavouriteStorage not Initialized");
+        return passwordStorage;
     }
 
     /**
@@ -24,7 +46,7 @@ public class PasswordStorage {
      * @param password the Password
      */
     public void setPassword(String password) {
-        SharedPreferences.Editor editor = passwordStorage.edit();
+        SharedPreferences.Editor editor = passwordSharedPreference.edit();
         editor.putString("password", password);
         editor.apply();
     }
@@ -33,7 +55,7 @@ public class PasswordStorage {
      * remove the Password
      */
     public void removePassword() {
-        SharedPreferences.Editor editor = passwordStorage.edit();
+        SharedPreferences.Editor editor = passwordSharedPreference.edit();
         editor.remove("password");
         editor.apply();
     }
@@ -46,7 +68,7 @@ public class PasswordStorage {
      * @return true if the id is in favor
      */
     public Boolean checkPassword(String password) {
-        if (passwordStorage.getString("password", "no password here").equals(password)) {
+        if (passwordSharedPreference.getString("password", "no password here").equals(password)) {
             return true;
         } else {
             return false;
@@ -57,7 +79,7 @@ public class PasswordStorage {
      * clear the Password
      */
     public void resetPassword() {
-        SharedPreferences.Editor editor = passwordStorage.edit();
+        SharedPreferences.Editor editor = passwordSharedPreference.edit();
         editor.clear();
         editor.apply();
     }

@@ -17,6 +17,7 @@ import com.tue.yuni.R;
 
 public class FeedbackDialog implements View.OnClickListener, View.OnTouchListener{
     private Context ctx;
+    private int ID;
     private AlertDialog dialog;
     private RatingBar ratingBar;
     private TextView ratingText;
@@ -28,9 +29,10 @@ public class FeedbackDialog implements View.OnClickListener, View.OnTouchListene
     }
 
     @SuppressWarnings({"all"})
-    public void show(@NonNull DialogContent parent){
+    public void show(@NonNull DialogContent parent, int ID){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
+            this.ID = ID;
             this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -65,7 +67,7 @@ public class FeedbackDialog implements View.OnClickListener, View.OnTouchListene
         float rating = ratingBar.getRating();
         String text = reviewText.getText().toString();
         dimiss();
-        parent.onSendReview(rating, text);
+        parent.onSendReview(rating, text, ID);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -88,6 +90,6 @@ public class FeedbackDialog implements View.OnClickListener, View.OnTouchListene
     }
 
     public interface DialogContent {
-        void onSendReview(float rating, String reviewText);
+        void onSendReview(float rating, String reviewText, int ID);
     }
 }

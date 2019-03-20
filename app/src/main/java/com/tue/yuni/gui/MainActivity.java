@@ -37,15 +37,16 @@ public class MainActivity extends AppCompatActivity {
                 vibrator.vibrate(150);
             }
         });
+        // Instantiate Favorite Storage
+        FavouriteStorage.initialize(getApplicationContext());
+        // Instantiate Remote Storage
+        RemoteStorage.initialise(getApplicationContext());
+        // Initial Fragment Transaction
         if (savedInstanceState == null) {
             // Create Fragment Transaction
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.content, new LandingView());
             ft.commit();
-            // Instantiate Favorite Storage
-            FavouriteStorage.initialize(getApplicationContext());
-            // Instantiate Remote Storage
-            RemoteStorage.initialise(getApplicationContext());
         }
 }
 

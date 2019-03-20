@@ -251,6 +251,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </LinearLayout>
+            <Button
+                android:id="@+id/sendReview"
+                android:layout_below="@id/reviewsContainer"
+                android:text="@string/feedback"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

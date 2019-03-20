@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.R;
+import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
 
@@ -79,8 +80,13 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
     }
 
     @Override
-    public void onSendReview(float rating, String reviewText) {
-
+    public void onSendReview(float rating, String reviewText, int ID) {
+        RemoteStorage.get().createMenuItemReview(ID, rating, reviewText, new RemoteStorage.ErrorHandler() {
+            @Override
+            public void onError(Exception e) {
+                // ToDo
+            }
+        });
     }
 
     @Override

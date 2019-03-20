@@ -163,7 +163,7 @@ public class RemoteStorage {
      */
     public void createMenuItemReview(
             int menuItemId,
-            int rating,
+            float rating,
             String description,
             ErrorHandler errorHandler
     ) {
@@ -236,7 +236,7 @@ public class RemoteStorage {
      */
     public void createCanteenReview(
             int canteenId,
-            int rating,
+            float rating,
             String description,
             ErrorHandler errorHandler
     ) {

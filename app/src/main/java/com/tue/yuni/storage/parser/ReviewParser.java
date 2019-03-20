@@ -11,7 +11,7 @@ public class ReviewParser {
     public static MenuItemReview parseMenuItemReview(JSONObject data) throws JSONException {
         return new MenuItemReview(
                 data.getInt("id"),
-                data.getInt("rating"),
+                (float)data.getDouble("rating"),
                 data.getString("description"),
                 data.getString("created_at"),
                 data.getInt("menu_item_id")
@@ -21,7 +21,7 @@ public class ReviewParser {
     public static CanteenReview parseCanteenReview(JSONObject data) throws JSONException {
         return new CanteenReview(
                 data.getInt("id"),
-                data.getInt("rating"),
+                (float)data.getDouble("rating"),
                 data.getString("description"),
                 data.getString("created_at"),
                 data.getInt("canteen_id")
