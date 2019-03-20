@@ -124,10 +124,15 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         if (v == leaveReview) {
             new FeedbackDialog(getContext()).show(new FeedbackDialog.DialogContent() {
                 @Override
-                public void onSendReview(float rating, String reviewText) {
-                    // Handle Review Contents
+                public void onSendReview(float rating, String reviewText, int ID) {
+                    RemoteStorage.get().createCanteenReview(ID, rating, reviewText, new RemoteStorage.ErrorHandler() {
+                        @Override
+                        public void onError(Exception e) {
+                            // ToDo
+                        }
+                    });
                 }
-            });
+            }, canteen.getId());
         }
     }
 

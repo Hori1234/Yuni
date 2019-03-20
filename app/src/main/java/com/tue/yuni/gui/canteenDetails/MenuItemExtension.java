@@ -142,7 +142,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
             imageDialog(menuItem);
         }
         else if (v.equals(leaveReview)) {
-            new FeedbackDialog(ctx).show(parent);
+            new FeedbackDialog(ctx).show(parent, menuItem.getId());
         }
         else if (v.equals(viewMoreReviews)) {
             // Create Alert Dialog
