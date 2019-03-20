@@ -21,15 +21,24 @@ import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.gui.review.ReviewBox;
 import com.tue.yuni.gui.util.AsyncImageViewLoader;
 import com.tue.yuni.models.MenuItem;
-import com.tue.yuni.models.Product;
+import com.tue.yuni.models.review.MenuItemReview;
+import com.tue.yuni.models.review.Review;
+import com.tue.yuni.storage.RemoteStorage;
 
-public class MenuItemExtension implements View.OnClickListener, View.OnTouchListener{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MenuItemExtension implements View.OnClickListener, View.OnTouchListener, RemoteStorage.MenuItemReviewsDataHandler, RemoteStorage.ErrorHandler {
     private Context ctx;
     private MenuItem menuItem;
     private AlertDialog imageDialog;
     private View imageDialogView;
     private ImageView imageView;
     private TextView menuItemDescription;
+
+    // Reviews Related
+    private List<Review> reviews;
+    private LinearLayout reviewsContainer;
     private Button leaveReview;
     private Button viewMoreReviews;
     private FeedbackDialog.DialogContent parent;
@@ -40,7 +49,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
     }
     @SuppressWarnings({"all"})
     public View getView(MenuItem menuItem, View convertView) {
-        this.menuItem = this.menuItem;
+        this.menuItem = menuItem;
 
         LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
         extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_extension, null,false));
@@ -56,28 +65,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         // Item Description
         menuItemDescription = convertView.findViewById(R.id.productDescription);
         menuItemDescription.setText(menuItem.getDescription());
-        // Reviews List
-        LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
-        // Check whether or not there is at least 1 review to display
-        // ToDo Reviews
-        /*if (menuItem.reviews != null && menuItem.reviews.size() > 0) {
-            // Display at most 2 reviews
-            for (int i = 0; i < Math.min(2, menuItem.reviews.size()); i++) {
-                View view = LayoutInflater.from(ctx).inflate(R.layout.layout_review_mini, null);
-                ((TextView) view.findViewById(R.id.reviewText)).setText(menuItem.reviews.get(i).text);
-                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(menuItem.reviews.get(i).rating);
-                reviewsContainer.addView(view);
-            }
-            // Display View More button if there are more than 2 reviews
-            if (menuItem.reviews.size() > 2) {
-                createButtonsLayout(reviewsContainer, true);
-            } else {
-                createButtonsLayout(reviewsContainer, false);
-            }
-        } else {*/
-            reviewsContainer.addView(createTextView(ctx, "No reviews Available!"));
-            createButtonsLayout(reviewsContainer, false);
-        //}
+        // Reviews
+        reviewsContainer = convertView.findViewById(R.id.productReviews);
+        RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
 
         return convertView;
     }
@@ -157,7 +147,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         else if (v.equals(viewMoreReviews)) {
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
-            //alertDialog.setView(new ReviewBox(ctx, menuItem.reviews).getView()); ToDo
+            alertDialog.setView(new ReviewBox(ctx, reviews).getView());
             alertDialog.show();
         }
     }
@@ -169,5 +159,33 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
             imageDialog.dismiss();
         }
         return false;
+    }
+
+    @Override
+    public void onReceive(List<MenuItemReview> reviews) {
+        if (reviews != null && reviews.size() > 0) {
+            this.reviews = new ArrayList<>(reviews);
+            // Display at most 2 reviews
+            for (int i = 0; i < Math.min(2, reviews.size()); i++) {
+                View view = LayoutInflater.from(ctx).inflate(R.layout.layout_review_mini, null);
+                ((TextView) view.findViewById(R.id.reviewText)).setText(reviews.get(i).getDescription());
+                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(reviews.get(i).getRating());
+                reviewsContainer.addView(view);
+            }
+            // Display View More button if there are more than 2 reviews
+            if (reviews.size() > 2) {
+                createButtonsLayout(reviewsContainer, true);
+            } else {
+                createButtonsLayout(reviewsContainer, false);
+            }
+        } else {
+            reviewsContainer.addView(createTextView(ctx, "No reviews Available!"));
+            createButtonsLayout(reviewsContainer, false);
+        }
+    }
+
+    @Override
+    public void onError(Exception e) {
+
     }
 }

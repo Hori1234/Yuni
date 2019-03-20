@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -19,26 +20,33 @@ import com.tue.yuni.gui.review.ReviewBox;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.util.AvailabilityIndicator;
 import com.tue.yuni.models.Day;
-import com.tue.yuni.models.Review;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.models.review.CanteenReview;
+import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class CanteenInfoTab extends Fragment {
+public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenReviewsDataHandler, RemoteStorage.ErrorHandler, View.OnClickListener {
     private Canteen canteen;
+
+    private View view;
     private AvailabilityIndicator busyness;
     private TextView busynessText;
     private TextView[] dayHoursTextView = new TextView[7];
     private TextView descriptionTextView;
     private RatingBar ratingBar;
+    private LinearLayout reviewBoxContainer;
+    Button leaveReview;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Instantiate View
-        final View view = inflater.inflate(R.layout.layout_canteen_info, null);
+        view = inflater.inflate(R.layout.layout_canteen_info, null);
+
         // Find All UI Elements
         busyness = view.findViewById(R.id.busyness);
         busynessText = view.findViewById(R.id.busynessText);
@@ -51,6 +59,8 @@ public class CanteenInfoTab extends Fragment {
         dayHoursTextView[6] = view.findViewById(R.id.sundayHours);
         descriptionTextView = view.findViewById(R.id.descriptionStore);
         ratingBar = view.findViewById(R.id.reviewRating);
+        reviewBoxContainer = view.findViewById(R.id.reviewsContainer);
+        leaveReview = view.findViewById(R.id.sendReview);
 
         // Busyness
         int busynessVal = 100 - canteen.getBusyness();
@@ -86,54 +96,12 @@ public class CanteenInfoTab extends Fragment {
         descriptionTextView.setText(canteen.getDescription());
         // Overall Canteen Rating
         ratingBar.setRating(canteen.getRating());
+        // Reviews
+        RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
+        // Feedback Button
+        leaveReview.setOnClickListener(this);
 
-        // Reviews ToDo
-        ReviewBox reviews = new ReviewBox(
-                getContext(),
-                new ArrayList<Review>(){{
-                    add(new Review(0, "Hello 1\naaijfoiahjfohjaophjf", 1.5f));
-                    add(new Review(1, "Hello 2", 1.5f));
-                    add(new Review(2, "Hello 3", 1.5f));
-                    add(new Review(3, "Hello 4", 1.5f));
-                    add(new Review(4, "Hello 5", 1.5f));
-                    add(new Review(5, "Hello 6", 1.5f));
-                    add(new Review(6, "Hello 7", 1.5f));
-                    add(new Review(7, "Hello 8", 1.5f));
-                    add(new Review(8, "Hello 9", 1.5f));
-                    add(new Review(9, "Hello 10", 1.5f));
-                    add(new Review(10, "Hello 11", 1.5f));
-                    add(new Review(11, "Hello 12\noiahwaopyhgtpoawerh", 1.5f));
-                    add(new Review(12, "Hello 13", 1.5f));
-                    add(new Review(13, "Hello 14\nhfoeahfpoawohpo\nafjhaoi[fjh", 1.5f));
-                    add(new Review(14, "Hello 15", 1.5f));
-                    add(new Review(15, "Hello 16 what is this sourcery this is so weird but it works hell yea what is this funkyness test test test", 1.5f)); // This breaks listView height
-                    add(new Review(16, "Hello 17", 1.5f));
-                    add(new Review(17, "Hello 18", 1.5f));
-                    add(new Review(18, "Hello 19\nouwpahgoruhgpo", 1.5f));
-                    add(new Review(19, "Hello 20", 1.5f));
-                    add(new Review(20, "Hello 21", 1.5f));
-                    add(new Review(21, "Hello 22", 1.5f));
-                }}, (ScrollView)view);
-        View viewReviews = reviews.getView();
-        // Add view to the layout
-        ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(viewReviews);
-        // Add Feedback button to layout
-        Button leaveReview = new Button(getContext(),null, 0, R.style.Widget_AppCompat_Button_Colored);
-        leaveReview.setText(getContext().getString(R.string.feedback));
-        leaveReview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
-        leaveReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new FeedbackDialog(getContext()).show(new FeedbackDialog.DialogContent() {
-                    @Override
-                    public void onSendReview(float rating, String reviewText) {
-                        // Handle Review Contents
-                    }
-                });
-            }
-        });
-        // Add Feedback button to the layout
-        ((LinearLayout)view.findViewById(R.id.reviewsContainer)).addView(leaveReview);
+        // Return view
         return view;
     }
 
@@ -149,5 +117,31 @@ public class CanteenInfoTab extends Fragment {
         if (args != null && args.containsKey("Canteen")) {
             canteen = args.getParcelable("Canteen");
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == leaveReview) {
+            new FeedbackDialog(getContext()).show(new FeedbackDialog.DialogContent() {
+                @Override
+                public void onSendReview(float rating, String reviewText) {
+                    // Handle Review Contents
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onReceive(List<CanteenReview> reviews) {
+        // Clear Container Content
+        reviewBoxContainer.removeAllViews();
+        // Add new ReviewBox
+        ReviewBox reviewBox = new ReviewBox(getContext(), new ArrayList<>(reviews), (ScrollView)view);
+        reviewBoxContainer.addView(reviewBox.getView());
+    }
+
+    @Override
+    public void onError(Exception e) {
+
     }
 }

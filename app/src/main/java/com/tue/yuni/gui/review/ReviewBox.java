@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import com.tue.yuni.models.Review;
+import com.tue.yuni.models.review.Review;
 import com.tue.yuni.R;
 
 import java.util.List;
