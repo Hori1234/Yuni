@@ -1,5 +1,8 @@
 package com.tue.yuni.models.canteen;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.tue.yuni.models.Day;
 
 import org.json.JSONException;
@@ -8,7 +11,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OperatingTimes {
+public class OperatingTimes implements Parcelable {
 
     private Map<Day, String> openingTimes;
     private Map<Day, String> closingTimes;
@@ -83,4 +86,37 @@ public class OperatingTimes {
 
         return new OperatingTimes(openingTimes, closingTimes);
     }
+
+    /**
+     * Parcelable Implementation
+     */
+    protected OperatingTimes(Parcel in) {
+        Map<Day, String> openingTimes = new HashMap<>();
+        Map<Day, String> closingTimes = new HashMap<>();
+        in.readMap(this.openingTimes, String.class.getClassLoader());
+        in.readMap(this.closingTimes, String.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeMap(openingTimes);
+        dest.writeMap(closingTimes);
+    }
+
+    public static final Creator<OperatingTimes> CREATOR = new Creator<OperatingTimes>() {
+        @Override
+        public OperatingTimes createFromParcel(Parcel source) {
+            return new OperatingTimes(source);
+        }
+
+        @Override
+        public OperatingTimes[] newArray(int size) {
+            return new OperatingTimes[size];
+        }
+    };
 }

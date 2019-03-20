@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.tue.yuni.R;
+import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Product;
 
 /**
@@ -13,24 +15,24 @@ import com.tue.yuni.models.Product;
  */
 public class AsyncImageViewLoader extends AsyncTask<Void, Void, Bitmap> {
     private Context ctx;
-    private Product product;
+    private MenuItem menuItem;
     private ImageView imageView;
     private String path;
 
-    public AsyncImageViewLoader(Context ctx, Product product, ImageView imageView) {
+    public AsyncImageViewLoader(Context ctx, MenuItem menuItem, ImageView imageView) {
         this.ctx = ctx;
-        this.product = product;
+        this.menuItem = menuItem;
         this.imageView = imageView;
         this.path = imageView.getTag().toString();
     }
 
-    public Product getProduct() {
-        return product;
+    public MenuItem getMenuItem() {
+        return menuItem;
     }
 
     @Override
     protected Bitmap doInBackground(Void... voids) {
-        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), product.picture);
+        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.hot_chocolate); // ToDo
         return bitmap;
     }
 

@@ -20,15 +20,16 @@ import com.tue.yuni.R;
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.gui.review.ReviewBox;
 import com.tue.yuni.gui.util.AsyncImageViewLoader;
+import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Product;
 
 public class MenuItemExtension implements View.OnClickListener, View.OnTouchListener{
     private Context ctx;
+    private MenuItem menuItem;
     private AlertDialog imageDialog;
     private View imageDialogView;
-    private Product product;
     private ImageView imageView;
-    private TextView productDescription;
+    private TextView menuItemDescription;
     private Button leaveReview;
     private Button viewMoreReviews;
     private FeedbackDialog.DialogContent parent;
@@ -38,8 +39,8 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         this.parent = parent;
     }
     @SuppressWarnings({"all"})
-    public View getView(Product product, View convertView) {
-        this.product = product;
+    public View getView(MenuItem menuItem, View convertView) {
+        this.menuItem = this.menuItem;
 
         LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
         extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_extension, null,false));
@@ -49,39 +50,40 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         }
         // Item Image
         imageView = convertView.findViewById(R.id.productImage);
-        imageView.setTag(product.id);
-        new AsyncImageViewLoader(ctx, product, imageView).execute();
+        imageView.setTag(menuItem.getId());
+        new AsyncImageViewLoader(ctx, menuItem, imageView).execute();
         imageView.setOnClickListener(this);
         // Item Description
-        productDescription = convertView.findViewById(R.id.productDescription);
-        productDescription.setText(product.description);
+        menuItemDescription = convertView.findViewById(R.id.productDescription);
+        menuItemDescription.setText(menuItem.getDescription());
         // Reviews List
         LinearLayout reviewsContainer = convertView.findViewById(R.id.productReviews);
         // Check whether or not there is at least 1 review to display
-        if (product.reviews != null && product.reviews.size() > 0) {
+        // ToDo Reviews
+        /*if (menuItem.reviews != null && menuItem.reviews.size() > 0) {
             // Display at most 2 reviews
-            for (int i = 0; i < Math.min(2, product.reviews.size()); i++) {
+            for (int i = 0; i < Math.min(2, menuItem.reviews.size()); i++) {
                 View view = LayoutInflater.from(ctx).inflate(R.layout.layout_review_mini, null);
-                ((TextView) view.findViewById(R.id.reviewText)).setText(product.reviews.get(i).text);
-                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(product.reviews.get(i).rating);
+                ((TextView) view.findViewById(R.id.reviewText)).setText(menuItem.reviews.get(i).text);
+                ((RatingBar) view.findViewById(R.id.reviewRating)).setRating(menuItem.reviews.get(i).rating);
                 reviewsContainer.addView(view);
             }
             // Display View More button if there are more than 2 reviews
-            if (product.reviews.size() > 2) {
+            if (menuItem.reviews.size() > 2) {
                 createButtonsLayout(reviewsContainer, true);
             } else {
                 createButtonsLayout(reviewsContainer, false);
             }
-        } else {
+        } else {*/
             reviewsContainer.addView(createTextView(ctx, "No reviews Available!"));
             createButtonsLayout(reviewsContainer, false);
-        }
+        //}
 
         return convertView;
     }
 
     @SuppressWarnings({"all"})
-    private void imageDialog(Product product){
+    private void imageDialog(MenuItem menuItem){
         // Create Alert Dialog
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
         // Inflate Alert Dialog View
@@ -89,8 +91,8 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         alertDialog.setView(imageDialogView);
         // Load Image
         ImageView imageView = imageDialogView.findViewById(R.id.imageContainer);
-        imageView.setTag(product.id);
-        new AsyncImageViewLoader(ctx, product, imageView).execute();
+        imageView.setTag(menuItem.getId());
+        new AsyncImageViewLoader(ctx, menuItem, imageView).execute();
         // Show Alert Dialog
         imageDialog = alertDialog.show();
         // Setup Alert Dialog Layout Params
@@ -147,7 +149,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
     @Override
     public void onClick(View v) {
         if (v.equals(imageView)) {
-            imageDialog(product);
+            imageDialog(menuItem);
         }
         else if (v.equals(leaveReview)) {
             new FeedbackDialog(ctx).show(parent);
@@ -155,7 +157,7 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         else if (v.equals(viewMoreReviews)) {
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
-            alertDialog.setView(new ReviewBox(ctx, product.reviews).getView());
+            //alertDialog.setView(new ReviewBox(ctx, menuItem.reviews).getView()); ToDo
             alertDialog.show();
         }
     }

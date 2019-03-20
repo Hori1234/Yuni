@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#1B9CD8</color>
+
+    <!-- UI Colors -->
+    <color name="canteenOpen">@android:color/holo_green_dark</color>
+    <color name="canteenClosing">@android:color/holo_orange_dark</color>
+    <color name="canteenClosed">@android:color/holo_red_dark</color>
 </resources>
