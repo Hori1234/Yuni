@@ -13,15 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.editCanteenDialog.DialogContent;
 import com.tue.yuni.gui.editCanteenDialog.deleteDialog;
 import com.tue.yuni.gui.editCanteenDialog.scheduleDialog;
 import com.tue.yuni.gui.editCanteenDialog.availabilityDialog;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.models.Schedule;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, deleteDialog.DialogContent , scheduleDialog.DialogContent, availabilityDialog.DialogContent{
+public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, DialogContent{
     private ListView listView;
     private MenuItemEditListViewAdapter listAdapter;
     private List<MenuItem> menuItems;
@@ -87,19 +89,11 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
 
 
     @Override
-    public void onSetAvailibaility(int q) {
+    public void onChangeMenuItem(int changeType, Schedule schedule, int availability) {
 
     }
 
-    @Override
-    public void onSetSchedule(ArrayList<ArrayList<Integer>> schedule) {
 
-    }
-
-    @Override
-    public void onDelete(String id) {
-
-    }
 
 
     @Override

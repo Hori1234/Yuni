@@ -9,9 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.tue.yuni.R;
 
@@ -27,14 +24,14 @@ public class scheduleDialog implements View.OnClickListener{
     }
 
     @SuppressWarnings({"all"})
-    public void show(){
+    public void show(DialogContent parent){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
-//            this.parent = parent;
+            this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
             // Inflate Alert Dialog View
-            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_edit, null);
+            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_set_schedule, null);
             alertDialog.setView(view);
             // Get View UI Elements
             Button sendScheduleButton = view.findViewById(R.id.sendReview);
@@ -62,15 +59,7 @@ public class scheduleDialog implements View.OnClickListener{
         dimiss();
         //TODO pass schedule
         ArrayList<Integer> q = new ArrayList<>();
-        q.add(1);
-        ArrayList<ArrayList<Integer>> w= new ArrayList<>();
-        w.add(q);
-        parent.onSetSchedule(w);
-    }
 
-
-
-    public interface DialogContent {
-        void onSetSchedule(ArrayList<ArrayList<Integer>> schedule);
+        parent.onChangeMenuItem(2,null,0);
     }
 }
