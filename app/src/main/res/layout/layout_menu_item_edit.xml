@@ -22,12 +22,12 @@
             android:textColor="#0C48C0"
             android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/starredButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/star_off" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/starredButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--app:srcCompat="@android:drawable/star_off" />-->
 
         <ImageButton
             android:id="@+id/availibilityButton"
