@@ -13,7 +13,7 @@
         android:layout_weight="0.15">
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/canteenspinner"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -29,14 +29,16 @@
         android:layout_weight="0.15">
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/PassInput"
             android:hint="Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
             android:background="#FFFFFF"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:windowSoftInputMode="adjustNothing"
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -48,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textSize="19dp"
+            android:textSize="19sp"
             style="@android:style/Widget.Material.Button.Colored"
             android:layout_centerInParent="true"/>
     </RelativeLayout>

@@ -15,6 +15,7 @@ import android.view.View;
 import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.R;
 import com.tue.yuni.storage.FavouriteStorage;
+import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 vibrator.vibrate(150);
             }
         });
+        PasswordStorage.initialize(getApplicationContext());
         // Instantiate Favorite Storage
         FavouriteStorage.initialize(getApplicationContext());
         // Instantiate Remote Storage

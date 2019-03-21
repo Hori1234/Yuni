@@ -54,6 +54,7 @@
     <string name="open">Open</string>
     <string name="closing">Closing</string>
     <string name="closed">Closed</string>
+    <string name="nameDescrition" />
     <string name="stock_high">in  stock</string>
     <string name="stock_low">low stock</string>
     <string name="stock_out" >out of stock</string>

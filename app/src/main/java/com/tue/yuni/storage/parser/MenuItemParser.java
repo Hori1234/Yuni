@@ -9,8 +9,15 @@ import org.json.JSONObject;
 
 public class MenuItemParser {
 
-    public static MenuItem parse(JSONObject data) {
-        return null; // TODO
+    public static MenuItem parse(JSONObject data) throws JSONException {
+        return new MenuItem(
+                data.getInt("id"),
+                data.getString("name"),
+                data.getString("description"),
+                data.getString("category"),
+                2.5f,
+                0
+        );
     }
 
     public static ExtendedMenuItem parseExtended(JSONObject data) throws JSONException {

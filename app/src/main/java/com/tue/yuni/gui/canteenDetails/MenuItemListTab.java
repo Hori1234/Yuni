@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tue.yuni.R;
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.models.MenuItem;
-import com.tue.yuni.R;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
         // Fix Scrolling of reviews List inside List View Item
         listView.setOnTouchListener(this);
         // Restore List State
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             listAdapter.setExtendedViewItem(savedInstanceState.getInt("ExtendedItem"));
             listView.scrollTo(0, savedInstanceState.getInt("ScrollY"));
         }
@@ -58,7 +58,7 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 listView.requestDisallowInterceptTouchEvent(false);
                 break;
@@ -81,12 +81,17 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onSendReview(float rating, String reviewText, int ID) {
-        RemoteStorage.get().createMenuItemReview(ID, rating, reviewText, new RemoteStorage.ErrorHandler() {
-            @Override
-            public void onError(Exception e) {
-                // ToDo
-            }
-        });
+        RemoteStorage.get().createMenuItemReview(
+                ID,
+                rating,
+                reviewText,
+                () -> {
+                    // TODO
+                },
+                e -> {
+                    // ToDo
+                }
+        );
     }
 
     @Override
