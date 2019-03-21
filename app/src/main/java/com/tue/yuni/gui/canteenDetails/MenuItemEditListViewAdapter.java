@@ -17,13 +17,14 @@ import com.tue.yuni.gui.editCanteenDialog.DialogContent;
 import com.tue.yuni.gui.editCanteenDialog.availabilityDialog;
 import com.tue.yuni.gui.editCanteenDialog.deleteDialog;
 import com.tue.yuni.gui.editCanteenDialog.scheduleDialog;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 
 import java.util.List;
 
 public class MenuItemEditListViewAdapter extends BaseAdapter {
     private Context ctx;
-    private List<MenuItem> menuItems;
+    private List<ExtendedMenuItem> menuItems;
 
 
     private DialogContent parentTab;
@@ -33,7 +34,7 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
     private ImageButton scheduleButton;
     private ImageButton deleteButton;
 
-    public MenuItemEditListViewAdapter(Context ctx, List<MenuItem> menuItems, DialogContent parent) {
+    public MenuItemEditListViewAdapter(Context ctx, List<ExtendedMenuItem> menuItems, DialogContent parent) {
         this.parentTab = parent;
         this.ctx = ctx;
         this.menuItems = menuItems;
@@ -101,7 +102,7 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         viewHolder.availabilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new availabilityDialog(ctx).show(parentTab);
+                new availabilityDialog(ctx).show(parentTab,menuItems.get(position));
             }
         });
 
@@ -109,7 +110,7 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         viewHolder.scheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new scheduleDialog(ctx).show(parentTab);
+                new scheduleDialog(ctx).show(parentTab, menuItems.get(position));
             }
         });
 
@@ -117,7 +118,7 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new deleteDialog(ctx).show(parentTab);
+                new deleteDialog(ctx).show(parentTab,menuItems.get(position));
             }
         });
 

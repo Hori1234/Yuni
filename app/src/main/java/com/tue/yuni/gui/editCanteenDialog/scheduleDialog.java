@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.tue.yuni.R;
+import com.tue.yuni.models.ExtendedMenuItem;
 
 import java.util.ArrayList;
 
@@ -18,15 +19,17 @@ public class scheduleDialog implements View.OnClickListener{
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
+    private ExtendedMenuItem menuItem;
 
     public scheduleDialog(@NonNull Context ctx) {
         this.ctx = ctx;
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent){
+    public void show(DialogContent parent, ExtendedMenuItem menuItem){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
+            this.menuItem=menuItem;
             this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -60,6 +63,6 @@ public class scheduleDialog implements View.OnClickListener{
         //TODO pass schedule
         ArrayList<Integer> q = new ArrayList<>();
 
-        parent.onChangeMenuItem(2,null,0);
+        parent.onChangeMenuItem(2,menuItem,null,0);
     }
 }

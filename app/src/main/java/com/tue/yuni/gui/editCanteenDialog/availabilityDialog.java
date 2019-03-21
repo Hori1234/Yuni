@@ -11,12 +11,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.tue.yuni.R;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Schedule;
 
 public class availabilityDialog implements View.OnClickListener{
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
+    private ExtendedMenuItem menuItem;
 
     RadioGroup availabilityGroup;
     RadioButton inStockButton;
@@ -28,9 +30,10 @@ public class availabilityDialog implements View.OnClickListener{
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent){
+    public void show(DialogContent parent, ExtendedMenuItem menuItem){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
+            this.menuItem=menuItem;
             this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -86,13 +89,11 @@ public class availabilityDialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         // Notify the parent of the feedback given
-        //TODO get schedule
-        int result =availabilityGroup.getCheckedRadioButtonId();
-
-        if(result>=0) {
+        int availability = availabilityGroup.getCheckedRadioButtonId();
+        if(availability>=0) {
             dimiss();
-            //TODO post
-            parent.onChangeMenuItem(0, null, result);
+
+            parent.onChangeMenuItem(0, menuItem,null, availability);
         }
     }
 }

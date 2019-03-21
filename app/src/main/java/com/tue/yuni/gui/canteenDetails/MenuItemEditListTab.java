@@ -17,8 +17,10 @@ import com.tue.yuni.gui.editCanteenDialog.DialogContent;
 import com.tue.yuni.gui.editCanteenDialog.deleteDialog;
 import com.tue.yuni.gui.editCanteenDialog.scheduleDialog;
 import com.tue.yuni.gui.editCanteenDialog.availabilityDialog;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
+import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.List;
 public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, DialogContent{
     private ListView listView;
     private MenuItemEditListViewAdapter listAdapter;
-    private List<MenuItem> menuItems;
+    private List<ExtendedMenuItem> menuItems;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -89,7 +91,18 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
 
 
     @Override
-    public void onChangeMenuItem(int changeType, Schedule schedule, int availability) {
+    public void onChangeMenuItem(int changeType, ExtendedMenuItem menuItem, Schedule schedule, int availability) {
+        switch(changeType){
+            case 0:
+                RemoteStorage.get().
+                break;
+            case 1:
+                //TODO
+                break;
+            case 2:
+                //TODO
+                break;
+        }
 
     }
 

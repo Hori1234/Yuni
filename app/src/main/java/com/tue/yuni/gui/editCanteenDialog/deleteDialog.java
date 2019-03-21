@@ -14,13 +14,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Schedule;
 
 public class deleteDialog implements View.OnClickListener{
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
-
+    private ExtendedMenuItem menuItem;
 
 
     public deleteDialog(@NonNull Context ctx) {
@@ -28,9 +29,10 @@ public class deleteDialog implements View.OnClickListener{
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent){
+    public void show(DialogContent parent, ExtendedMenuItem menuItem){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
+            this.menuItem=menuItem;
             this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -62,6 +64,6 @@ public class deleteDialog implements View.OnClickListener{
         //TODO
 
         dimiss();
-        parent.onChangeMenuItem(1,null,0);
+        parent.onChangeMenuItem(1,menuItem,null,0);
     }
 }
