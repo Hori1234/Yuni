@@ -273,7 +273,7 @@ public class RemoteStorage {
      */
     public void getAllMenuItems(MenuItemsDataHandler handler, ErrorHandler errorHandler) {
         queue.add(
-                new JsonObjectRequest(
+                new JsonArrayRequest(
                         Request.Method.GET,
                         BASE_URL + "/menu/all",
                         null,
