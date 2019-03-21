@@ -17,6 +17,20 @@ public class Schedule implements Parcelable {
         this.schedule = schedule;
     }
 
+    public String toBitmask() {
+        String bitmask = "";
+
+        bitmask += schedule.getOrDefault(Day.MONDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.TUESDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.WEDNESDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.THURSDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.FRIDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.SATURDAY, false) ? "1" : "0";
+        bitmask += schedule.getOrDefault(Day.SUNDAY, false) ? "1" : "0";
+
+        return bitmask;
+    }
+
     public static Schedule fromStorage(JSONObject data) throws JSONException {
         Map<Day, Boolean> schedule = new HashMap<>();
 

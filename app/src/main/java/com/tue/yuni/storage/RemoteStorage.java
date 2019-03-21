@@ -10,10 +10,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.models.Schedule;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.MenuItemReview;
 import com.tue.yuni.storage.parser.CanteenParser;
+import com.tue.yuni.storage.parser.MenuItemParser;
 import com.tue.yuni.storage.parser.ReviewParser;
 
 import org.json.JSONException;
@@ -263,10 +265,33 @@ public class RemoteStorage {
         );
     }
 
-    public List<MenuItem> getAllMenuItems() {
-        // TODO: Implement method body
+    /**
+     * Fetches a list of all available menu items.
+     *
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void getAllMenuItems(MenuItemsDataHandler handler, ErrorHandler errorHandler) {
+        queue.add(
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        BASE_URL + "/menu/all",
+                        null,
+                        response -> {
+                            try {
+                                List<MenuItem> menuItems = new ArrayList<>();
+                                for (int i = 0; i < response.length(); i++) {
+                                    menuItems.add(MenuItemParser.parse(response.getJSONObject(i)));
+                                }
 
-        return null;
+                                handler.onReceive(menuItems);
+                            } catch (JSONException e) {
+                                errorHandler.onError(e);
+                            }
+                        },
+                        errorHandler::onError
+                )
+        );
     }
 
     /**
@@ -290,6 +315,107 @@ public class RemoteStorage {
                         errorHandler.onError(e);
                     }
                 },
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Adds a menu item to a menu of a canteen.
+     *
+     * @param canteenId    Canteen id
+     * @param menuItemId   Menu item id
+     * @param schedule     Schedule
+     * @param password     Owner password
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void addItemToMenu(
+            int canteenId,
+            int menuItemId,
+            Schedule schedule,
+            String password,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build post data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("canteen_id", canteenId);
+            data.put("menu_item_id", menuItemId);
+            data.put("schedule", schedule.toBitmask());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+
+            return;
+        }
+
+        // Perform request
+        authenticatedObjectRequest(
+                Request.Method.POST,
+                BASE_URL + "/menu",
+                data,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Removes an item from a canteens menu. Note that this method needs the menu id instead of the
+     * menu item id.
+     *
+     * @param menuId       Menu id
+     * @param password     Owner password
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void removeItemFromMenu(
+            int menuId,
+            String password,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        authenticatedObjectRequest(
+                Request.Method.DELETE,
+                BASE_URL + "/menu/" + menuId,
+                null,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Update the schedule of a menu item.
+     *
+     * @param password     Owner password
+     * @param menuId       Menu id (note, not menu item id)
+     * @param schedule     Schedule
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void updateMenuItemSchedule(
+            String password,
+            int menuId,
+            Schedule schedule,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build patch data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("schedule", schedule.toBitmask());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+        }
+
+        // Send request
+        authenticatedObjectRequest(
+                Request.Method.PATCH,
+                BASE_URL + "/menu/" + menuId + "/schedule",
+                data,
+                response -> handler.onCompleted(),
                 errorHandler::onError,
                 password
         );
@@ -352,5 +478,9 @@ public class RemoteStorage {
 
     public interface CanteenReviewsDataHandler {
         public void onReceive(List<CanteenReview> reviews);
+    }
+
+    public interface MenuItemsDataHandler {
+        public void onReceive(List<MenuItem> menuItems);
     }
 }
