@@ -46,10 +46,17 @@ public class deleteDialog implements View.OnClickListener{
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             // Setup Event
             deleteButton.setOnClickListener(this);
+            Button cancelButton = view.findViewById(R.id.cancelButton);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
         }
     }
 
-    public void dimiss() {
+    public void dismiss() {
         // Dismiss Dialog only if it exists
         if (dialog != null) {
             dialog.dismiss();
@@ -61,9 +68,7 @@ public class deleteDialog implements View.OnClickListener{
     public void onClick(View v) {
         // Notify the parent of the feedback given
 
-        //TODO
-
-        dimiss();
+        dismiss();
         parent.onChangeMenuItem(1,menuItem,null,0);
     }
 }

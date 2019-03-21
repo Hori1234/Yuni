@@ -130,12 +130,10 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * TODO
-     */
-    private void setStarred() {
 
-    }
+//    private void setStarred() {
+//
+//    }
 
 
 

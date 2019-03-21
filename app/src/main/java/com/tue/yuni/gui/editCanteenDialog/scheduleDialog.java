@@ -9,17 +9,33 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 
+import com.tue.yuni.models.Day;
+import com.tue.yuni.models.Schedule;
 import com.tue.yuni.R;
 import com.tue.yuni.models.ExtendedMenuItem;
+import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class scheduleDialog implements View.OnClickListener{
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
     private ExtendedMenuItem menuItem;
+
+    CheckBox mondayBox;
+    CheckBox tuesdayBox;
+    CheckBox wednesdayBox;
+    CheckBox thursdayBox;
+    CheckBox fridayBox;
+    CheckBox saturdayBox;
+    CheckBox sundayBox;
 
     public scheduleDialog(@NonNull Context ctx) {
         this.ctx = ctx;
@@ -37,7 +53,27 @@ public class scheduleDialog implements View.OnClickListener{
             View view = LayoutInflater.from(ctx).inflate(R.layout.layout_set_schedule, null);
             alertDialog.setView(view);
             // Get View UI Elements
-            Button sendScheduleButton = view.findViewById(R.id.sendReview);
+            Button sendScheduleButton = view.findViewById(R.id.setScheduleButton);
+            Schedule schedule = menuItem.getSchedule();
+            mondayBox = view.findViewById(R.id.mondayBox);
+            tuesdayBox = view.findViewById(R.id.tuesdayBox);
+            wednesdayBox = view.findViewById(R.id.wednesdayBox);
+            thursdayBox = view.findViewById(R.id.thursdayBox);
+            fridayBox = view.findViewById(R.id.fridayBox);
+            saturdayBox = view.findViewById(R.id.saturdayBox);
+            sundayBox = view.findViewById(R.id.sundayBox);
+
+            mondayBox.setChecked(schedule.getDay(Day.MONDAY));
+            tuesdayBox.setChecked(schedule.getDay(Day.TUESDAY));
+            wednesdayBox.setChecked(schedule.getDay(Day.WEDNESDAY));
+            thursdayBox.setChecked(schedule.getDay(Day.THURSDAY));
+            fridayBox.setChecked(schedule.getDay(Day.FRIDAY));
+            saturdayBox.setChecked(schedule.getDay(Day.SATURDAY));
+            sundayBox.setChecked(schedule.getDay(Day.SUNDAY));
+
+
+
+
             // Show Alert Dialog
             dialog = alertDialog.show();
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -46,7 +82,7 @@ public class scheduleDialog implements View.OnClickListener{
         }
     }
 
-    public void dimiss() {
+    public void dismiss() {
         // Dismiss Dialog only if it exists
         if (dialog != null) {
             dialog.dismiss();
@@ -57,12 +93,22 @@ public class scheduleDialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         // Notify the parent of the feedback given
-        //TODO get schedule
+        Map<Day,Boolean> dayMap = new HashMap<>();
+        dayMap.put(Day.MONDAY,mondayBox.isChecked());
+        dayMap.put(Day.TUESDAY,tuesdayBox.isChecked());
+        dayMap.put(Day.WEDNESDAY,wednesdayBox.isChecked());
+        dayMap.put(Day.THURSDAY,thursdayBox.isChecked());
+        dayMap.put(Day.FRIDAY,fridayBox.isChecked());
+        dayMap.put(Day.SATURDAY,saturdayBox.isChecked());
+        dayMap.put(Day.SUNDAY,sundayBox.isChecked());
 
-        dimiss();
-        //TODO pass schedule
+        Schedule schedule = new Schedule(dayMap);
+
+        dismiss();
         ArrayList<Integer> q = new ArrayList<>();
 
-        parent.onChangeMenuItem(2,menuItem,null,0);
+        parent.onChangeMenuItem(2,menuItem,schedule,0);
     }
+
+
 }

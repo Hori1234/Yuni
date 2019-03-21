@@ -14,18 +14,16 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.editCanteenDialog.DialogContent;
-import com.tue.yuni.gui.editCanteenDialog.deleteDialog;
-import com.tue.yuni.gui.editCanteenDialog.scheduleDialog;
-import com.tue.yuni.gui.editCanteenDialog.availabilityDialog;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
+import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, DialogContent{
+public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, DialogContent, RemoteStorage.ErrorHandler,RemoteStorage.RequestCompletedHandler{
     private ListView listView;
     private MenuItemEditListViewAdapter listAdapter;
     private List<ExtendedMenuItem> menuItems;
@@ -94,13 +92,14 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     public void onChangeMenuItem(int changeType, ExtendedMenuItem menuItem, Schedule schedule, int availability) {
         switch(changeType){
             case 0:
-                RemoteStorage.get().
+                //TODO
                 break;
             case 1:
                 //TODO
+                RemoteStorage.get().removeItemFromMenu(menuItem.getMenuId(),PasswordStorage.get().getPassword(),this,this);
                 break;
             case 2:
-                //TODO
+                RemoteStorage.get().updateMenuItemSchedule(PasswordStorage.get().getPassword(),menuItem.getMenuId(),schedule,this,this);
                 break;
         }
 
@@ -113,5 +112,15 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("ScrollY", listView.getScrollY());
+    }
+
+    @Override
+    public void onError(Exception e) {
+        //TODO
+    }
+
+    @Override
+    public void onCompleted() {
+        //TODO
     }
 }

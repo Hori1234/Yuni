@@ -78,7 +78,7 @@ public class availabilityDialog implements View.OnClickListener{
         }
     }
 
-    public void dimiss() {
+    public void dismiss() {
         // Dismiss Dialog only if it exists
         if (dialog != null) {
             dialog.dismiss();
@@ -91,7 +91,7 @@ public class availabilityDialog implements View.OnClickListener{
         // Notify the parent of the feedback given
         int availability = availabilityGroup.getCheckedRadioButtonId();
         if(availability>=0) {
-            dimiss();
+            dismiss();
 
             parent.onChangeMenuItem(0, menuItem,null, availability);
         }
