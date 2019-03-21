@@ -83,7 +83,7 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
             child.measure(UNBOUNDED, UNBOUNDED);
             height += child.getMeasuredHeight();
         }
-        reviewsListView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + 10));
+        reviewsListView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + 18));
     }
 
     @Override

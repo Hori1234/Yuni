@@ -75,12 +75,18 @@ public class ReviewListViewAdapter extends BaseAdapter {
         if (viewHolder.ID != reviews.get(startItem + position).getId()) {
             viewHolder.ID = reviews.get(startItem + position).getId();
             viewHolder.reviewText.setText(reviews.get(startItem + position).getDescription());
-            viewHolder.reviewText.setLines(
-                    calculateNumberOfTextLines(
-                            viewHolder.reviewText.getPaint(),
-                            reviews.get(startItem + position).getDescription(),
-                            parent.getWidth())
-            );
+
+            if (reviews.get(startItem + position).getDescription().length() == 0) {
+                viewHolder.reviewText.setLines(1);
+            } else {
+                viewHolder.reviewText.setLines(
+                        calculateNumberOfTextLines(
+                                viewHolder.reviewText.getPaint(),
+                                reviews.get(startItem + position).getDescription(),
+                                parent.getWidth())
+                );
+            }
+
             viewHolder.reviewRating.setRating(reviews.get(startItem + position).getRating());
         }
 
