@@ -21,6 +21,7 @@ import com.tue.yuni.gui.util.AvailabilityIndicator;
 import com.tue.yuni.models.Day;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
+import com.tue.yuni.models.review.Review;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                             rating,
                             reviewText,
                             () -> {
-                                // TODO
+                                RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
                             },
                             e -> {
                                 // ToDo
@@ -142,6 +143,8 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
 
     @Override
     public void onReceive(List<CanteenReview> reviews) {
+        // Sort Reviews by Date
+        reviews.sort(new Review.CustomComparator());
         // Clear Container Content
         reviewBoxContainer.removeAllViews();
         // Add new ReviewBox

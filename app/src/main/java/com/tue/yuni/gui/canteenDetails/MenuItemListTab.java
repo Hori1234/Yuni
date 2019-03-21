@@ -86,7 +86,9 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
                 rating,
                 reviewText,
                 () -> {
-                    // TODO
+                    if (menuItems.get(listAdapter.getExtendedViewItem()).getId() == ID) {
+                        listAdapter.forceMenuItemExtensionReviewsUpdate();
+                    }
                 },
                 e -> {
                     // ToDo

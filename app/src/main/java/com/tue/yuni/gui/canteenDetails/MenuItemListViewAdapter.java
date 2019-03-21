@@ -25,7 +25,9 @@ public class MenuItemListViewAdapter extends BaseAdapter {
     private List<MenuItem> menuItems;
     private int extendedViewItem = -1;
     private FeedbackDialog.DialogContent parent;
+    // Extension Related
     private MenuItemExtension extendedItem;
+    private boolean forceReviewsUpdate = false;
 
     public MenuItemListViewAdapter(Context ctx, List<MenuItem> menuItems, FeedbackDialog.DialogContent parent) {
         this.ctx = ctx;
@@ -44,6 +46,11 @@ public class MenuItemListViewAdapter extends BaseAdapter {
 
     public int getExtendedViewItem() {
         return extendedViewItem;
+    }
+
+    public void forceMenuItemExtensionReviewsUpdate(){
+        forceReviewsUpdate = true;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -84,8 +91,13 @@ public class MenuItemListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
             // Check if the current list Item needs to be a Default or Extended Layout
-            if (position == extendedViewItem && viewHolder.extensionLayout.getChildCount() == 0) {
-                convertView = extendedItem.getView(menuItems.get(position), convertView);
+            if (position == extendedViewItem){
+                if (viewHolder.extensionLayout.getChildCount() == 0)
+                    convertView = extendedItem.getView(menuItems.get(position), convertView);
+                else if (forceReviewsUpdate) {
+                    convertView = extendedItem.reviewsUpdate(menuItems.get(position), convertView);
+                    forceReviewsUpdate = false;
+                }
             } else if (position != extendedViewItem && viewHolder.extensionLayout.getChildCount() > 0){
                 viewHolder.extensionLayout.removeAllViews();
             }

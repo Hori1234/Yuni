@@ -52,6 +52,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         this.menuItem = menuItem;
 
         LinearLayout extensionLayout = convertView.findViewById(R.id.extendedDetails);
+        // Ensure Container Layout is empty
+        extensionLayout.removeAllViews();
+        // Inflate Extended Layout
         extensionLayout.addView(LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_extension, null,false));
         // Retract Symbol
         if (convertView.findViewById(R.id.extendView).getVisibility() == View.VISIBLE ) {
@@ -69,6 +72,13 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         reviewsContainer = convertView.findViewById(R.id.productReviews);
         RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
 
+        return convertView;
+    }
+
+    public View reviewsUpdate(MenuItem menuItem, View convertView) {
+        reviewsContainer = convertView.findViewById(R.id.productReviews);
+        reviewsContainer.removeAllViews();
+        RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
         return convertView;
     }
 
@@ -164,6 +174,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
     @Override
     public void onReceive(List<MenuItemReview> reviews) {
         if (reviews != null && reviews.size() > 0) {
+            // Sort Reviews by Date
+            reviews.sort(new Review.CustomComparator());
+            // Cast The array
             this.reviews = new ArrayList<>(reviews);
             // Display at most 2 reviews
             for (int i = 0; i < Math.min(2, reviews.size()); i++) {
