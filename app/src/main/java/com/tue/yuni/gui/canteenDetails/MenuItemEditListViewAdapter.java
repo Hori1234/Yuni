@@ -63,23 +63,15 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             // Default Layout
-            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item, parent, false);
-
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_edit, parent, false);
 
             // ViewHolder
             viewHolder = new ViewHolder();
             viewHolder.menuItemName = convertView.findViewById(R.id.productName);
-
-
-//            starredButton = convertView.findViewById(R.id.starredButton);
-            availabilityButton = convertView.findViewById(R.id.availibilityButton);
-            scheduleButton = convertView.findViewById(R.id.sheduleButton);
-            deleteButton = convertView.findViewById(R.id.deleteMenuItem);
-
 //            viewHolder.starredButton = this.starredButton;
-            viewHolder.availabilityButton = this.availabilityButton;
-            viewHolder.scheduleButton = this.scheduleButton;
-            viewHolder.deleteButton = this.deleteButton;
+            viewHolder.availabilityButton =  convertView.findViewById(R.id.availibilityButton);
+            viewHolder.scheduleButton = convertView.findViewById(R.id.sheduleButton);
+            viewHolder.deleteButton = convertView.findViewById(R.id.deleteMenuItem);
 
             convertView.setTag(viewHolder);
         } else {

@@ -77,8 +77,8 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         // Read Arguments From Bundle
-        if (args != null && args.containsKey("menuItemsByCategory")) {
-            menuItems = args.getParcelableArrayList("menuItemsByCategory");
+        if (args != null && args.containsKey("menuItems")) {
+            menuItems = args.getParcelableArrayList("menuItems");
         }
     }
 
@@ -104,8 +104,6 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
         }
 
     }
-
-
 
 
     @Override
