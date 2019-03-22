@@ -17,6 +17,10 @@ public class Schedule implements Parcelable {
         this.schedule = schedule;
     }
 
+    public boolean getDay(Day day){
+        return schedule.get(day);
+    }
+
     public String toBitmask() {
         String bitmask = "";
 
@@ -49,6 +53,12 @@ public class Schedule implements Parcelable {
         in.readMap(this.schedule, Boolean.class.getClassLoader());
     }
 
+
+
+    /**
+     * TODO
+     * @return
+     */
     @Override
     public int describeContents() {
         return 0;

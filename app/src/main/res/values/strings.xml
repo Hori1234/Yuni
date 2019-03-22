@@ -42,6 +42,7 @@
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="help">Help</string>
+    <string name="descriptionBox">Enter description here</string>
 
     <!--Busyness Ratings-->
     <string name="busy">Busy</string>
@@ -54,6 +55,15 @@
     <string name="closing">Closing</string>
     <string name="closed">Closed</string>
     <string name="nameDescrition" />
+    <string name="stock_high">in  stock</string>
+    <string name="stock_low">low stock</string>
+    <string name="stock_out" >out of stock</string>
+    <string name="stock">Stock:</string>
+    <string name="set_availability_button">set availability</string>
+    <string name="certainty">Are you sure?</string>
+    <string name="remove_dish">remove dish</string>
+    <string name="set_availability">Set availabilty:</string>
+    <string name="set_schedule">set schedule</string>string>
 
     <!-- Thijs -->
     <string-array name="canteen_array">
