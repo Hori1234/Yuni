@@ -15,7 +15,9 @@ public class MenuItemParser {
                 data.getString("name"),
                 data.getString("description"),
                 data.getString("category"),
-                2.5f,
+                Double.isNaN(data.optDouble("rating"))
+                        ? 0
+                        : (float) data.getDouble("rating"),
                 0
         );
     }
@@ -26,7 +28,9 @@ public class MenuItemParser {
                 data.getString("name"),
                 data.getString("description"),
                 data.getString("category"),
-                2.5f,
+                Double.isNaN(data.optDouble("rating"))
+                        ? 0
+                        : (float) data.getDouble("rating"),
                 0,
                 data.getInt("menu_id"),
                 Schedule.fromStorage(data.getJSONObject("schedule"))

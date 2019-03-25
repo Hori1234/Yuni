@@ -37,7 +37,9 @@ public class CanteenParser {
                 new Location(), // TODO: Location
                 data.getString("building"),
                 0, // TODO: Image resource id
-                2.5f,
+                Double.isNaN(data.optDouble("rating"))
+                        ? 0
+                        : (float) data.getDouble("rating"),
                 3,
                 menuItems
         );
