@@ -17,7 +17,7 @@ import com.tue.yuni.R;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Schedule;
 
-public class deleteDialog implements View.OnClickListener{
+public class deleteDialog {
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
@@ -44,8 +44,17 @@ public class deleteDialog implements View.OnClickListener{
             // Show Alert Dialog
             dialog = alertDialog.show();
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            // Setup Event
-            deleteButton.setOnClickListener(this);
+
+            // Setup Events
+            deleteButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    // Notify the parent of the feedback given
+
+                    dismiss();
+                    parent.onChangeMenuItem(1,menuItem,null,0);
+                }
+            });
             Button cancelButton = view.findViewById(R.id.cancelButton);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,11 +73,5 @@ public class deleteDialog implements View.OnClickListener{
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        // Notify the parent of the feedback given
 
-        dismiss();
-        parent.onChangeMenuItem(1,menuItem,null,0);
-    }
 }
