@@ -40,7 +40,7 @@ public class deleteDialog {
             View view = LayoutInflater.from(ctx).inflate(R.layout.layout_delete_menu_item, null);
             alertDialog.setView(view);
             // Get View UI Elements
-            Button deleteButton = view.findViewById(R.id.sendButton);
+            Button deleteButton = view.findViewById(R.id.removeDish);
             // Show Alert Dialog
             dialog = alertDialog.show();
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
