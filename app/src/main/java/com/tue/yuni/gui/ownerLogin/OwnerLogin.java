@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,6 +95,7 @@ public class OwnerLogin extends Fragment implements RemoteStorage.CanteensDataHa
                     },
 
                     error -> {
+                        Log.d("abcd", error.getMessage() + "");
                         Toast toast = Toast.makeText(getActivity().getApplicationContext(), "An error occurred, please try again, if this keeps happening, contant the developper", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP, 0, 30);
                         toast.show();

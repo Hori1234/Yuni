@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
 import com.tue.yuni.gui.canteenDetails.MenuItemEditListTab;
 import com.tue.yuni.gui.ownerLogin.OwnerLogin;
 import com.tue.yuni.models.ExtendedMenuItem;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 
 public class OwnerLanding extends Fragment implements View.OnClickListener {
     Canteen canteen;
-    Button menu, info, reviews, statistics, switchCanteen;
+    Button menu, info, reviews, addItem, switchCanteen;
 
     @Nullable
     @Override
@@ -36,7 +37,7 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
         menu = view.findViewById(R.id.buttonMenu);
         info = view.findViewById(R.id.buttonInfo);
         reviews = view.findViewById(R.id.buttonReviews);
-        statistics = view.findViewById(R.id.buttonStatistics);
+        addItem = view.findViewById(R.id.buttonAddItem);
         switchCanteen = view.findViewById(R.id.buttonSwitch);
 
         // Setup UI
@@ -48,7 +49,7 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
         //button for the reviews
         reviews.setOnClickListener(this);
         //button for the statistics
-        statistics.setOnClickListener(this);
+        addItem.setOnClickListener(this);
         //button for switching canteens goes to login so an employee can switch canteens
         switchCanteen.setOnClickListener(this);
 
@@ -92,12 +93,11 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
             ft.replace(R.id.content, new OwnerLogin());
             //todo: link to correct destiantion
             ft.commit();
-        } else if (v == statistics) {
+        } else if (v == addItem) {
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, new OwnerLogin());
-            //todo: link to correct destination
+            ft.replace(R.id.content, new MenuItemFragment());
             ft.commit();
         } else if (v == switchCanteen) {
             // Transition to Fragment

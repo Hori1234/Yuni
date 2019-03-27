@@ -86,24 +86,37 @@ public class MenuItemFragment extends Fragment {
         Button addDishBtn = v.findViewById(R.id.button);
         addDishBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (descriptionTxt.getText().toString().equals("") || nameTxt.getText().toString().equals("") || imageView.getDrawable() == null) {
+                    final String error = "All the fields must be completed";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Error");
+                    builder.setMessage(error);
+                    builder.show();
+                }else {
+                    //What has to be done when add dish button is pressed
+                    //Getting the selected item of the spiner
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        public void onItemSelected(
+                                AdapterView<?> adapterView, View view,
+                                int i, long l) {
+                            itemType = spinner.getItemAtPosition(i).toString();
+                        }
 
-                //What has to be done when add dish button is pressed
-                //Getting the selected item of the spiner
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(
-                            AdapterView<?> adapterView, View view,
-                            int i, long l) {
-                        itemType = spinner.getItemAtPosition(i).toString();
-                    }
+                        public void onNothingSelected(
+                                AdapterView<?> adapterView) {
+                        }
+                    });
 
-                    public void onNothingSelected(
-                            AdapterView<?> adapterView) {
-                    }
-                });
+                    //Getting the text fron the editable text views
+                    itemDescription = descriptionTxt.getText().toString();
+                    itemName = nameTxt.getText().toString();
 
-                //Getting the text fron the editable text views
-                itemDescription = descriptionTxt.getText().toString();
-                itemName = nameTxt.getText().toString();
+                    final String error = "Item was add to the database";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Succes");
+                    builder.setMessage(error);
+                    builder.show();
+                }
             }
         });
 
@@ -245,4 +258,5 @@ public class MenuItemFragment extends Fragment {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
     }
+
 }
