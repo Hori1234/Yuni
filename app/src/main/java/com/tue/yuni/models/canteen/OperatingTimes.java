@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class OperatingTimes implements Parcelable {
 
-    private Map<Day, String> openingTimes;
-    private Map<Day, String> closingTimes;
+    private Map<Day, Integer> openingTimes;
+    private Map<Day, Integer> closingTimes;
 
-    public OperatingTimes(Map<Day, String> openingTimes, Map<Day, String> closingTimes) {
+    public OperatingTimes(Map<Day, Integer> openingTimes, Map<Day, Integer> closingTimes) {
         this.openingTimes = openingTimes;
         this.closingTimes = closingTimes;
     }
@@ -39,7 +39,7 @@ public class OperatingTimes implements Parcelable {
      * @param day Day of the week
      * @return Opening time
      */
-    public String getOpeningTime(Day day) {
+    public int getOpeningTime(Day day) {
         if (!openingTimes.containsKey(day)) {
             throw new IllegalStateException(
                     String.format("Opening times map does not contain day of week '%s'", day.asString())
@@ -56,7 +56,7 @@ public class OperatingTimes implements Parcelable {
      * @param day Day of the week
      * @return Opening time
      */
-    public String getClosingTime(Day day) {
+    public int getClosingTime(Day day) {
         if (!closingTimes.containsKey(day)) {
             throw new IllegalStateException(
                     String.format("Closing times map does not contain day of week '%s'", day.asString())
@@ -74,13 +74,13 @@ public class OperatingTimes implements Parcelable {
      * @throws JSONException If the data cannot be read
      */
     public static OperatingTimes fromStorage(JSONObject data) throws JSONException {
-        Map<Day, String> openingTimes = new HashMap<>();
-        Map<Day, String> closingTimes = new HashMap<>();
+        Map<Day, Integer> openingTimes = new HashMap<>();
+        Map<Day, Integer> closingTimes = new HashMap<>();
 
         for (Day day : Day.values()) {
             if (data.has(day.name())) {
-                openingTimes.put(day, data.getJSONObject(day.name()).getString("opening"));
-                closingTimes.put(day, data.getJSONObject(day.name()).getString("closing"));
+                openingTimes.put(day, data.getJSONObject(day.name()).getInt("opening"));
+                closingTimes.put(day, data.getJSONObject(day.name()).getInt("closing"));
             }
         }
 
@@ -91,10 +91,8 @@ public class OperatingTimes implements Parcelable {
      * Parcelable Implementation
      */
     protected OperatingTimes(Parcel in) {
-        Map<Day, String> openingTimes = new HashMap<>();
-        Map<Day, String> closingTimes = new HashMap<>();
-        in.readMap(this.openingTimes, String.class.getClassLoader());
-        in.readMap(this.closingTimes, String.class.getClassLoader());
+        in.readMap(this.openingTimes, Integer.class.getClassLoader());
+        in.readMap(this.closingTimes, Integer.class.getClassLoader());
     }
 
     @Override

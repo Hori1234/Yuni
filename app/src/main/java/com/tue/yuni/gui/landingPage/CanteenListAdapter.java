@@ -109,8 +109,8 @@ public class CanteenListAdapter extends BaseAdapter {
             int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
             if (canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().isOpen(Day.values()[day])) {
                 // Get Current Time
-                int open = Integer.parseInt(canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getOpeningTime(Day.values()[day]));
-                int close = Integer.parseInt(canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getClosingTime(Day.values()[day]));
+                int open = canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getOpeningTime(Day.values()[day]);
+                int close = canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getClosingTime(Day.values()[day]);
                 int currentTime = calendar.get(Calendar.HOUR_OF_DAY) * 100 + calendar.get(Calendar.MINUTE);
                 // Display Open Or Closed for the canteen
                 if (open <= currentTime && currentTime < close) {

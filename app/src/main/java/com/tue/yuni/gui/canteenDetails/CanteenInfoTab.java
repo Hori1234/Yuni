@@ -77,8 +77,8 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
             // Check if Canteen is open on day i
             if (canteen.getOperatingTimes().isOpen(Day.values()[i])) {
                 // Parse Time
-                int openTime = Integer.parseInt(canteen.getOperatingTimes().getOpeningTime(Day.values()[i]));
-                int closeTime = Integer.parseInt(canteen.getOperatingTimes().getClosingTime(Day.values()[i]));
+                int openTime = canteen.getOperatingTimes().getOpeningTime(Day.values()[i]);
+                int closeTime = canteen.getOperatingTimes().getClosingTime(Day.values()[i]);
                 int hOpen = openTime / 100;
                 int mOpen = openTime % 100;
                 int hClose = closeTime / 100;
