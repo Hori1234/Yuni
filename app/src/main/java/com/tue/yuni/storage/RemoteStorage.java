@@ -321,6 +321,90 @@ public class RemoteStorage {
     }
 
     /**
+     * Creates a new menu item in the database.
+     *
+     * @param password     Owner password
+     * @param name         Name of the menu item
+     * @param description  Description of the menu item
+     * @param category     Category of the menu item
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void createMenuItem(
+            String password,
+            String name,
+            String description,
+            String category,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("name", name);
+            data.put("description", description);
+            data.put("category", category.toUpperCase());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+
+            return;
+        }
+
+        // Perform request
+        authenticatedObjectRequest(
+                Request.Method.POST,
+                BASE_URL + "/menu_items",
+                data,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Updates a menu item.
+     *
+     * @param password     Owner password
+     * @param menuItemId   Menu item id
+     * @param name         New name of the menu item
+     * @param description  New description of the menu item
+     * @param category     New category of the menu item
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void updateMenuItem(
+            String password,
+            int menuItemId,
+            String name,
+            String description,
+            String category,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("name", name);
+            data.put("description", description);
+            data.put("category", category.toUpperCase());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+
+            return;
+        }
+
+        // Perform request
+        authenticatedObjectRequest(
+                Request.Method.PATCH,
+                BASE_URL + "/menu_items/" + menuItemId,
+                data,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
      * Adds a menu item to a menu of a canteen.
      *
      * @param canteenId    Canteen id
