@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.models.canteen.OperatingTimes;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.MenuItemReview;
 import com.tue.yuni.storage.parser.CanteenParser;
@@ -464,6 +465,38 @@ public class RemoteStorage {
                 Request.Method.DELETE,
                 BASE_URL + "/menu/" + menuId,
                 null,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    public void updateCanteen(
+            String password,
+            int canteenId,
+            String name,
+            String description,
+            OperatingTimes operatingTimes,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("name", name);
+            data.put("description", description);
+            data.put("operating_times", operatingTimes.toJson());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+
+            return;
+        }
+
+        // Perform request
+        authenticatedObjectRequest(
+                Request.Method.PATCH,
+                BASE_URL + "/canteens/" + canteenId,
+                data,
                 response -> handler.onCompleted(),
                 errorHandler::onError,
                 password

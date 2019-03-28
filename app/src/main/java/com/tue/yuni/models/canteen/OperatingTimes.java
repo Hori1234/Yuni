@@ -66,6 +66,22 @@ public class OperatingTimes implements Parcelable {
         return closingTimes.get(day);
     }
 
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+
+        for (Day day : Day.values()) {
+            if (openingTimes.containsKey(day)) {
+                JSONObject data = new JSONObject();
+                data.put("opening", openingTimes.get(day));
+                data.put("closing", closingTimes.get(day));
+
+                json.put(day.name(), data);
+            }
+        }
+
+        return json;
+    }
+
     /**
      * Creates a new OperatingTimes object from json data
      *
@@ -73,7 +89,7 @@ public class OperatingTimes implements Parcelable {
      * @return OperatingTimes object
      * @throws JSONException If the data cannot be read
      */
-    public static OperatingTimes fromStorage(JSONObject data) throws JSONException {
+    public static OperatingTimes fromJson(JSONObject data) throws JSONException {
         Map<Day, Integer> openingTimes = new HashMap<>();
         Map<Day, Integer> closingTimes = new HashMap<>();
 
