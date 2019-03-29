@@ -8,12 +8,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.R;
+import com.tue.yuni.models.Location;
+import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.storage.FavouriteStorage;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
@@ -50,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
             ft.add(R.id.content, new LandingView());
             ft.commit();
         }
+
+        LocationService.initialise(
+                this,
+                (loc) -> {
+                    Log.d("abcd", LocationService.getWalkingTime(
+                            new Location(5.485019, 51.447831),
+                            loc
+                    ) + "");
+                }
+                );
+
 }
 
     @Override

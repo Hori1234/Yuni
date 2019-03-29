@@ -34,7 +34,7 @@ public class CanteenParser {
                 data.getString("name"),
                 data.getString("description"),
                 OperatingTimes.fromJson(data.getJSONObject("operating_times")),
-                new Location(), // TODO: Location
+                new Location(0, 0), // TODO: Location
                 data.getString("building"),
                 0, // TODO: Image resource id
                 Double.isNaN(data.optDouble("rating"))
