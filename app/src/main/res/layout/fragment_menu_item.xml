@@ -1,83 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.ownerLanding.OwnerLanding">
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.09"
+        android:paddingTop="10sp">
+
+        <EditText
+            android:id="@+id/nameID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8sp"
+            android:paddingEnd="8sp"
+            android:ems="10"
+            android:hint="@string/itemtitle"
+            android:inputType="textMultiLine" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.18"
+        android:paddingTop="10sp">
+
+        <EditText
+            android:id="@+id/descriptionID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8sp"
+            android:layout_marginEnd="8sp"
+            android:autofillHints="coffee"
+            android:ems="10"
+            android:hint="@string/description"
+            android:inputType="textMultiLine" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.41">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            tools:srcCompat="@tools:sample/backgrounds/scenic[3]" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.10"
+        android:paddingTop="10sp">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/upload_photo" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"
+        android:paddingTop="10sp">
+
+        <Spinner
+            android:id="@+id/categoryspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:entries="@array/planets_array"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/add_dish"
+            tools:text="Add Dish" />
+
+    </RelativeLayout>
 
 
-
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="72dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="146dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add Dish"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Add Dish" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="201dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="105dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-        android:Text = "@stringArrays/planets_array"</Spinner>
-
-    <EditText
-        android:id="@+id/descriptionID"
-        android:layout_width="402dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="19dp"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/nameID"
-        android:layout_width="402dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
+    <!--<View
         android:id="@+id/view2"
         android:layout_width="wrap_content"
         android:layout_height="281dp"
@@ -86,35 +112,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="350dp"
-        android:layout_height="228dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:scaleType="centerInside"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.415"
-        tools:srcCompat="@tools:sample/backgrounds/scenic[3]" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="133dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginBottom="6dp"
-        android:text="Upload Photo"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.454" /><![CDATA[>]]>
-</android.support.constraint.ConstraintLayout>
+    -->
+</LinearLayout>

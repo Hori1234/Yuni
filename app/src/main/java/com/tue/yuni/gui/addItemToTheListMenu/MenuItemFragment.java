@@ -61,7 +61,7 @@ public class MenuItemFragment extends Fragment {
         descriptionTxt = v.findViewById(R.id.descriptionID);
 
         //Spinner Initializaton
-        Spinner spinner = v.findViewById(R.id.spinner);
+        Spinner spinner = v.findViewById(R.id.categoryspinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.planets_array, android.R.layout.simple_spinner_item);

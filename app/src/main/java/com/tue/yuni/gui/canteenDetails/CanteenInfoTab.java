@@ -22,11 +22,8 @@ import com.tue.yuni.models.Day;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.Review;
-<<<<<<< HEAD
 import com.tue.yuni.services.network.NetworkService;
-=======
 import com.tue.yuni.services.mapper.BusynessMapper;
->>>>>>> master
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;

@@ -83,10 +83,10 @@ public class OwnerLogin extends Fragment implements RemoteStorage.CanteensDataHa
                         landing.setArguments(bundle);
                         //the name and ID of the canteen selected in the spinner is saved to be used later
                         ft.addToBackStack("OwnerLogin");
-                        //todo: decide wether this should stay added to the back stack
+                        //todo: decide whether this should stay added to the back stack
                         ft.replace(R.id.content, landing);
                         ft.commit();
-                        //transition to the ownerlanding fragment if password was correct
+                        //transition to the landing page for employees fragment if password was correct
                     } else {
                         editPassword.setText("");
                         //password resetted to allow for easy re entering of password
