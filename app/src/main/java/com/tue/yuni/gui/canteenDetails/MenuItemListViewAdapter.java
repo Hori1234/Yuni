@@ -12,8 +12,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.tue.yuni.gui.util.AvailabilityIndicator;
+import com.tue.yuni.gui.util.TrafficLightIndicator;
 import com.tue.yuni.gui.review.FeedbackDialog;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.R;
 import com.tue.yuni.storage.FavouriteStorage;
@@ -22,14 +23,14 @@ import java.util.List;
 
 public class MenuItemListViewAdapter extends BaseAdapter {
     private Context ctx;
-    private List<MenuItem> menuItems;
+    private List<ExtendedMenuItem> menuItems;
     private int extendedViewItem = -1;
     private FeedbackDialog.DialogContent parent;
     // Extension Related
     private MenuItemExtension extendedItem;
     private boolean forceReviewsUpdate = false;
 
-    public MenuItemListViewAdapter(Context ctx, List<MenuItem> menuItems, FeedbackDialog.DialogContent parent) {
+    public MenuItemListViewAdapter(Context ctx, List<ExtendedMenuItem> menuItems, FeedbackDialog.DialogContent parent) {
         this.ctx = ctx;
         this.menuItems = menuItems;
         this.parent = parent;
@@ -107,7 +108,7 @@ public class MenuItemListViewAdapter extends BaseAdapter {
         // Default View
         viewHolder.menuItemName.setText(menuItems.get(position).getName());
         viewHolder.menuItemRating.setRating(menuItems.get(position).getRating());
-        viewHolder.menuItemAvailability.setAvailability(menuItems.get(position).getAvailability());
+        viewHolder.menuItemAvailability.setState(menuItems.get(position).getAvailability());
         if (viewHolder.extendButton .getVisibility() == View.INVISIBLE && position != extendedViewItem) {
             viewHolder.extendButton .setVisibility(View.VISIBLE);
         }
@@ -132,7 +133,7 @@ public class MenuItemListViewAdapter extends BaseAdapter {
     private static class ViewHolder {
         private TextView menuItemName;
         private RatingBar menuItemRating;
-        private AvailabilityIndicator menuItemAvailability;
+        private TrafficLightIndicator menuItemAvailability;
         private ToggleButton favoriteButton;
 
         private ImageView extendButton;

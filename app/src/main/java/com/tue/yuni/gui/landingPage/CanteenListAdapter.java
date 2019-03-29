@@ -9,9 +9,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.tue.yuni.R;
-import com.tue.yuni.gui.util.AvailabilityIndicator;
+import com.tue.yuni.gui.util.TrafficLightIndicator;
 import com.tue.yuni.models.Day;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.services.mapper.BusynessMapper;
 import com.tue.yuni.storage.FavouriteStorage;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class CanteenListAdapter extends BaseAdapter {
         return null;
     }
 
-    private void buildItemsList(){
+    private void buildItemsList() {
         if (canteens != null) {
             List<String> locations = new ArrayList<>();
             // Find all different buildings
@@ -87,13 +88,13 @@ public class CanteenListAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             // Check if Item is a Location or a Canteen
-            if (!listItem.get(position).isCanteen()){
+            if (!listItem.get(position).isCanteen()) {
                 convertView = createCanteenHeader(viewHolder, parent);
             } else {
                 convertView = createCanteen(viewHolder, parent);
             }
         } else {
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
             // Check if the View needs to change type
             if (viewHolder.isCanteen() && !listItem.get(position).isCanteen()) {
                 convertView = createCanteenHeader(viewHolder, parent);
@@ -101,17 +102,21 @@ public class CanteenListAdapter extends BaseAdapter {
                 convertView = createCanteen(viewHolder, parent);
             }
         }
+
         // Setup the Item parameters
         if (viewHolder.isCanteen()) {
-            viewHolder.textView1.setText(canteens.get(listItem.get(position).canteenPosition).getName());
+            Canteen canteen = canteens.get(listItem.get(position).canteenPosition);
+
+            viewHolder.textView1.setText(canteen.getName());
             // Canteen Status Processing
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
-            if (canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().isOpen(Day.values()[day])) {
+            if (canteen.getOperatingTimes().isOpen(Day.values()[day])) {
                 // Get Current Time
-                int open = canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getOpeningTime(Day.values()[day]);
-                int close = canteens.get(listItem.get(position).canteenPosition).getOperatingTimes().getClosingTime(Day.values()[day]);
+                int open = canteen.getOperatingTimes().getOpeningTime(Day.values()[day]);
+                int close = canteen.getOperatingTimes().getClosingTime(Day.values()[day]);
                 int currentTime = calendar.get(Calendar.HOUR_OF_DAY) * 100 + calendar.get(Calendar.MINUTE);
+
                 // Display Open Or Closed for the canteen
                 if (open <= currentTime && currentTime < close) {
                     if ((close % 100) - 5 < 0) {
@@ -133,26 +138,22 @@ public class CanteenListAdapter extends BaseAdapter {
                 viewHolder.textView2.setText(ctx.getString(R.string.closed));
                 viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenClosed));
             }
+
             // Favorites Processing
             int favoritesCount = 0;
-            for (int i = 0; i < canteens.get(listItem.get(position).canteenPosition).getMenuItems().size(); i++) {
-                if (FavouriteStorage.get().checkFavorite(canteens.get(listItem.get(position).canteenPosition).getMenuItems().get(i).getId())){
+            for (int i = 0; i < canteen.getMenuItems().size(); i++) {
+                if (FavouriteStorage.get().checkFavorite(canteen.getMenuItems().get(i).getId())) {
                     favoritesCount++;
                 }
             }
             viewHolder.canteenFavs.setText(ctx.getString(R.string.favoritesAbbreviation) + ": " + favoritesCount);
+
             // Canteen Busyness Processing
-            int busyness = 100 - canteens.get(listItem.get(position).canteenPosition).getBusyness();
-            viewHolder.canteenBusyness.setAvailability(busyness);
-            if (0 <= busyness && busyness < viewHolder.canteenBusyness.getThreshold(0)) {
-                viewHolder.canteenBusynessText.setText(ctx.getString(R.string.busy));
-            } else if (viewHolder.canteenBusyness.getThreshold(0) <= busyness && busyness < viewHolder.canteenBusyness.getThreshold(1)) {
-                viewHolder.canteenBusynessText.setText(ctx.getString(R.string.moderate));
-            } else if (viewHolder.canteenBusyness.getThreshold(1) <= busyness && busyness < viewHolder.canteenBusyness.getThreshold(2)) {
-                viewHolder.canteenBusynessText.setText(ctx.getString(R.string.quiet));
-            }
+            viewHolder.canteenBusyness.setState(BusynessMapper.getState(canteen.getBusyness()));
+            viewHolder.canteenBusynessText.setText(ctx.getString(BusynessMapper.getTextResource(canteen.getBusyness())));
+
             // Canteen Rating Processing
-            viewHolder.canteenRating.setRating(canteens.get(listItem.get(position).canteenPosition).getRating());
+            viewHolder.canteenRating.setRating(canteen.getRating());
         } else {
             viewHolder.textView1.setText(listItem.get(position).getLocation());
             // Solution for Distance Required
@@ -161,7 +162,7 @@ public class CanteenListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private View createCanteenHeader(ViewHolder viewHolder, ViewGroup parent){
+    private View createCanteenHeader(ViewHolder viewHolder, ViewGroup parent) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item_header, parent, false);
         viewHolder.textView1 = view.findViewById(R.id.locationName);
         viewHolder.textView2 = view.findViewById(R.id.locationDistance);
@@ -173,7 +174,7 @@ public class CanteenListAdapter extends BaseAdapter {
         return view;
     }
 
-    private View createCanteen(ViewHolder viewHolder, ViewGroup parent){
+    private View createCanteen(ViewHolder viewHolder, ViewGroup parent) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.layout_landing_page_canteen_list_item, parent, false);
         viewHolder.textView1 = view.findViewById(R.id.canteenName);
         viewHolder.textView2 = view.findViewById(R.id.canteenOpenOrClosed);
@@ -192,11 +193,11 @@ public class CanteenListAdapter extends BaseAdapter {
         private TextView textView1;         // Either canteenName or locationName
         private TextView textView2;         // Either canteenOpenOrClosed or locationDistance
         private TextView canteenFavs;
-        private AvailabilityIndicator canteenBusyness;
+        private TrafficLightIndicator canteenBusyness;
         private TextView canteenBusynessText;
         private RatingBar canteenRating;
 
-        private boolean isCanteen(){
+        private boolean isCanteen() {
             if (canteenFavs == null) return false;
             return true;
         }
@@ -205,7 +206,7 @@ public class CanteenListAdapter extends BaseAdapter {
     /**
      * Customized List of Buildings and Canteens
      */
-    private class Item{
+    private class Item {
         private String location;
         private int canteenPosition;
 
@@ -214,11 +215,11 @@ public class CanteenListAdapter extends BaseAdapter {
             this.canteenPosition = canteenPosition;
         }
 
-        public String getLocation(){
+        public String getLocation() {
             return location;
         }
 
-        public boolean isCanteen(){
+        public boolean isCanteen() {
             if (canteenPosition == -1)
                 return false;
             return true;

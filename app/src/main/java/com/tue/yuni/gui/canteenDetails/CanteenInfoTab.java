@@ -17,11 +17,12 @@ import android.widget.TextView;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.review.FeedbackDialog;
 import com.tue.yuni.gui.review.ReviewBox;
-import com.tue.yuni.gui.util.AvailabilityIndicator;
+import com.tue.yuni.gui.util.TrafficLightIndicator;
 import com.tue.yuni.models.Day;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.Review;
+import com.tue.yuni.services.mapper.BusynessMapper;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     private Canteen canteen;
 
     private View view;
-    private AvailabilityIndicator busyness;
+    private TrafficLightIndicator busyness;
     private TextView busynessText;
     private TextView[] dayHoursTextView = new TextView[7];
     private TextView descriptionTextView;
@@ -63,15 +64,9 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         leaveReview = view.findViewById(R.id.sendReview);
 
         // Busyness
-        int busynessVal = 100 - canteen.getBusyness();
-        busyness.setAvailability(busynessVal);
-        if (0 <= busynessVal && busynessVal < busyness.getThreshold(0)) {
-            busynessText.setText(getContext().getString(R.string.busy));
-        } else if (busyness.getThreshold(0) <= busynessVal && busynessVal < busyness.getThreshold(1)) {
-            busynessText.setText(getContext().getString(R.string.moderate));
-        } else if (busyness.getThreshold(1) <= busynessVal && busynessVal < busyness.getThreshold(2)) {
-            busynessText.setText(getContext().getString(R.string.quiet));
-        }
+        busyness.setState(BusynessMapper.getState(canteen.getBusyness()));
+        busynessText.setText(getContext().getString(BusynessMapper.getTextResource(canteen.getBusyness())));
+
         // Opening Hours
         for (int i = 0; i < 7; i++) {
             // Check if Canteen is open on day i

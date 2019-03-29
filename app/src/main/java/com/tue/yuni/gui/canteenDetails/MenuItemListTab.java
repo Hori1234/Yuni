@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.review.FeedbackDialog;
+import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.storage.RemoteStorage;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class MenuItemListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, FeedbackDialog.DialogContent {
     private ListView listView;
     private MenuItemListViewAdapter listAdapter;
-    private List<MenuItem> menuItems;
+    private List<ExtendedMenuItem> menuItems;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

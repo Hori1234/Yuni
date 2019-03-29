@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class ExtendedMenuItem extends MenuItem implements Parcelable {
     private int menuId;
     private Schedule schedule;
+    private Availability availability;
 
     public ExtendedMenuItem(
             int id,
@@ -13,13 +14,14 @@ public class ExtendedMenuItem extends MenuItem implements Parcelable {
             String description,
             String category,
             float rating,
-            int availability,
+            Availability availability,
             int menuId,
             Schedule schedule
     ) {
-        super(id, name, description, category, rating, availability);
+        super(id, name, description, category, rating);
         this.menuId = menuId;
         this.schedule = schedule;
+        this.availability = availability;
     }
 
     public int getMenuId() {
@@ -30,11 +32,18 @@ public class ExtendedMenuItem extends MenuItem implements Parcelable {
         return schedule;
     }
 
+    public Availability getAvailability() {
+        return availability;
+    }
+
     /**
      * Parcelable Implementation
      */
     protected ExtendedMenuItem(Parcel in) {
         super(in);
+        menuId = in.readInt();
+        schedule = in.readParcelable(Schedule.class.getClassLoader());
+        availability = Availability.valueOf(in.readString());
     }
 
     @Override
@@ -44,8 +53,10 @@ public class ExtendedMenuItem extends MenuItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeInt(menuId);
         dest.writeParcelable(schedule, 0);
+        dest.writeString(availability.name());
     }
 
     public static final Creator<ExtendedMenuItem> CREATOR = new Creator<ExtendedMenuItem>() {

@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!--MenuItemListTab Related-->
-    <string name="availability">Availability</string>
+    <string name="legacyAvailability">Availability</string>
     <string name="feedback">Feedback</string>
     <string name="view_more">View More</string>
     <string name="next">Next</string>
@@ -59,7 +59,7 @@
     <string name="stock_low">low stock</string>
     <string name="stock_out" >out of stock</string>
     <string name="stock">Stock:</string>
-    <string name="set_availability_button">set availability</string>
+    <string name="set_availability_button">set legacyAvailability</string>
     <string name="certainty">Are you sure?</string>
     <string name="remove_dish">remove dish</string>
     <string name="set_availability">Set availabilty:</string>

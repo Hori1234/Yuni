@@ -25,7 +25,7 @@ public class CanteenView extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private List<String> menuItemCategories;
-    private List<List<MenuItem>> menuItemsByCategory;
+    private List<List<ExtendedMenuItem>> menuItemsByCategory;
 
     @Nullable
     @Override
@@ -53,7 +53,7 @@ public class CanteenView extends Fragment {
                     default:
                         // Create Arguments
                         Bundle arguments = new Bundle();
-                        arguments.putParcelableArrayList("menuItemsByCategory", (ArrayList<MenuItem>) menuItemsByCategory.get(i - 1));
+                        arguments.putParcelableArrayList("menuItemsByCategory", (ArrayList<ExtendedMenuItem>) menuItemsByCategory.get(i - 1));
                         // Instantiate MenuItemListTab Fragment and Pass Arguments
                         MenuItemListTab productsListView = new MenuItemListTab();
                         productsListView.setArguments(arguments);

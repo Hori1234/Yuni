@@ -59,13 +59,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <com.tue.yuni.gui.util.AvailabilityIndicator
+            <com.tue.yuni.gui.util.TrafficLightIndicator
                 android:id="@+id/productAvailability"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:lowThreshold="10"
-                app:mediumThreshold="25"
-                app:highThreshold="100"/>
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginStart="1dp"
                 android:id="@+id/textView"

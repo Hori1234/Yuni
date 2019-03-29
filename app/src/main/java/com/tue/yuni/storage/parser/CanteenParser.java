@@ -40,7 +40,7 @@ public class CanteenParser {
                 Double.isNaN(data.optDouble("rating"))
                         ? 0
                         : (float) data.getDouble("rating"),
-                3,
+                1,
                 menuItems
         );
     }

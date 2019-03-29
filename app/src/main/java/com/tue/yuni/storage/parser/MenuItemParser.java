@@ -1,5 +1,6 @@
 package com.tue.yuni.storage.parser;
 
+import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
@@ -17,8 +18,7 @@ public class MenuItemParser {
                 data.getString("category"),
                 Double.isNaN(data.optDouble("rating"))
                         ? 0
-                        : (float) data.getDouble("rating"),
-                0
+                        : (float) data.getDouble("rating")
         );
     }
 
@@ -31,7 +31,7 @@ public class MenuItemParser {
                 Double.isNaN(data.optDouble("rating"))
                         ? 0
                         : (float) data.getDouble("rating"),
-                0,
+                Availability.valueOf(data.getString("availability")),
                 data.getInt("menu_id"),
                 Schedule.fromStorage(data.getJSONObject("schedule"))
         );
