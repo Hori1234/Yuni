@@ -22,7 +22,11 @@ import com.tue.yuni.models.Day;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.Review;
+<<<<<<< HEAD
+import com.tue.yuni.services.network.NetworkService;
+=======
 import com.tue.yuni.services.mapper.BusynessMapper;
+>>>>>>> master
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
@@ -92,7 +96,9 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Overall Canteen Rating
         ratingBar.setRating(canteen.getRating());
         // Reviews
-        RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
+        if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+            RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
+        }
         // Feedback Button
         leaveReview.setOnClickListener(this);
 
@@ -120,17 +126,21 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
             new FeedbackDialog(getContext()).show(new FeedbackDialog.DialogContent() {
                 @Override
                 public void onSendReview(float rating, String reviewText, int ID) {
-                    RemoteStorage.get().createCanteenReview(
-                            ID,
-                            rating,
-                            reviewText,
-                            () -> {
-                                RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
-                            },
-                            e -> {
-                                // ToDo
-                            }
-                    );
+                    if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+                        RemoteStorage.get().createCanteenReview(
+                                ID,
+                                rating,
+                                reviewText,
+                                () -> {
+                                    if (NetworkService.networkAvailabilityHandler((getActivity().getApplicationContext()))){
+                                        RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
+                                    }
+                                },
+                                e -> {
+                                    // ToDo
+                                }
+                        );
+                    }
                 }
             }, canteen.getId());
         }

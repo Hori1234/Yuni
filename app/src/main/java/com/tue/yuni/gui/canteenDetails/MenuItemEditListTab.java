@@ -17,6 +17,7 @@ import com.tue.yuni.gui.editCanteenDialog.DialogContent;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
@@ -96,10 +97,16 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
                 break;
             case 1:
                 //TODO
-                RemoteStorage.get().removeItemFromMenu(menuItem.getMenuId(),PasswordStorage.get().getPassword(),this,this);
+                if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+                    //todo: test this check
+                    RemoteStorage.get().removeItemFromMenu(menuItem.getMenuId(),PasswordStorage.get().getPassword(),this,this);
+                }
                 break;
             case 2:
-                RemoteStorage.get().updateMenuItemSchedule(PasswordStorage.get().getPassword(),menuItem.getMenuId(),schedule,this,this);
+                if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+                    //todo: test this ckeck
+                    RemoteStorage.get().updateMenuItemSchedule(PasswordStorage.get().getPassword(),menuItem.getMenuId(),schedule,this,this);
+                }
                 break;
         }
 

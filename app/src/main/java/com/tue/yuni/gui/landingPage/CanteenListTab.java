@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.canteenDetails.CanteenView;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
@@ -36,8 +37,9 @@ public class CanteenListTab extends Fragment implements AdapterView.OnItemClickL
         // List View Adapter
         listAdapter = new CanteenListAdapter(getContext());
         listView.setAdapter(listAdapter);
-        // Query Server for canteens
-        RemoteStorage.get().getCanteens(this, this);
+        // Query Server for canteens, if network is available
+        if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+            RemoteStorage.get().getCanteens(this, this);}
         // Return View
         return view;
     }

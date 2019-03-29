@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20sp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/the_app_yuni_is_made_for_vitam_the_company_that_runs_the_canteens_on_the_tu_e_campus_it_allows_the_vitam_to_communicate_information_about_the_different_daily_menus_to_the_students_and_staff_who_visit_the_canteen_the_visitors_can_track_their_favourite_menu_items_and_see_where_the_closed_canteens_are_they_can_leave_and_read_reviews_on_canteens_and_dishes_as_well_as_seeing_general_information_about_canteens_including_opening_times_the_app_will_always_start_on_the_list_tab_of_this_page_you_can_navigate_via_the_top_bar_to_access_either_the_map_or_the_list_section_where_you_can_select_a_canteen_to_view_if_you_need_any_help_come_to_this_section_for_information_on_how_to_use_the_app_if_you_click_on_a_canteen_it_will_open_on_this_information_page_you_can_view_the_reviews_and_description_of_the_canteen_as_well_as_opening_hours_and_the_latest_reported_busyness" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25sp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/if_you_are_a_vitam_employee_please_login_using_the_button_below" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/login" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+

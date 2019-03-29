@@ -23,6 +23,7 @@ import com.tue.yuni.gui.util.AsyncImageViewLoader;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.review.MenuItemReview;
 import com.tue.yuni.models.review.Review;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
@@ -70,7 +71,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
         menuItemDescription.setText(menuItem.getDescription());
         // Reviews
         reviewsContainer = convertView.findViewById(R.id.productReviews);
-        RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
+        if (NetworkService.networkAvailabilityHandler(ctx.getApplicationContext())){
+            RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
+        }
 
         return convertView;
     }
@@ -78,7 +81,9 @@ public class MenuItemExtension implements View.OnClickListener, View.OnTouchList
     public View reviewsUpdate(MenuItem menuItem, View convertView) {
         reviewsContainer = convertView.findViewById(R.id.productReviews);
         reviewsContainer.removeAllViews();
-        RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
+        if (NetworkService.networkAvailabilityHandler(ctx.getApplicationContext())){
+            RemoteStorage.get().getMenuItemReviews(menuItem.getId(), this, this);
+        }
         return convertView;
     }
 

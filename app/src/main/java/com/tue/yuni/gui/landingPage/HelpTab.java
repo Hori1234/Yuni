@@ -17,8 +17,8 @@ public class HelpTab extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_landing_page_canteen_map, null);  // Place Holder
-        ((Button)view.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.layout_landing_page_canteen_help, null);  // Place Holder
+        ((Button)view.findViewById(R.id.buttonLogin)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Transition to Fragment
