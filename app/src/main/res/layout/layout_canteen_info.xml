@@ -50,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
 
-                <com.tue.yuni.gui.util.AvailabilityIndicator
+                <com.tue.yuni.gui.util.TrafficLightIndicator
                     android:id="@+id/busyness"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"

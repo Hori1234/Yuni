@@ -2,7 +2,6 @@ package com.tue.yuni.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.Menu;
 
 public class MenuItem implements Parcelable {
     protected final int id;
@@ -10,22 +9,19 @@ public class MenuItem implements Parcelable {
     protected final String description;
     protected final String category;
     protected final float rating;
-    protected final int availability;
 
     public MenuItem(
             int id,
             String name,
             String description,
             String category,
-            float rating,
-            int availability
+            float rating
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
         this.rating = rating;
-        this.availability = availability;
     }
 
     public int getId() {
@@ -48,10 +44,6 @@ public class MenuItem implements Parcelable {
         return rating;
     }
 
-    public int getAvailability() {
-        return availability;
-    }
-
     /**
      * Parcelable Implementation
      */
@@ -61,7 +53,6 @@ public class MenuItem implements Parcelable {
         this.description = in.readString();
         this.category = in.readString();
         this.rating = in.readFloat();
-        this.availability = in.readInt();
     }
 
     @Override
@@ -76,7 +67,6 @@ public class MenuItem implements Parcelable {
         dest.writeString(description);
         dest.writeString(category);
         dest.writeFloat(rating);
-        dest.writeInt(availability);
     }
 
     public static final Creator<MenuItem> CREATOR = new Creator<MenuItem>() {
