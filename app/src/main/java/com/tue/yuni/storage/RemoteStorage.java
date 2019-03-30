@@ -296,6 +296,29 @@ public class RemoteStorage {
     }
 
     /**
+     * Adds a new entry to the busyness database for a specific canteen
+     *
+     * @param canteenId    Canteen id
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void createBusynessEntry(
+            int canteenId,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        queue.add(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        BASE_URL + "/canteens/" + canteenId + "/busyness",
+                        null,
+                        response -> handler.onCompleted(),
+                        errorHandler::onError
+                )
+        );
+    }
+
+    /**
      * @param password            Password
      * @param authenticateHandler Authentication handler
      * @param errorHandler        Error handler
