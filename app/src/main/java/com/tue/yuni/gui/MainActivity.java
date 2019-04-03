@@ -16,13 +16,18 @@ import com.tue.yuni.gui.util.MotionDetector;
 import com.tue.yuni.gui.util.OnShakeListener;
 import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.models.Location;
+import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.storage.FavouriteStorage;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements OnShakeListener {
     MotionDetector motionDetector;
+    List<Canteen> canteens;
+    Location currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +44,27 @@ public class MainActivity extends AppCompatActivity implements OnShakeListener {
         FavouriteStorage.initialize(getApplicationContext());
         // Instantiate Remote Storage
         RemoteStorage.initialise(getApplicationContext());
-        // Initial Fragment Transaction
-        if (savedInstanceState == null) {
-            // Create Fragment Transaction
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.content, new LandingView());
-            ft.commit();
-        }
 
         LocationService.initialize(this,  (locationService, success) -> {
             // Location service is initialized
             if (success) {
+                // Get Location to use in ShakeDetector
                 locationService.requestLocation(location -> {
+                    currentLocation = location;
                     Log.d("abcd", LocationService.getWalkingTime(
                             new Location(5.484207, 51.446439),
                             location
                     ) + "");
                 });
+                // Initial Fragment Transaction
+                if (savedInstanceState == null) {
+                    // Create Fragment Transaction
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.content, new LandingView());
+                    ft.commit();
+                }
             } else {
+                // Exit app since permission was denied
                 System.exit(0);
             }
         });
@@ -91,11 +99,36 @@ public class MainActivity extends AppCompatActivity implements OnShakeListener {
     }
 
     @Override
-    public void onShake(int count) {
-        // Shake 5 times
+    public void onShake(final int count) {
+        // Shake 3 times
         if (count == 3) {
             // ToDo
-            Toast.makeText(getApplicationContext(), "Shaked 3 times", Toast.LENGTH_SHORT).show();
+            if (canteens == null) {
+                // Get all canteens locations for the ShakeDetector;
+                RemoteStorage.get().getCanteens(canteens1 -> {
+                    canteens = canteens1;
+                    // Call function again
+                    onShake(count);
+                }, e -> {
+                    // ToDo Error
+                });
+            } else {
+                for (int i = 0; i < canteens.size(); i++) {
+                    float d = LocationService.distanceInKm(currentLocation, canteens.get(i).getLocation());
+                    Log.d("ShakeDetector", "Distance to canteen " + canteens.get(i).getName() + ": " + d + "km");
+                    // Check if canteen is within 50m
+                    if (d < 0.05) {
+                        RemoteStorage.get().createBusynessEntry(canteens.get(i).getId(), () -> {
+                            // Not Necessary
+                        }, e -> {
+                            // Not Necessary
+                        });
+                        // Notification
+                        Toast.makeText(getApplicationContext(), "Notifying canteen of busyness", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
         }
     }
   

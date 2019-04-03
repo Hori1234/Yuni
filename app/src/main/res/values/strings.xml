@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Yuni</string>
     <string name="action_settings">Settings</string>
+    <string name="minutes">minutes</string>
 
     <!--MenuItemFragment Related-->
     <string name="done">Done</string>

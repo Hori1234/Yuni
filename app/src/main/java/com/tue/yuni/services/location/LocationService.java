@@ -17,6 +17,9 @@ import com.tue.yuni.models.Location;
 
 import java.text.DecimalFormat;
 
+import static java.lang.Math.asin;
+import static java.lang.Math.sqrt;
+
 public class LocationService {
     private static LocationService locationService = null;
 
@@ -123,5 +126,13 @@ public class LocationService {
             }
         }
 
+    }
+
+    public static float distanceInKm(Location start, Location dest) {
+        double p = 0.017453292519943295;     //Pi/180
+        double a = 0.5 -
+                Math.cos((start.getLatitude() - dest.getLatitude()) * p)/2 + Math.cos(start.getLatitude() * p) *
+                Math.cos(dest.getLatitude() * p) * (1 - Math.cos((dest.getLongitude() - start.getLongitude()) * p)) / 2;
+        return (float)(12742 * asin(sqrt(a))); //2*R*asin...
     }
 }

@@ -1,5 +1,8 @@
 package com.tue.yuni.models;
 
+import static java.lang.Math.asin;
+import static java.lang.Math.sqrt;
+
 public class Location {
     private final double longitude;
     private final double latitude;

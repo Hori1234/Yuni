@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.util.TrafficLightIndicator;
 import com.tue.yuni.models.Day;
+import com.tue.yuni.models.Location;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.services.mapper.BusynessMapper;
 import com.tue.yuni.storage.FavouriteStorage;
 
@@ -23,6 +25,7 @@ public class CanteenListAdapter extends BaseAdapter {
     private Context ctx;
     private List<Item> listItem;
     private List<Canteen> canteens;
+    private Location location = null;
 
     public CanteenListAdapter(Context ctx) {
         this.ctx = ctx;
@@ -43,23 +46,30 @@ public class CanteenListAdapter extends BaseAdapter {
         return null;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+        notifyDataSetChanged();
+    }
+
     private void buildItemsList() {
         if (canteens != null) {
-            List<String> locations = new ArrayList<>();
+            List<String> buildings = new ArrayList<>();
+            List<Location> locations = new ArrayList<>();
             // Find all different buildings
             for (int i = 0; i < canteens.size(); i++) {
-                if (!locations.contains(canteens.get(i).getBuilding())) {
-                    locations.add(canteens.get(i).getBuilding());
+                if (!buildings.contains(canteens.get(i).getBuilding())) {
+                    buildings.add(canteens.get(i).getBuilding());
+                    locations.add(canteens.get(i).getLocation());
                 }
             }
             listItem = new ArrayList<>();
             // Populate list
-            for (int i = 0; i < locations.size(); i++) {
-                listItem.add(new Item(locations.get(i), -1));
+            for (int i = 0; i < buildings.size(); i++) {
+                listItem.add(new Item(buildings.get(i), locations.get(i), -1));
                 // Find all canteens in the same given building
                 for (int u = 0; u < canteens.size(); u++) {
-                    if (canteens.get(u).getBuilding().equals(locations.get(i))) {
-                        listItem.add(new Item(null, u));
+                    if (canteens.get(u).getBuilding().equals(buildings.get(i))) {
+                        listItem.add(new Item(null, null, u));
                     }
                 }
             }
@@ -155,8 +165,12 @@ public class CanteenListAdapter extends BaseAdapter {
             // Canteen Rating Processing
             viewHolder.canteenRating.setRating(canteen.getRating());
         } else {
-            viewHolder.textView1.setText(listItem.get(position).getLocation());
+            viewHolder.textView1.setText(listItem.get(position).getBuilding());
             // Solution for Distance Required
+            if (location != null) {
+                int time = (int) Math.round(LocationService.getWalkingTime(listItem.get(position).location, location));
+                viewHolder.textView2.setText(time + " " + ctx.getString(R.string.minutes));
+            }
         }
 
         return convertView;
@@ -207,15 +221,21 @@ public class CanteenListAdapter extends BaseAdapter {
      * Customized List of Buildings and Canteens
      */
     private class Item {
-        private String location;
+        private String building;
+        private Location location;
         private int canteenPosition;
 
-        public Item(String location, int canteenPosition) {
+        public Item(String building, Location location, int canteenPosition) {
+            this.building = building;
             this.location = location;
             this.canteenPosition = canteenPosition;
         }
 
-        public String getLocation() {
+        public String getBuilding() {
+            return building;
+        }
+
+        public Location getLocation() {
             return location;
         }
 

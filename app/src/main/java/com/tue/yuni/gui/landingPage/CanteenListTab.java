@@ -13,7 +13,9 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.canteenDetails.CanteenView;
+import com.tue.yuni.models.Location;
 import com.tue.yuni.models.canteen.Canteen;
+import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
@@ -36,6 +38,9 @@ public class CanteenListTab extends Fragment implements AdapterView.OnItemClickL
         listView.setOnItemClickListener(this);
         // List View Adapter
         listAdapter = new CanteenListAdapter(getContext());
+        // Location
+        LocationService.get().requestLocation((location -> listAdapter.setLocation(location)));
+        // Set Adapter to ListView
         listView.setAdapter(listAdapter);
         // Query Server for canteens, if network is available
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
