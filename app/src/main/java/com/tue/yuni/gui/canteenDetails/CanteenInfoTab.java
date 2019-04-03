@@ -34,13 +34,17 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     private Canteen canteen;
 
     private View view;
+    private ScrollView scrollView;
     private TrafficLightIndicator busyness;
     private TextView busynessText;
     private TextView[] dayHoursTextView = new TextView[7];
     private TextView descriptionTextView;
     private RatingBar ratingBar;
     private LinearLayout reviewBoxContainer;
-    Button leaveReview;
+    private Button leaveReview;
+    private ReviewBox reviewBox;
+    private int restorePage = -1;
+    private int restoreScroll = -1;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -50,6 +54,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         view = inflater.inflate(R.layout.layout_canteen_info, null);
 
         // Find All UI Elements
+        scrollView = view.findViewById(R.id.scrollView);
         busyness = view.findViewById(R.id.busyness);
         busynessText = view.findViewById(R.id.busynessText);
         dayHoursTextView[0] = view.findViewById(R.id.mondayHours);
@@ -99,6 +104,12 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Feedback Button
         leaveReview.setOnClickListener(this);
 
+        // Restore State
+        if (savedInstanceState != null) {
+            restoreScroll = savedInstanceState.getInt("ScrollY");
+            restorePage = savedInstanceState.getInt("ReviewsPage");
+        }
+
         // Return view
         return view;
     }
@@ -106,7 +117,8 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        // ToDO ListView Position and Reviews page
+        outState.putInt("ReviewsPage", reviewBox.getReviewsPage());
+        outState.putInt("ScrollY", ((ScrollView)view.findViewById(R.id.scrollView)).getScrollY());
     }
 
     @Override
@@ -150,8 +162,17 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Clear Container Content
         reviewBoxContainer.removeAllViews();
         // Add new ReviewBox
-        ReviewBox reviewBox = new ReviewBox(getContext(), new ArrayList<>(reviews), (ScrollView) view);
+        reviewBox = new ReviewBox(getContext(), new ArrayList<>(reviews), (ScrollView) view);
+        if (restorePage != -1) reviewBox.setReviewsPage(restorePage);
         reviewBoxContainer.addView(reviewBox.getView());
+        // Restore ScrollView Scroll
+        if (restoreScroll != - 1)
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.setScrollY(restoreScroll);
+                }
+            });
     }
 
     @Override

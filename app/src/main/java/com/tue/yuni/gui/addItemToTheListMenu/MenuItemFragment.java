@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,55 +24,82 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.tue.yuni.R;
+import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.storage.PasswordStorage;
+import com.tue.yuni.storage.RemoteStorage;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v4.app.Fragment;
 
-public class MenuItemFragment extends Fragment {
+public class MenuItemFragment extends Fragment implements View.OnClickListener, RemoteStorage.RequestCompletedHandler, RemoteStorage.ErrorHandler
+{
+    private MenuItem menuItem;
+    private List<String> categories;
 
-    //Info stuff
+    // Ui Components
     private EditText nameTxt;
     private EditText descriptionTxt;
-    private String itemType;
+    private Spinner spinner;
+    private ImageView imageView;
+    private Button addItem;
+
+    // New parameters
     private String itemName;
     private String itemDescription;
+    private String itemCategory;
 
     //Galery stuff
-    private ImageView imageView;
-    public static final int PICK_IMAGE = 100;
+    private static final int PICK_IMAGE = 100;
     private Uri imageUri;
 
     //Camera stuff
-    public static final int CAMERA_REQUEST = 1888;
-    public static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private String mCurrentPhotoPath;
-    static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_TAKE_PHOTO = 1;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_menu_item, container, false);
+
+        // Get UI elements
         nameTxt = v.findViewById(R.id.nameID);
         descriptionTxt = v.findViewById(R.id.descriptionID);
-
-        //Spinner Initializaton
-        Spinner spinner = v.findViewById(R.id.categoryspinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.planets_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-        //ImageView Initialization
+        spinner = v.findViewById(R.id.categoryspinner);
         imageView = v.findViewById(R.id.imageView2);
+        addItem = v.findViewById(R.id.button);
+
+        // Initialize UI elements
+        ArrayAdapter<String> adapter;
+        if (menuItem != null) {
+            nameTxt.setText(menuItem.getName());
+            descriptionTxt.setText(menuItem.getDescription());
+            addItem.setText(getContext().getString(R.string.done));
+        }
+        if (categories != null) {
+            // Create an ArrayAdapter using the string array and a default spinner layout
+            adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories);
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Apply the adapter to the spinner
+            spinner.setAdapter(adapter);
+        }
+        // Set default spinner value
+        if (categories != null) {
+            spinner.setSelection(categories.indexOf(itemCategory));
+        } else {
+            spinner.setSelection(0);
+        }
 
         //Camera button initialization
         Button photoButton = v.findViewById(R.id.button2);
@@ -83,44 +111,75 @@ public class MenuItemFragment extends Fragment {
         });
 
         //Initialization of Add Dish button
-        Button addDishBtn = v.findViewById(R.id.button);
-        addDishBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (descriptionTxt.getText().toString().equals("") || nameTxt.getText().toString().equals("") || imageView.getDrawable() == null) {
-                    final String error = "All the fields must be completed";
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Error");
-                    builder.setMessage(error);
-                    builder.show();
-                }else {
-                    //What has to be done when add dish button is pressed
-                    //Getting the selected item of the spiner
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        public void onItemSelected(
-                                AdapterView<?> adapterView, View view,
-                                int i, long l) {
-                            itemType = spinner.getItemAtPosition(i).toString();
-                        }
-
-                        public void onNothingSelected(
-                                AdapterView<?> adapterView) {
-                        }
-                    });
-
-                    //Getting the text fron the editable text views
-                    itemDescription = descriptionTxt.getText().toString();
-                    itemName = nameTxt.getText().toString();
-
-                    final String error = "Item was add to the database";
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Succes");
-                    builder.setMessage(error);
-                    builder.show();
-                }
-            }
-        });
+        addItem.setOnClickListener(this);
 
         return v;
+    }
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        if (args != null) {
+            if (args.containsKey("menuItem")) {
+                this.menuItem = args.getParcelable("menuItem");
+                itemCategory = menuItem.getCategory();
+            } else {
+                itemCategory = args.getString("category");
+            }
+            if (args.containsKey("categories"))
+                this.categories = Arrays.asList(args.getStringArray("categories"));
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == addItem) {
+            if (descriptionTxt.getText().toString().equals("") || nameTxt.getText().toString().equals("") || imageView.getDrawable() == null) {
+                final String error = "All the fields must be completed";
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage(error);
+                builder.show();
+            }
+            else {
+                //Getting parameters
+                itemDescription = descriptionTxt.getText().toString();
+                itemName = nameTxt.getText().toString();
+                itemCategory = spinner.getAdapter().getItem(spinner.getSelectedItemPosition()).toString();
+
+                // Post Item To Database
+                if (menuItem != null) {
+                    RemoteStorage.get().updateMenuItem(PasswordStorage.get().getPassword(),
+                            menuItem.getId(), itemName, itemDescription, itemCategory,
+                            this, this);
+                } else {
+                    RemoteStorage.get().createMenuItem(PasswordStorage.get().getPassword(),
+                            itemName, itemDescription, itemCategory, this, this);
+                }
+
+
+            }
+        }
+    }
+
+    @Override
+    public void onError(Exception e) {
+        // ToDo
+    }
+
+    @Override
+    public void onCompleted() {
+        // Build and show Dialog confirming changes have been applied
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Success");
+        if (menuItem != null) {
+            builder.setMessage(getContext().getString(R.string.itemModified));
+        } else {
+            builder.setMessage(getContext().getString(R.string.itemAdded));
+        }
+        builder.show();
+
+        // Leave fragment
+        getActivity().onBackPressed();
     }
 
     @Override

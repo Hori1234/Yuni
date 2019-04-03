@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.tue.yuni.models.review.Review;
 import com.tue.yuni.R;
@@ -19,6 +20,7 @@ import com.tue.yuni.R;
 import java.util.List;
 
 public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
+    private View view;
     private Context ctx;
     private List<Review> reviews;
     private ReviewListViewAdapter adapter;
@@ -26,6 +28,14 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
     private Button prev, next;
     private int itemsToList;
     private ScrollView scrollView;
+
+    // ScrollView Mode Only
+    private View itemsView[];
+    private LinearLayout container;
+    private RatingBar itemRating[];
+    private TextView itemText[];
+    private int startItem = 0;
+
 
     public ReviewBox(Context ctx, List<Review> reviews) {
         this.ctx = ctx;
@@ -38,18 +48,92 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
         this.reviews = reviews;
         this.scrollView = scrollView;
         itemsToList = 10;
+
+        itemsView = new View[itemsToList];
+        itemRating = new RatingBar[itemsToList];
+        itemText = new TextView[itemsToList];
     }
 
     @SuppressWarnings({"all"})
     public View getView(){
         // Inflate Alert Dialog View
-        View view = LayoutInflater.from(ctx).inflate(R.layout.layout_reviews, null);
+        view = LayoutInflater.from(ctx).inflate(R.layout.layout_reviews, null);
         // List View
-        reviewsListView = view.findViewById(R.id.reviewsList);
-        adapter = new ReviewListViewAdapter(ctx, reviews, itemsToList);
-        reviewsListView.setAdapter(adapter);
+        if (scrollView == null) {
+            reviewsListView = view.findViewById(R.id.reviewsList);
+            adapter = new ReviewListViewAdapter(ctx, reviews, itemsToList);
+            reviewsListView.setAdapter(adapter);
+        } else {
+            container = view.findViewById(R.id.reviewsContainer);
+            // Remove ListView
+            container.removeView(view.findViewById(R.id.reviewsList));
+            // Instantiate all reviews view
+            for (int i = 0; i < itemsToList; i++) {
+                itemsView[i] = LayoutInflater.from(ctx).inflate(R.layout.layout_review, null);
+                itemRating[i] = itemsView[i].findViewById(R.id.reviewRating);
+                itemText[i] = itemsView[i].findViewById(R.id.reviewText);
+                container.addView(itemsView[i], i);
+            }
+            setListItems(false);
+        }
+
+        // Create and Setup Buttons
+        setButton();
+
+        // Return View
+        return view;
+    }
+
+    public void setReviewsPage(int page){
+        startItem = page * itemsToList;
+        if (!(reviews != null && startItem < reviews.size())) {
+            startItem = 0;
+        }
+    }
+
+    public int getReviewsPage(){
+        return (startItem / itemsToList);
+    }
+
+    private void setListItems(boolean scroll){
+        if (scrollView != null) {
+            for (int i = 0; i < itemsView.length; i++) {
+                if ((startItem + i) < reviews.size()) {
+                    itemsView[i].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    itemsView[i].setVisibility(View.VISIBLE);
+                    itemRating[i].setRating(reviews.get(startItem + i).getRating());
+                    itemText[i].setText(reviews.get(startItem + i).getDescription());
+                    itemText[i].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                } else {
+                    itemsView[i].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+                    itemsView[i].setVisibility(View.INVISIBLE);
+                }
+            }
+            // Scroll to top of the list with the ScrollView
+            if (scroll) {
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        itemsView[0].getParent().requestChildFocus(itemsView[0], itemsView[0]);
+                        //scrollView.smoothScrollTo(0, container.getTop() + scrollView.getHeight());
+                    }
+                });
+            }
+        } else {
+            // Set Top Item
+            adapter.setStartItem(startItem + itemsToList);
+            // Notify Adapter
+            adapter.notifyDataSetChanged();
+            // Scroll to top
+            if (scroll) {
+                reviewsListView.smoothScrollToPosition(0);
+            }
+        }
+    }
+
+    private void setButton(){
         // Buttons
-        if (reviews != null && reviews.size() > 10) {
+        if (reviews != null && reviews.size() > itemsToList) {
             LinearLayout buttonsContainer = view.findViewById(R.id.buttonsContainer);
             // Create Previous Button
             prev = new Button(ctx, null, 0, R.style.Widget_AppCompat_Button_Borderless_Colored);
@@ -65,56 +149,30 @@ public class ReviewBox implements View.OnClickListener, View.OnTouchListener {
             buttonsContainer.addView(prev);
             buttonsContainer.addView(next);
             // Setup buttons visibility
-            prev.setVisibility(View.INVISIBLE);
-            if (reviews.size() < 10)
+            if (startItem == 0)
+                prev.setVisibility(View.INVISIBLE);
+            if ((startItem + itemsToList) >= reviews.size())
                 next.setVisibility(View.INVISIBLE);
         }
-        // Size List appropriately if inside a scrollview
-        resizeListView();
-        // Return View
-        return view;
-    }
-
-    private void resizeListView(){
-        final int UNBOUNDED = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int height = 0;
-        for (int i = 0; i < reviewsListView.getCount(); i++) {
-            View child = reviewsListView.getAdapter().getView(i, null, reviewsListView);
-            child.measure(UNBOUNDED, UNBOUNDED);
-            height += child.getMeasuredHeight();
-        }
-        reviewsListView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + 18));
     }
 
     @Override
     public void onClick(View v) {
         if (v.equals(next)){
-            adapter.setStartItem(adapter.getStartItem() + itemsToList);
+            startItem += itemsToList;
+            setListItems(true);
+            // Buttons Visibility
             prev.setVisibility(View.VISIBLE);
-            if ((reviews.size() - adapter.getStartItem()) < itemsToList)
+            if ((reviews.size() - startItem) < itemsToList)
                 next.setVisibility(View.INVISIBLE);
         }
         else if (v.equals(prev)) {
-            adapter.setStartItem(adapter.getStartItem() - itemsToList);
+            startItem -= itemsToList;
+            setListItems(true);
+            // Buttons Visibility
             next.setVisibility(View.VISIBLE);
-            if (adapter.getStartItem() == 0)
+            if (startItem == 0)
                 prev.setVisibility(View.INVISIBLE);
-        }
-        // Notify Adapter
-        adapter.notifyDataSetChanged();
-        // Scroll to top
-        reviewsListView.smoothScrollToPosition(0);
-        // If ScrollView exists
-        if (scrollView != null) {
-            // Resize ListView
-            resizeListView();
-            // Scroll to top of the list with the ScrollView
-            reviewsListView.post(new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.smoothScrollTo(0, reviewsListView.getTop() + scrollView.getHeight());
-                }
-            });
         }
     }
 

@@ -2,6 +2,11 @@
     <string name="app_name">Yuni</string>
     <string name="action_settings">Settings</string>
 
+    <!--MenuItemFragment Related-->
+    <string name="done">Done</string>
+    <string name="itemAdded">Item has been added to database</string>
+    <string name="itemModified">Item has been modified</string>
+
     <!--MenuItemListTab Related-->
     <string name="legacyAvailability">Availability</string>
     <string name="feedback">Feedback</string>
@@ -74,6 +79,11 @@
     <string name="add_dish">Add Dish</string>
     <string name="upload_photo">Upload Photo</string>
     string>
+
+    <!--MenuItemEditList-->
+    <string name="confirmDeleteMessage">Are you sure you wish to delete this item?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Thijs -->
     <string-array name="canteen_array">

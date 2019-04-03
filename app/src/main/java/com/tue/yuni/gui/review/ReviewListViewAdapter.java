@@ -2,6 +2,7 @@ package com.tue.yuni.gui.review;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         this.ctx = ctx;
         this.reviews = reviews;
         this.itemsToList = itemsToList;
+        this.startItem = 0;
     }
 
     public int getStartItem() {
@@ -101,7 +103,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
             for (int i = 0; i < splits.length; i++) {
                 numberOfLines += (int) Math.ceil(paint.measureText(splits[i]) / (float) width);
             }
-
+            Log.d("ReviewBox", "Nr: " + numberOfLines + "\n" + text);
             return numberOfLines;
         } else {
             return splits.length;

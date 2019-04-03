@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
 import com.tue.yuni.gui.canteenDetails.MenuItemEditListTab;
+import com.tue.yuni.gui.editMenu.MenuEditView;
 import com.tue.yuni.gui.ownerLogin.OwnerLogin;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.canteen.Canteen;
@@ -97,7 +98,7 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, new MenuItemFragment());
+            ft.replace(R.id.content, new MenuEditView());
             ft.commit();
         } else if (v == switchCanteen) {
             // Transition to Fragment

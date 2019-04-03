@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/reviewsContainer"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
@@ -12,9 +14,8 @@
     <LinearLayout
         android:id="@+id/buttonsContainer"
         android:orientation="horizontal"
-        android:layout_below="@+id/reviewsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

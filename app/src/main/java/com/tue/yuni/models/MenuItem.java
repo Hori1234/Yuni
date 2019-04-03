@@ -3,6 +3,8 @@ package com.tue.yuni.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+
 public class MenuItem implements Parcelable {
     protected final int id;
     protected final String name;
@@ -80,4 +82,11 @@ public class MenuItem implements Parcelable {
             return new MenuItem[size];
         }
     };
+
+    public static class CustomComparator implements Comparator<MenuItem> {
+        @Override
+        public int compare(MenuItem o1, MenuItem o2) {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+        }
+    }
 }
