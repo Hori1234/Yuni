@@ -1,11 +1,9 @@
 package com.tue.yuni.gui.editCanteenDialog;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,18 +13,15 @@ import com.tue.yuni.models.Day;
 import com.tue.yuni.models.Schedule;
 import com.tue.yuni.R;
 import com.tue.yuni.models.ExtendedMenuItem;
-import com.tue.yuni.models.canteen.Canteen;
-import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class scheduleDialog implements View.OnClickListener{
+public class scheduleMenuDialog implements View.OnClickListener{
     private Context ctx;
     private AlertDialog dialog;
-    private DialogContent parent;
+    private MenuDialogContent parent;
     private ExtendedMenuItem menuItem;
 
     CheckBox mondayBox;
@@ -37,12 +32,12 @@ public class scheduleDialog implements View.OnClickListener{
     CheckBox saturdayBox;
     CheckBox sundayBox;
 
-    public scheduleDialog(@NonNull Context ctx) {
+    public scheduleMenuDialog(@NonNull Context ctx) {
         this.ctx = ctx;
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent, ExtendedMenuItem menuItem){
+    public void show(MenuDialogContent parent, ExtendedMenuItem menuItem){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
             this.menuItem=menuItem;
@@ -107,8 +102,6 @@ public class scheduleDialog implements View.OnClickListener{
         dismiss();
         ArrayList<Integer> q = new ArrayList<>();
 
-        parent.onChangeMenuItem(2,menuItem,schedule,null);
+        parent.onChangeMenuItem(menuItem,schedule);
     }
-
-
 }

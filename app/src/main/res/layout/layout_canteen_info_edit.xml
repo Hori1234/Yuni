@@ -28,7 +28,7 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageButton
-                android:id="@+id/edit"
+                android:id="@+id/editCanteenImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -76,19 +76,6 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/edit4"
-                android:layout_width="1dp"
-                android:layout_height="21dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/productImage"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_edit" />
 
         </LinearLayout>
 
@@ -279,7 +266,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/editCanteenTimes2"
+                android:id="@+id/editCanteenDescription"
                 android:layout_width="84dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="12dp"

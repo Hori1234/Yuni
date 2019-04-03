@@ -7,48 +7,51 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.tue.yuni.R;
-import com.tue.yuni.models.ExtendedMenuItem;
+import com.tue.yuni.models.canteen.Canteen;
 
-public class deleteDialog {
+public class descriptionCanteenDialog {
     private Context ctx;
     private AlertDialog dialog;
-    private MenuDialogContent parent;
-    private ExtendedMenuItem menuItem;
+    private Canteen canteen;
+    private CanteenDialogContent parent;
 
+    EditText description;
 
-    public deleteDialog(@NonNull Context ctx) {
+    public descriptionCanteenDialog(@NonNull Context ctx) {
         this.ctx = ctx;
     }
 
     @SuppressWarnings({"all"})
-    public void show(MenuDialogContent parent, ExtendedMenuItem menuItem){
+    public void show(CanteenDialogContent parent, Canteen canteen){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
-            this.menuItem=menuItem;
             this.parent = parent;
+            this.canteen = canteen;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
             // Inflate Alert Dialog View
-            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_delete_menu_item, null);
+            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_canteen_info_edit_description, null);
             alertDialog.setView(view);
             // Get View UI Elements
-            Button deleteButton = view.findViewById(R.id.removeDish);
-            // Show Alert Dialog
-            dialog = alertDialog.show();
-            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-            // Setup Events
-            deleteButton.setOnClickListener(new View.OnClickListener(){
+            description       =  view.findViewById(R.id.editDescription);
+            description.setText(canteen.getDescription());
+
+
+            Button sendDescriptionButton = view.findViewById(R.id.setDescriptionButton);
+            sendDescriptionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Notify the parent of the feedback given
 
                     dismiss();
-                    parent.onChangeMenuItem(menuItem);
+
+                    parent.onChangeCanteen(description.getText().toString());
                 }
             });
+
             Button cancelButton = view.findViewById(R.id.cancelButton);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,6 +59,14 @@ public class deleteDialog {
                     dismiss();
                 }
             });
+
+
+
+            // Show Alert Dialog
+            dialog = alertDialog.show();
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            // Setup Event
+
         }
     }
 
@@ -66,4 +77,7 @@ public class deleteDialog {
             dialog = null;
         }
     }
+
+
+
 }

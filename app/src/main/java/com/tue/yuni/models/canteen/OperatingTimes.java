@@ -65,6 +65,13 @@ public class OperatingTimes implements Parcelable {
 
         return closingTimes.get(day);
     }
+    public void setClosingTime(Day day, int time) {
+        this.closingTimes.put(day,time);
+    }
+
+    public void setOpeningTime(Day day, int time) {
+        this.openingTimes.put(day,time);
+    }
 
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();

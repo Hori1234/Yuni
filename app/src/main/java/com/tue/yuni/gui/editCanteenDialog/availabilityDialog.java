@@ -17,7 +17,7 @@ import com.tue.yuni.models.ExtendedMenuItem;
 public class availabilityDialog implements View.OnClickListener {
     private Context ctx;
     private AlertDialog dialog;
-    private DialogContent parent;
+    private MenuDialogContent parent;
     private ExtendedMenuItem menuItem;
 
     RadioGroup availabilityGroup;
@@ -30,7 +30,7 @@ public class availabilityDialog implements View.OnClickListener {
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent, ExtendedMenuItem menuItem) {
+    public void show(MenuDialogContent parent, ExtendedMenuItem menuItem){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
             this.menuItem = menuItem;
@@ -70,6 +70,22 @@ public class availabilityDialog implements View.OnClickListener {
                 }
             });
 
+            switch(menuItem.getAvailability()){
+                case IN_STOCK:
+                    inStockButton.toggle();
+                    break;
+                case LOW_STOCK:
+                    lowStockButton.toggle();
+                    break;
+                case OUT_OF_STOCK:
+                    noStockButton.toggle();
+                    break;
+                default:
+                    inStockButton.toggle();
+                    break;
+
+            }
+
             // Show Alert Dialog
             dialog = alertDialog.show();
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -107,6 +123,6 @@ public class availabilityDialog implements View.OnClickListener {
         }
         dismiss();
 
-        parent.onChangeMenuItem(0, menuItem, null, availability);
+        parent.onChangeMenuItem(menuItem, availability);
     }
 }

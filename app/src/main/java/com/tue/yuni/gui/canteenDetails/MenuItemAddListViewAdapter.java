@@ -9,25 +9,34 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.editCanteenDialog.AddDialogContent;
 import com.tue.yuni.gui.editCanteenDialog.MenuDialogContent;
+import com.tue.yuni.gui.editCanteenDialog.addDialog;
 import com.tue.yuni.gui.editCanteenDialog.availabilityDialog;
 import com.tue.yuni.gui.editCanteenDialog.deleteDialog;
 import com.tue.yuni.gui.editCanteenDialog.scheduleMenuDialog;
 import com.tue.yuni.models.ExtendedMenuItem;
+import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.models.canteen.Canteen;
 
 import java.util.List;
 
-public class MenuItemEditListViewAdapter extends BaseAdapter {
+import static java.security.AccessController.getContext;
+
+public class MenuItemAddListViewAdapter extends BaseAdapter {
     private Context ctx;
-    private List<ExtendedMenuItem> menuItems;
+    private List<MenuItem> menuItems;
+
+    private Canteen canteen;
+    private AddDialogContent parentTab;
 
 
-    private MenuDialogContent parentTab;
 
-    public MenuItemEditListViewAdapter(Context ctx, List<ExtendedMenuItem> menuItems, MenuDialogContent parent) {
+    public MenuItemAddListViewAdapter(Context ctx, List<MenuItem> menuItems, AddDialogContent parent, Canteen canteen) {
         this.parentTab = parent;
         this.ctx = ctx;
         this.menuItems = menuItems;
+        this.canteen = canteen;
     }
 
 
@@ -53,15 +62,17 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         // Inflate Layout for each list row
         if (convertView == null) {
             // Default Layout
-            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_canteen_menu_item_edit, parent, false);
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_menu_item_name, parent, false);
 
             // ViewHolder
             viewHolder = new ViewHolder();
             viewHolder.menuItemName = convertView.findViewById(R.id.productName);
-            viewHolder.availabilityButton =  convertView.findViewById(R.id.availibilityButton);
-            viewHolder.scheduleButton = convertView.findViewById(R.id.sheduleButton);
-            viewHolder.deleteButton = convertView.findViewById(R.id.deleteMenuItem);
-
+            viewHolder.menuItemName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new addDialog(ctx).show(parentTab,menuItems.get(position),canteen);
+                }
+            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -71,44 +82,10 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
         // Default View
         viewHolder.menuItemName.setText(menuItems.get(position).getName());
 
-
-
-
-        viewHolder.availabilityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new availabilityDialog(ctx).show(parentTab,menuItems.get(position));
-            }
-        });
-
-
-        viewHolder.scheduleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new scheduleMenuDialog(ctx).show(parentTab, menuItems.get(position));
-            }
-        });
-
-
-        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new deleteDialog(ctx).show(parentTab,menuItems.get(position));
-            }
-        });
-
-
-
-
-
         // Return the instantiated row
         return convertView;
     }
 
-
-//    private void setStarred() {
-//
-//    }
 
 
 

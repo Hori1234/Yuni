@@ -10,31 +10,35 @@ import android.widget.Button;
 
 import com.tue.yuni.R;
 import com.tue.yuni.models.ExtendedMenuItem;
+import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.models.canteen.Canteen;
 
-public class deleteDialog {
+public class addDialog {
     private Context ctx;
     private AlertDialog dialog;
-    private MenuDialogContent parent;
-    private ExtendedMenuItem menuItem;
+    private AddDialogContent parent;
+    private MenuItem menuItem;
+    private Canteen canteen;
 
 
-    public deleteDialog(@NonNull Context ctx) {
+    public addDialog(@NonNull Context ctx) {
         this.ctx = ctx;
     }
 
     @SuppressWarnings({"all"})
-    public void show(MenuDialogContent parent, ExtendedMenuItem menuItem){
+    public void show(AddDialogContent parent, MenuItem menuItem, Canteen canteen){
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
             this.menuItem=menuItem;
             this.parent = parent;
+            this.canteen = canteen;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
             // Inflate Alert Dialog View
-            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_delete_menu_item, null);
+            View view = LayoutInflater.from(ctx).inflate(R.layout.layout_add_menu_item, null);
             alertDialog.setView(view);
             // Get View UI Elements
-            Button deleteButton = view.findViewById(R.id.removeDish);
+            Button deleteButton = view.findViewById(R.id.addDish);
             // Show Alert Dialog
             dialog = alertDialog.show();
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -46,7 +50,7 @@ public class deleteDialog {
                     // Notify the parent of the feedback given
 
                     dismiss();
-                    parent.onChangeMenuItem(menuItem);
+                    parent.onAddMenuItem(menuItem, canteen);
                 }
             });
             Button cancelButton = view.findViewById(R.id.cancelButton);
@@ -66,4 +70,6 @@ public class deleteDialog {
             dialog = null;
         }
     }
+
+
 }

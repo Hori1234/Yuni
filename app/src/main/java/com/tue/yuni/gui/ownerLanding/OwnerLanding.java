@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
+import com.tue.yuni.gui.canteenDetails.CanteenInfoEditTab;
 import com.tue.yuni.gui.canteenDetails.MenuItemEditListTab;
 import com.tue.yuni.gui.editMenu.MenuEditView;
 import com.tue.yuni.gui.ownerLogin.OwnerLogin;
@@ -71,6 +72,7 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
         if (v == menu) {
             // Setup Arguments
             Bundle bundle = new Bundle();
+            bundle.putParcelable("Canteen", canteen);
             bundle.putParcelableArrayList("menuItems",  new ArrayList<>(canteen.getMenuItems()));
             // Instantiate Fragment
             MenuItemEditListTab menuItemEditListTab = new MenuItemEditListTab();
@@ -81,13 +83,16 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
             ft.replace(R.id.content, menuItemEditListTab);
             ft.commit();
         } else if (v == info) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("Canteen",  canteen);
+            CanteenInfoEditTab canteenInfoEditTab = new CanteenInfoEditTab();
+            canteenInfoEditTab.setArguments(bundle);
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, new OwnerLogin());
-            //todo: replace with correct destination
+            ft.replace(R.id.content, canteenInfoEditTab);
             ft.commit();
-        } else if (v == reviews) {
+        } else if (v == reviews){
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.addToBackStack("OwnerLanding");
