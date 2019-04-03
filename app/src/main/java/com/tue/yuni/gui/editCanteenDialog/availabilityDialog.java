@@ -11,10 +11,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.tue.yuni.R;
+import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.ExtendedMenuItem;
-import com.tue.yuni.models.Schedule;
 
-public class availabilityDialog implements View.OnClickListener{
+public class availabilityDialog implements View.OnClickListener {
     private Context ctx;
     private AlertDialog dialog;
     private DialogContent parent;
@@ -30,10 +30,10 @@ public class availabilityDialog implements View.OnClickListener{
     }
 
     @SuppressWarnings({"all"})
-    public void show(DialogContent parent, ExtendedMenuItem menuItem){
+    public void show(DialogContent parent, ExtendedMenuItem menuItem) {
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
-            this.menuItem=menuItem;
+            this.menuItem = menuItem;
             this.parent = parent;
             // Create Alert Dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
@@ -45,7 +45,7 @@ public class availabilityDialog implements View.OnClickListener{
 
             availabilityGroup = view.findViewById(R.id.availabilityGroup);
 
-            inStockButton=view.findViewById(R.id.inStockButton);
+            inStockButton = view.findViewById(R.id.inStockButton);
             inStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -53,7 +53,7 @@ public class availabilityDialog implements View.OnClickListener{
                     inStockButton.toggle();
                 }
             });
-            lowStockButton=view.findViewById(R.id.lowStockButton);
+            lowStockButton = view.findViewById(R.id.lowStockButton);
             lowStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,7 +61,7 @@ public class availabilityDialog implements View.OnClickListener{
                     lowStockButton.toggle();
                 }
             });
-            noStockButton=view.findViewById(R.id.outStockButton);
+            noStockButton = view.findViewById(R.id.outStockButton);
             noStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,11 +89,24 @@ public class availabilityDialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         // Notify the parent of the feedback given
-        int availability = availabilityGroup.getCheckedRadioButtonId();
-        if(availability>=0) {
-            dismiss();
+        int radioButtonId = availabilityGroup.getCheckedRadioButtonId();
+        View radioButton = availabilityGroup.findViewById(radioButtonId);
+        int idx = availabilityGroup.indexOfChild(radioButton);
+        Availability availability = null;
 
-            parent.onChangeMenuItem(0, menuItem,null, availability);
+        switch (idx) {
+            case 0:
+                availability = Availability.OUT_OF_STOCK;
+                break;
+            case 1:
+                availability = Availability.IN_STOCK;
+                break;
+            case 2:
+                availability = Availability.LOW_STOCK;
+                break;
         }
+        dismiss();
+
+        parent.onChangeMenuItem(0, menuItem, null, availability);
     }
 }

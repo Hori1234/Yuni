@@ -52,7 +52,7 @@ public class deleteDialog {
                     // Notify the parent of the feedback given
 
                     dismiss();
-                    parent.onChangeMenuItem(1,menuItem,null,0);
+                    parent.onChangeMenuItem(1,menuItem,null,null);
                 }
             });
             Button cancelButton = view.findViewById(R.id.cancelButton);

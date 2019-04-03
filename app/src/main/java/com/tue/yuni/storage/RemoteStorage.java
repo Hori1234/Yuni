@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
 import com.tue.yuni.models.canteen.Canteen;
@@ -554,6 +555,43 @@ public class RemoteStorage {
         authenticatedObjectRequest(
                 Request.Method.PATCH,
                 BASE_URL + "/menu/" + menuId + "/schedule",
+                data,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
+     * Update the availability of a menu item.
+     *
+     * @param password     Canteen owner password
+     * @param menuId       Menu id (not menu item id)
+     * @param availability Availability
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void updateMenuItemAvailability(
+            String password,
+            int menuId,
+            Availability availability,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        // Build data
+        JSONObject data = new JSONObject();
+        try {
+            data.put("availability", availability.name());
+        } catch (JSONException e) {
+            errorHandler.onError(e);
+
+            return;
+        }
+
+        // Perform request
+        authenticatedObjectRequest(
+                Request.Method.PATCH,
+                BASE_URL + "/menu/" + menuId + "/availability",
                 data,
                 response -> handler.onCompleted(),
                 errorHandler::onError,

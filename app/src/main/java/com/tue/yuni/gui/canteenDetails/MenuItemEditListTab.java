@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.editCanteenDialog.DialogContent;
+import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.Schedule;
@@ -90,10 +91,19 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
 
 
     @Override
-    public void onChangeMenuItem(int changeType, ExtendedMenuItem menuItem, Schedule schedule, int availability) {
+    public void onChangeMenuItem(int changeType, ExtendedMenuItem menuItem, Schedule schedule, Availability availability) {
         switch(changeType){
             case 0:
                 //TODO
+                if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
+                    RemoteStorage.get().updateMenuItemAvailability(
+                            PasswordStorage.get().getPassword(),
+                            menuItem.getMenuId(),
+                            availability,
+                            this,
+                            this
+                    );
+                }
                 break;
             case 1:
                 //TODO

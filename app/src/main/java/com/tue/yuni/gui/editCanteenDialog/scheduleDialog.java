@@ -107,7 +107,7 @@ public class scheduleDialog implements View.OnClickListener{
         dismiss();
         ArrayList<Integer> q = new ArrayList<>();
 
-        parent.onChangeMenuItem(2,menuItem,schedule,0);
+        parent.onChangeMenuItem(2,menuItem,schedule,null);
     }
 
 
