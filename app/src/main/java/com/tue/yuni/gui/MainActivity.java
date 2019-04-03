@@ -7,14 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.R;
+import com.tue.yuni.gui.landingPage.LandingView;
 import com.tue.yuni.models.Location;
 import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.storage.FavouriteStorage;
@@ -58,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 (loc) -> {
                     Log.d("abcd", LocationService.getWalkingTime(
-                            new Location(5.485019, 51.447831),
+                            new Location(5.484207, 51.446439),
                             loc
                     ) + "");
                 }
-                );
+        );
 
 }
 

@@ -16,6 +16,11 @@ import java.text.DecimalFormat;
 
 public class LocationService {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+    private static final int LATITUDE_CONSTANT = 111200; //=1 degrees, because 0.005959 degrees = 663.63 m
+    private static final int LONGITUDE_CONSTANT = 70000; //= 1 degrees, because 0.15668 degrees = 1100 m
+    private static final int WALKING_VELOCITY = 5000; //m per hour
+    private static final int WALK_TIME_IN_MINUTES = 60;
+    //60: walking time in minutes; 1:time in hours; 3600: time in seconds
     private static FusedLocationProviderClient mFusedLocationClient;
     private static DecimalFormat deci2 = new DecimalFormat(".##");
 
@@ -23,7 +28,7 @@ public class LocationService {
         double deltaLat = Math.abs(start.getLatitude() - end.getLatitude());
         double deltaLon = Math.abs(start.getLongitude() - end.getLongitude());
 
-        return (deltaLat * 111207 + deltaLon * 68093) / 5000 * 60;
+        return (deltaLat * LATITUDE_CONSTANT + deltaLon * LONGITUDE_CONSTANT) / WALKING_VELOCITY * WALK_TIME_IN_MINUTES;
     }
 
     public static void initialise(Activity activity, LocationReceivedListener listener) {
