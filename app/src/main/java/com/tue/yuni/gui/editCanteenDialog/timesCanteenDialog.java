@@ -80,21 +80,6 @@ public class timesCanteenDialog implements View.OnClickListener {
                     dayTimes[d][0].setOnClickListener(this);
                 }
             }
-//            mondayMorning.setText(times.getOpeningTime(Day.MONDAY));
-//            mondayEvening.setText(times.getClosingTime(Day.MONDAY));
-//            tuesdayMorning.setText(times.getOpeningTime(Day.TUESDAY));
-//            tuesdayEvening.setText(times.getClosingTime(Day.TUESDAY));
-//            wednesdayMorning.setText(times.getOpeningTime(Day.WEDNESDAY));
-//            wednesdayEvening.setText(times.getClosingTime(Day.WEDNESDAY));
-//            thursdayMorning.setText(times.getOpeningTime(Day.THURSDAY));
-//            thursdayEvening.setText(times.getClosingTime(Day.THURSDAY));
-//            fridayMorning.setText(times.getOpeningTime(Day.FRIDAY));
-//            fridayEvening.setText(times.getClosingTime(Day.FRIDAY));
-//            saturdayMorning.setText(times.getOpeningTime(Day.SATURDAY));
-//            saturdayEvening.setText(times.getClosingTime(Day.SATURDAY));
-//            sundayMorning.setText(times.getOpeningTime(Day.SUNDAY));
-//            sundayEvening.setText(times.getClosingTime(Day.SUNDAY));
-
 
 
             Button sendTimesButton = view.findViewById(R.id.setSchedule);
@@ -104,13 +89,25 @@ public class timesCanteenDialog implements View.OnClickListener {
                     HashMap<Day, Integer> opening = new HashMap<>();
                     dismiss();
                     String[] time;
+                    int timeOpen;
+                    int timeClose;
                     for(int d = 0; d < 7; d++){
-                        if(!dayTimes[d][0].equals(dayTimes[d][1])){
-                            time = dayTimes[d][0].getText().toString().split(":");
-                            times.setOpeningTime(Day.values()[d],Integer.valueOf(time[0])*100+Integer.valueOf(time[1]));
-                            time = dayTimes[d][1].getText().toString().split(":");
-                            times.setClosingTime(Day.values()[d],Integer.valueOf(time[0])*100+Integer.valueOf(time[1]));
+                        time = dayTimes[d][0].getText().toString().split(":");
+                        timeOpen = Integer.valueOf(time[0])*100+Integer.valueOf(time[1]);
+                        
+                        time = dayTimes[d][1].getText().toString().split(":");
+                        timeClose = Integer.valueOf(time[0])*100+Integer.valueOf(time[1]);
+
+                        if(timeOpen!=timeClose) {
+                            times.setOpeningTime(Day.values()[d], timeOpen);
+                            times.setClosingTime(Day.values()[d], timeClose);
+                        }else{
+                            if(times.isOpen(Day.values()[d])){
+                                times.removeDay(Day.values()[d]);
+                            }
                         }
+
+
                     }
                     parent.onChangeCanteen(times);
                 }
