@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_width="match_parent"
@@ -31,23 +32,23 @@
 
         <ImageButton
             android:id="@+id/availibilityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:srcCompat="@android:drawable/ic_menu_set_as" />
 
         <ImageButton
             android:id="@+id/sheduleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
         <ImageButton
             android:id="@+id/deleteMenuItem"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             app:srcCompat="@android:drawable/ic_delete" />
 
     </LinearLayout>

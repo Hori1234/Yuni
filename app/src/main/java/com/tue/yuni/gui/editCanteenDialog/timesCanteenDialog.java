@@ -94,7 +94,7 @@ public class timesCanteenDialog implements View.OnClickListener {
                     for(int d = 0; d < 7; d++){
                         time = dayTimes[d][0].getText().toString().split(":");
                         timeOpen = Integer.valueOf(time[0])*100+Integer.valueOf(time[1]);
-                        
+
                         time = dayTimes[d][1].getText().toString().split(":");
                         timeClose = Integer.valueOf(time[0])*100+Integer.valueOf(time[1]);
 
