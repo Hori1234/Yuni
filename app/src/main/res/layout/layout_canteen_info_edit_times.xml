@@ -36,10 +36,10 @@
             android:inputType="time" />
 
         <ImageButton
-            android:id="@+id/deleteTime2"
+            android:id="@+id/deleteTime0"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
 
     </LinearLayout>
@@ -80,10 +80,10 @@
             android:inputType="time" />
 
         <ImageButton
-            android:id="@+id/deleteTime3"
+            android:id="@+id/deleteTime1"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
 
     </LinearLayout>
@@ -125,10 +125,10 @@
 
 
         <ImageButton
-            android:id="@+id/deleteTime4"
+            android:id="@+id/deleteTime2"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
     </LinearLayout>
 
@@ -169,10 +169,10 @@
 
 
         <ImageButton
-            android:id="@+id/deleteTime5"
+            android:id="@+id/deleteTime3"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
     </LinearLayout>
 
@@ -212,10 +212,10 @@
             android:inputType="time" />
 
         <ImageButton
-            android:id="@+id/deleteTime6"
+            android:id="@+id/deleteTime4"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
     </LinearLayout>
 
@@ -255,10 +255,10 @@
             android:inputType="time" />
 
         <ImageButton
-            android:id="@+id/deleteTime1"
+            android:id="@+id/deleteTime5"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
     </LinearLayout>
 
@@ -298,10 +298,10 @@
             android:inputType="time" />
 
         <ImageButton
-            android:id="@+id/deleteTime7"
+            android:id="@+id/deleteTime6"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            style="@android:style/Widget.Material.Button.Borderless"
             app:srcCompat="@android:drawable/ic_delete" />
     </LinearLayout>
 
