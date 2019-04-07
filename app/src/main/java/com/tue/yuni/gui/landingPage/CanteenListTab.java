@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.canteenDetails.CanteenView;
-import com.tue.yuni.models.Location;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.services.location.LocationService;
 import com.tue.yuni.services.network.NetworkService;
