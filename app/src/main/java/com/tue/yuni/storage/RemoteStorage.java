@@ -600,6 +600,30 @@ public class RemoteStorage {
     }
 
     /**
+     * Removes a menu item from the database along with all reviews and mappings between canteens
+     *
+     * @param password     Owner password
+     * @param menuItemId   Menu item id
+     * @param handler      Success handler
+     * @param errorHandler Error handler
+     */
+    public void removeMenuItem(
+            String password,
+            int menuItemId,
+            RequestCompletedHandler handler,
+            ErrorHandler errorHandler
+    ) {
+        authenticatedObjectRequest(
+                Request.Method.DELETE,
+                BASE_URL + "/menu_items/" + menuItemId,
+                null,
+                response -> handler.onCompleted(),
+                errorHandler::onError,
+                password
+        );
+    }
+
+    /**
      * Performs an authenticated request by setting the X-api-key header in the request.
      *
      * @param method        HTTP method
