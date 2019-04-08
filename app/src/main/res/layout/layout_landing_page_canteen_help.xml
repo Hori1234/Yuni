@@ -16,7 +16,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="The app Yuni is made for VITAM, the company that runs the canteens on the Tu/e campus. It allows the VITAM to communicate information about the different daily menus to the students and staff who visit the canteen. The visitors can track their favourite menu items and see where the closed canteens are. They can leave and read reviews on canteens and dishes as well as seeing general information about canteens, including opening times. If you are a visitor of the VITAM canteens you can find how to use the app in this section. The app will always start on this page. You can navigate via the top bar to access either the map or the list section where you can select a canteen to view. If you need any help, go to the help section for information on how to use the app.If you click on a canteen it will open on this information page. You can view the reviews and description of the canteen, as well as opening hours and the latest reported busyness. To leave a review, scroll done and click on Feedback. A widget will pop up that allows you to give a star rating from 1 to 5, including half stars. You can add a short text to share your thoughts and recommendations. In the top bar of the canteen page, you can choose between different menu categories. Please note that you can swipe to the left, to view more categories, if available. Clicking on an item will expand it, showing the availability, rating, a picture and a few reviews. If you press the hearth at the item, it will be marked as your favourite and it will show up as a marking in the canteen map and list. To read more reviews, press more below the reviews listed. Press feedback to leave a review yourself, with the same system as mentioned above."  />
+                android:text="@string/helptext">
+
+            </TextView>
         </RelativeLayout>
 
         <RelativeLayout

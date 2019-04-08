@@ -30,7 +30,7 @@
 
         <EditText
             android:id="@+id/PassInput"
-            android:hint="Password"
+            android:hint="@string/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -49,7 +49,7 @@
             android:id="@+id/buttonLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login"
             android:textSize="19sp"
             style="@android:style/Widget.Material.Button.Colored"
             android:layout_centerInParent="true"/>

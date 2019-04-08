@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_weight="1"
-            android:text="Product Name" />
+            android:text="@string/product_name" />
 
         <RatingBar
             android:id="@+id/productRating"
@@ -39,7 +39,7 @@
         android:layout_below="@+id/firstRow"
         android:padding="4dp"
         android:textSize="18sp"
-        android:text="Description"
+        android:text="@string/description"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -61,7 +61,7 @@
         android:id="@+id/productDescription"
         android:layout_below="@+id/descriptionTitle"
         android:padding="4dp"
-        android:text="Item Description"
+        android:text="@string/item_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

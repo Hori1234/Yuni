@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">Yuni</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="minutes">minuten</string>
+
+    <!--MenuItemFragment Related-->
+    <string name="done">Done</string>
+    <string name="itemAdded">Item is toegevoegd aan de database</string>
+    <string name="itemModified">Item is aangepast</string>
+
+    <!--MenuItemListTab Related-->
+    <string name="legacyAvailability">Beschikbaarheid</string>
+    <string name="feedback">Feedback</string>
+    <string name="view_more">Meer bekijken</string>
+    <string name="next">Volgende</string>
+    <string name="prev">Vorige</string>
+    <string name="no_reviews">No geen recencies beschikbaar!</string>
+
+    <!--Feedback Dialog Related-->
+    <string name="stars_0">Vermijden</string>
+    <string name="stars_1">Heel slecht</string>
+    <string name="stars_2">Slecht</string>
+    <string name="stars_3">Goed</string>
+    <string name="stars_4">Heel goed</string>
+    <string name="stars_5">Geweldig!</string>
+    <string name="hintFeedback">Vertel ons wat je er van vond</string>
+    <string name="sendFeedback">Verstuur recensie</string>
+
+    <!--Info Page-->
+    <string name="info">Info</string>
+    <string name="openingHours">Openingstijden</string>
+    <string name="busyness">Drukte</string>
+    <string name="thursday">Donderdag</string>
+    <string name="friday">Vrijdag</string>
+    <string name="saturday">Zaterdag</string>
+    <string name="sunday">Zondag</string>
+    <string name="textview">Textview</string>
+    <string name="name">Naam</string>
+
+    <!-- Favorites -->
+    <string name="favoritesAbbreviation">Favs</string>
+
+    <!--Canteens page-->
+    <string name="map">Kaart</string>
+    <string name="list">Lijst</string>
+    <string name="help">Help</string>
+    <string name="descriptionBox">Vul de beschrijving hier in</string>
+
+    <!--Busyness Ratings-->
+    <string name="busy">Druk</string>
+    <string name="moderate">Gemiddeld</string>
+    <string name="unknown">Onbekend</string>
+
+    <!--Operating Status-->
+    <string name="closing">Gaat sluiten</string>
+    <string name="closed">Gesloten</string>
+    <string name="nameDescrition" />
+    <string name="stock_high">op voorraad</string>
+    <string name="stock_low">lage voorraad</string>
+    <string name="stock_out" >uitverkocht</string>
+    <string name="stock">Voorraad:</string>
+    <string name="set_availability_button">meld beschikbaarheid</string>
+    <string name="certainty">Weet je het zeker?</string>
+    <string name="remove_dish">verwijder item</string>
+    <string name="set_availability">meld beschikbaarheid:</string>
+    <string name="set_schedule">stel een schema in</string>
+    <string name="if_you_are_a_vitam_employee_please_login_using_the_button_below">Als u een medewerker van VITAM bent, log dan in met de knop hier beneden</string>
+    <string name="helptext">Nederlands versie van help komt snel (wilde eerst snel mergen en dan pas dit goed schrijven)</string>
+    <string name="itemtitle">Naam</string>
+    <string name="add_dish">Voeg item toe</string>
+    <string name="upload_photo">Upload foto</string>
+    string>
+
+    <!--MenuItemEditList-->
+    <string name="confirmDeleteMessage">Weet u zeker dat u dit item wil verwijderen?</string>
+    <string name="confirm">Bevestigen</string>
+    <string name="cancel">Annuleren</string>
+
+    <string name="availability">Beschikbaarheid</string>
+    <string name="monday">Maandag</string>
+    <string name="tuesday">Dinsdag</string>
+    <string name="wednesday">Woensdag</string>
+    <string name="set_description">stel beschrijving in</string>
+    <string name="password">Wachtwoord</string>
+    <string name="login">Login</string>
+    <string name="canteen_name">Kantine Naam</string>
+    <string name="open">Open</string>
+    <string name="favs_1">Favs: 1</string>
+    <string name="quiet">Rustig</string>
+    <string name="building_name">Gebouw Naam</string>
+    <string name="_10_minutes">10 minuten</string>
+    <string name="item_description">Beschrijving item</string>
+    <string name="description">Beschrijving</string>
+    <string name="change">wisselen</string>
+    <string name="menu">Menu</string>
+    <string name="general_info">Algemene Info</string>
+    <string name="reviews">Reviews</string>
+    <string name="add_item">Voeg Item Toe</string>
+    <string name="review_text">Review Tekst</string>
+    <string name="product_name">Product naam</string>
+    <string name="button">Knop</string>
+
+    <!-- Thijs -->
+    <string-array name="canteen_array">
+        <item>Atlas kantine</item>
+        <item>Atlas sate zaak</item>
+        <item>Atlas veggie shop</item>
+        <item>Auditorium kantine</item>
+        <item>Auditorium grillz</item>
+        <item>Flux kantine</item>
+        <item>Gemini kantine</item>
+        <item>Helix kantine</item>
+        <item>Laplace kantine</item>
+        <item>Metaforum kantine</item>
+        <item>Traverse kantine</item>
+        <item>Vertigo kantine</item>
+    </string-array>
+</resources>

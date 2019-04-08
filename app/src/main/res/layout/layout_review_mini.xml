@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#0C48C0"
-        android:text="Review Text" />
+        android:text="@string/review_text" />
 
     <RatingBar
         android:id="@+id/reviewRating"

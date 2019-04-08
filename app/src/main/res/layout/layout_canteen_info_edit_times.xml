@@ -316,14 +316,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="set schedule" />
+            android:text="@string/set_schedule" />
 
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="cancel" />
+            android:text="@string/cancel" />
     </LinearLayout>
 
 </LinearLayout>
