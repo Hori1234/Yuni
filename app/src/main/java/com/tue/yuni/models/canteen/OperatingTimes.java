@@ -73,6 +73,16 @@ public class OperatingTimes implements Parcelable {
         this.openingTimes.put(day,time);
     }
 
+    public void removeDay(Day day){
+        if(openingTimes.containsKey(day)){
+            openingTimes.remove(day);
+        }
+        if(closingTimes.containsKey(day)){
+            closingTimes.remove(day);
+        }
+
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
 

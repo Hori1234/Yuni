@@ -106,11 +106,6 @@ public class MenuItemEditListViewAdapter extends BaseAdapter {
     }
 
 
-//    private void setStarred() {
-//
-//    }
-
-
 
     /*
     Required for Performance Optimization

@@ -14,23 +14,29 @@ import android.widget.TextView;
 import com.tue.yuni.R;
 import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
 import com.tue.yuni.gui.canteenDetails.CanteenInfoEditTab;
+import com.tue.yuni.gui.canteenDetails.CanteenOwnerView;
 import com.tue.yuni.gui.canteenDetails.MenuItemEditListTab;
 import com.tue.yuni.gui.editMenu.MenuEditView;
 import com.tue.yuni.gui.ownerLogin.OwnerLogin;
 import com.tue.yuni.models.ExtendedMenuItem;
+import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class OwnerLanding extends Fragment implements View.OnClickListener {
+public class OwnerLanding extends Fragment implements View.OnClickListener, RemoteStorage.MenuItemsDataHandler, RemoteStorage.ErrorHandler {
     Canteen canteen;
+    List<MenuItem> menuItems;
     Button menu, info, reviews, addItem, switchCanteen;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        RemoteStorage.get().getAllMenuItems(this,this);
+
         // Instantiate new View
         View view = inflater.inflate(R.layout.layout_ownerlanding, null);
 
@@ -73,14 +79,14 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
             // Setup Arguments
             Bundle bundle = new Bundle();
             bundle.putParcelable("Canteen", canteen);
-            bundle.putParcelableArrayList("menuItems",  new ArrayList<>(canteen.getMenuItems()));
+            bundle.putParcelableArrayList("allMenuItems",  new ArrayList<>(menuItems));
             // Instantiate Fragment
-            MenuItemEditListTab menuItemEditListTab = new MenuItemEditListTab();
-            menuItemEditListTab.setArguments(bundle);
+            CanteenOwnerView canteenOwnerView = new CanteenOwnerView();
+            canteenOwnerView.setArguments(bundle);
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, menuItemEditListTab);
+            ft.replace(R.id.content, canteenOwnerView);
             ft.commit();
         } else if (v == info) {
             Bundle bundle = new Bundle();
@@ -112,5 +118,15 @@ public class OwnerLanding extends Fragment implements View.OnClickListener {
             ft.replace(R.id.content, new OwnerLogin());
             ft.commit();
         }
+    }
+
+    @Override
+    public void onError(Exception e) {
+
+    }
+
+    @Override
+    public void onReceive(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 }

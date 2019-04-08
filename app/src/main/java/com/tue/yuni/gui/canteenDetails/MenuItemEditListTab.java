@@ -62,7 +62,7 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("menuItems", new ArrayList<>(allItems));
-                bundle.putParcelable("Canteen", canteen);
+                bundle.putParcelable("canteen", canteen);
                 // Instantiate Fragment
                 MenuItemAddListTab menuItemAddListTab = new MenuItemAddListTab();
                 menuItemAddListTab.setArguments(bundle);
@@ -109,8 +109,8 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
         if (args != null && args.containsKey("menuItems")) {
             menuItems = args.getParcelableArrayList("menuItems");
         }
-        if (args != null && args.containsKey("Canteen")) {
-            canteen = args.getParcelable("Canteen");
+        if (args != null && args.containsKey("canteen")) {
+            canteen = args.getParcelable("canteen");
         }
     }
 

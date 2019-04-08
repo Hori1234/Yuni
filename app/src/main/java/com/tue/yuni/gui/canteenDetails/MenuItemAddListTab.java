@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
 import com.tue.yuni.gui.editCanteenDialog.AddDialogContent;
 import com.tue.yuni.gui.editCanteenDialog.MenuDialogContent;
+import com.tue.yuni.gui.editMenu.MenuEditView;
 import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.Day;
 import com.tue.yuni.models.ExtendedMenuItem;
@@ -26,6 +29,7 @@ import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,9 +42,18 @@ public class MenuItemAddListTab extends Fragment implements AdapterView.OnItemCl
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        if (getActivity().getWindow().getDecorView().findViewById(R.id.fab) != null){
-//            Log.d("btn", "btn found");
-//        }
+        List<MenuItem> doubles = new ArrayList<>();
+        for(ExtendedMenuItem canteenItem :canteen.getMenuItems()){
+            for(MenuItem catagoryItem: menuItems){
+                if(catagoryItem.getId()==canteenItem.getId()){
+                    doubles.add(catagoryItem);
+                }
+            }
+            for(MenuItem dubble: doubles){
+                menuItems.remove(dubble);
+            }
+        }
+
         View view = inflater.inflate(R.layout.layout_products_edit, container, false);
         // Get ListView
         listView = view.findViewById(R.id.productsList);
@@ -58,6 +71,8 @@ public class MenuItemAddListTab extends Fragment implements AdapterView.OnItemCl
         if (savedInstanceState != null){
             listView.scrollTo(0, savedInstanceState.getInt("ScrollY"));
         }
+        FloatingActionButton fab = view.findViewById(R.id.addDish);
+        fab.hide();
         return view;
     }
 
@@ -87,11 +102,11 @@ public class MenuItemAddListTab extends Fragment implements AdapterView.OnItemCl
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         // Read Arguments From Bundle
-        if (args != null && args.containsKey("Canteen")) {
+        if (args != null && args.containsKey("menuItems")) {
             menuItems = args.getParcelableArrayList("menuItems");
         }
-        if (args != null && args.containsKey("Canteen")) {
-            canteen = args.getParcelable("Canteen");
+        if (args != null && args.containsKey("canteen")) {
+            canteen = args.getParcelable("canteen");
         }
     }
 

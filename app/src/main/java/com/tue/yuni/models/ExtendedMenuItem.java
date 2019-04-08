@@ -23,6 +23,9 @@ public class ExtendedMenuItem extends MenuItem implements Parcelable {
         this.schedule = schedule;
         this.availability = availability;
     }
+    public int getId() {
+        return id;
+    }
 
     public int getMenuId() {
         return menuId;
