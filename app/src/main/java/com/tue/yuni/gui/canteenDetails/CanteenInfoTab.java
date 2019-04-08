@@ -143,6 +143,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                                 () -> {
                                     if (NetworkService.networkAvailabilityHandler((getActivity().getApplicationContext()))){
                                         RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
+                                        RemoteStorage.get().getCanteen(canteen.getId(), canteen1 -> ratingBar.setRating(canteen1.getRating()), e -> {});
                                     }
                                 },
                                 e -> {
