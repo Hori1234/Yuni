@@ -2,7 +2,6 @@ package com.tue.yuni.gui.editMenu;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class MenuEditCategoryListAdapter extends BaseAdapter {
             viewHolder.menuItemRemove = convertView.findViewById(R.id.removeItem);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         // Setup the Item parameters
@@ -70,32 +70,30 @@ public class MenuEditCategoryListAdapter extends BaseAdapter {
         viewHolder.menuItemName.setText(menuItems.get(position).getName());
         viewHolder.menuItemRating.setRating(menuItems.get(position).getRating());
         viewHolder.menuItemDescription.setText(menuItems.get(position).getDescription());
-        viewHolder.menuItemRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-                builder.setMessage(ctx.getString(R.string.confirmDeleteMessage))
-                        .setPositiveButton(ctx.getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // ToDo RemoteStorage remove item from database
-                                //menuItems.remove(position);
-                                //notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton(ctx.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                builder.create().show();
-            }
+        viewHolder.menuItemRemove.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+            builder.setMessage(ctx.getString(R.string.confirmDeleteMessage))
+                    .setPositiveButton(ctx.getString(R.string.confirm), (dialog, which) -> {
+                        // User pressed confirm, remove menu item from database
+                        MenuItem item = menuItems.get(position);
+                        RemoteStorage.get().removeMenuItem(
+                                PasswordStorage.get().getPassword(),
+                                item.getId(),
+                                this::notifyDataSetChanged,
+                                e -> {
+                                }
+                        );
+                    })
+                    .setNegativeButton(ctx.getString(R.string.cancel), (dialog, which) -> {
+                        // Intentionally left blank
+                    });
+            builder.create().show();
         });
 
         // Return the instantiated row
         return convertView;
     }
+
     /*
     Required for Performance Optimization
      */

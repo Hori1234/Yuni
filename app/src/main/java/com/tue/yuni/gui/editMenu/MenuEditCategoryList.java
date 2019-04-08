@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -78,7 +77,7 @@ public class MenuEditCategoryList extends Fragment implements AdapterView.OnItem
         if (args != null && args.containsKey("menuItemsByCategory")) {
             menuItems = args.getParcelableArrayList("menuItemsByCategory");
             categories = args.getStringArray("categories");
-            if (listAdapter != null){
+            if (listAdapter != null) {
                 listAdapter.setMenuItems(menuItems);
             }
             if (args.containsKey("Index"))
@@ -92,7 +91,7 @@ public class MenuEditCategoryList extends Fragment implements AdapterView.OnItem
         outState.putInt("ScrollY", listView.getScrollY());
     }
 
-    private void transitionToEditMenuItem(MenuItem menuItem){
+    private void transitionToEditMenuItem(MenuItem menuItem) {
         // Create Fragment
         MenuItemFragment menuItemFragment = new MenuItemFragment();
         // Set Fragment Arguments

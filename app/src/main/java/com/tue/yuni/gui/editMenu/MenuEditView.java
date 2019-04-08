@@ -47,15 +47,15 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
         viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                    // Create Arguments
-                    Bundle arguments = new Bundle();
-                    arguments.putParcelableArrayList("menuItemsByCategory", (ArrayList<MenuItem>) menuItemsByCategory.get(i));
-                    arguments.putStringArray("categories", menuItemCategories.toArray(new String[0]));
-                    arguments.putInt("Index", i);
-                    // Instantiate MenuItemListTab Fragment and Pass Arguments
-                    MenuEditCategoryList productsListView = new MenuEditCategoryList();
-                    productsListView.setArguments(arguments);
-                    return productsListView;
+                // Create Arguments
+                Bundle arguments = new Bundle();
+                arguments.putParcelableArrayList("menuItemsByCategory", (ArrayList<MenuItem>) menuItemsByCategory.get(i));
+                arguments.putStringArray("categories", menuItemCategories.toArray(new String[0]));
+                arguments.putInt("Index", i);
+                // Instantiate MenuItemListTab Fragment and Pass Arguments
+                MenuEditCategoryList productsListView = new MenuEditCategoryList();
+                productsListView.setArguments(arguments);
+                return productsListView;
             }
 
             @Override
@@ -66,7 +66,7 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                return menuItemCategories.get(position );
+                return menuItemCategories.get(position);
             }
         });
         // Check if this is a new instance or not
@@ -98,13 +98,13 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
         outState.putInt("CurrentPage", viewPager.getCurrentItem());
     }
 
-    private void transitionToEditMenuItem(){
+    private void transitionToEditMenuItem() {
         // Create MenuItemFragment
         MenuItemFragment menuItemFragment = new MenuItemFragment();
         // Create Arguments
         Bundle arguments = new Bundle();
         arguments.putStringArray("categories", menuItemCategories.toArray(new String[0]));
-        arguments.putString("category", (String)viewPager.getAdapter().getPageTitle(viewPager.getCurrentItem()));
+        arguments.putString("category", (String) viewPager.getAdapter().getPageTitle(viewPager.getCurrentItem()));
         menuItemFragment.setArguments(arguments);
         // Transition to Fragment
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -113,14 +113,17 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
         ft.commit();
     }
 
-    private void requestUpdate(){
+    /**
+     * When a update is requested
+     */
+    private void requestUpdate() {
         RemoteStorage.get().getAllMenuItems(new RemoteStorage.MenuItemsDataHandler() {
             @Override
             public void onReceive(List<MenuItem> menuItems) {
                 processMenuData(menuItems);
                 List<Fragment> frags = getChildFragmentManager().getFragments();
                 for (int i = 0; i < frags.size(); i++) {
-                    CustomFragment cFrag = (CustomFragment)frags.get(i);
+                    CustomFragment cFrag = (CustomFragment) frags.get(i);
                     // Get Frag Menu Items by Category index
                     int index = cFrag.getParameters().getInt("Index");
                     // Update Fragment
@@ -143,7 +146,12 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void processMenuData(List<MenuItem> menuItems){
+    /**
+     * Process the menu items to be placed in categories
+     *
+     * @param menuItems Raw menu items
+     */
+    private void processMenuData(List<MenuItem> menuItems) {
         // Find All Categories in the Menu
         menuItemCategories = new ArrayList<>();
         for (int i = 0; i < menuItems.size(); i++) {
