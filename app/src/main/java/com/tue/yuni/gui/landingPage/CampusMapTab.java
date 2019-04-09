@@ -1,9 +1,6 @@
 package com.tue.yuni.gui.landingPage;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.tue.yuni.R;
-import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
+import com.tue.yuni.gui.mapLayout.MapLayoutFragment;
 
 public class CampusMapTab extends Fragment {
     @Nullable
@@ -25,7 +21,10 @@ public class CampusMapTab extends Fragment {
         ((Button)view.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack("LandingPage");
+                ft.replace(R.id.content, new MapLayoutFragment());
+                ft.commit();
             }
         });
         return view;

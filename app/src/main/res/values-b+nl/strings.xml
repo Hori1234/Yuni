@@ -2,6 +2,8 @@
     <string name="app_name">Yuni</string>
     <string name="action_settings">Instellingen</string>
     <string name="minutes">minuten</string>
+    <string name="favsAvailable">favs</string>
+    <string name="favAvailable">fav</string>
 
     <!--MenuItemFragment Related-->
     <string name="done">Done</string>

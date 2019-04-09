@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tue.yuni.R;
+import com.tue.yuni.gui.mapLayout.MapLayoutFragment;
 
 public class LandingView extends Fragment {
     private View view;
@@ -31,7 +32,7 @@ public class LandingView extends Fragment {
             @Override
             public Fragment getItem(int i) {
                 switch (i){
-                    case 0: return new CampusMapTab();
+                    case 0: return new MapLayoutFragment();
                     case 1: return new CanteenListTab();
                     case 2: return new HelpTab();
                     default: return null;   // Should never get here

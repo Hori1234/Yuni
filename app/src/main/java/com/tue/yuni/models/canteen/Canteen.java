@@ -3,10 +3,13 @@ package com.tue.yuni.models.canteen;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tue.yuni.R;
+import com.tue.yuni.models.Day;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Location;
 import com.tue.yuni.models.MenuItem;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Canteen implements Parcelable {
@@ -133,4 +136,34 @@ public class Canteen implements Parcelable {
             return new Canteen[size];
         }
     };
+
+    //0 = Closed, 1 = Closing, 2 = Open
+    public static int getCanteenCurrentOpenStatus(Canteen canteen){
+        // Canteen Status Processing
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
+        if (canteen.getOperatingTimes().isOpen(Day.values()[day])) {
+            // Get Current Time
+            int open = canteen.getOperatingTimes().getOpeningTime(Day.values()[day]);
+            int close = canteen.getOperatingTimes().getClosingTime(Day.values()[day]);
+            int currentTime = calendar.get(Calendar.HOUR_OF_DAY) * 100 + calendar.get(Calendar.MINUTE);
+
+            // Display Open Or Closed for the canteen
+            if (open <= currentTime && currentTime < close) {
+                if ((close % 100) - 5 < 0) {
+                    int min = 60 + ((close % 100) - 5);
+                    close = ((close / 100) - 1) * 100 + min;
+                }
+                if (currentTime >= close) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
 }

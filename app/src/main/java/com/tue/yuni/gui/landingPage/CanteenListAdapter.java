@@ -119,34 +119,18 @@ public class CanteenListAdapter extends BaseAdapter {
 
             viewHolder.textView1.setText(canteen.getName());
             // Canteen Status Processing
-            Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
-            if (canteen.getOperatingTimes().isOpen(Day.values()[day])) {
-                // Get Current Time
-                int open = canteen.getOperatingTimes().getOpeningTime(Day.values()[day]);
-                int close = canteen.getOperatingTimes().getClosingTime(Day.values()[day]);
-                int currentTime = calendar.get(Calendar.HOUR_OF_DAY) * 100 + calendar.get(Calendar.MINUTE);
-
-                // Display Open Or Closed for the canteen
-                if (open <= currentTime && currentTime < close) {
-                    if ((close % 100) - 5 < 0) {
-                        int min = 60 + ((close % 100) - 5);
-                        close = ((close / 100) - 1) * 100 + min;
-                    }
-                    if (currentTime >= close) {
-                        viewHolder.textView2.setText(ctx.getString(R.string.closing));
-                        viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenClosing));
-                    } else {
-                        viewHolder.textView2.setText(ctx.getString(R.string.open));
-                        viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenOpen));
-                    }
-                } else {
-                    viewHolder.textView2.setText(ctx.getString(R.string.closed));
-                    viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenClosed));
-                }
-            } else {
+            int status = Canteen.getCanteenCurrentOpenStatus(canteens.get(listItem.get(position).canteenPosition));
+            if (status == 0) {
                 viewHolder.textView2.setText(ctx.getString(R.string.closed));
                 viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenClosed));
+            }
+            else if (status == 1) {
+                viewHolder.textView2.setText(ctx.getString(R.string.closing));
+                viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenClosing));
+            }
+            else if (status == 2) {
+                viewHolder.textView2.setText(ctx.getString(R.string.open));
+                viewHolder.textView2.setTextColor(ctx.getColor(R.color.canteenOpen));
             }
 
             // Favorites Processing

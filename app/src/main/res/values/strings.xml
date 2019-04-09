@@ -2,6 +2,8 @@
     <string name="app_name">Yuni</string>
     <string name="action_settings">Settings</string>
     <string name="minutes">minutes</string>
+    <string name="favsAvailable">favs</string>
+    <string name="favAvailable">fav</string>
 
     <!--MenuItemFragment Related-->
     <string name="done">Done</string>
@@ -57,7 +59,7 @@
     <string name="nameDescrition" />
     <string name="stock_high">in  stock</string>
     <string name="stock_low">low stock</string>
-    <string name="stock_out" >out of stock</string>
+    <string name="stock_out">out of stock</string>
     <string name="stock">Stock:</string>
     <string name="set_availability_button">set availability</string>
     <string name="certainty">Are you sure?</string>
