@@ -100,11 +100,11 @@ public class OwnerLanding extends Fragment implements View.OnClickListener, Remo
             ft.commit();
         } else if (v == reviews){
             // Transition to Fragment
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, new OwnerLogin());
+            //FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            //ft.addToBackStack("OwnerLanding");
+            //ft.replace(R.id.content, new OwnerLogin());
             //todo: link to correct destiantion
-            ft.commit();
+            //ft.commit();
         } else if (v == addItem) {
             // Transition to Fragment
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -112,11 +112,7 @@ public class OwnerLanding extends Fragment implements View.OnClickListener, Remo
             ft.replace(R.id.content, new MenuEditView());
             ft.commit();
         } else if (v == switchCanteen) {
-            // Transition to Fragment
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.addToBackStack("OwnerLanding");
-            ft.replace(R.id.content, new OwnerLogin());
-            ft.commit();
+            getActivity().onBackPressed();
         }
     }
 

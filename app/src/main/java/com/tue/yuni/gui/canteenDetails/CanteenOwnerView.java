@@ -42,11 +42,11 @@ public class CanteenOwnerView extends Fragment {
         viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-
                     // Create Arguments
                     Bundle arguments = new Bundle();
                     arguments.putParcelableArrayList("menuItems", (ArrayList<ExtendedMenuItem>) menuItemsByCategory.get(i));
                     arguments.putParcelable("canteen", canteen);
+                    arguments.putString("category", menuItemCategories.get(i));
                     // Instantiate MenuItemListTab Fragment and Pass Arguments
                     MenuItemEditListTab productsListView = new MenuItemEditListTab();
                     productsListView.setArguments(arguments);

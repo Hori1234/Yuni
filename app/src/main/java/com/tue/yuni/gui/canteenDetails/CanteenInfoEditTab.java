@@ -80,6 +80,21 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
         busynessText.setText(getContext().getString(BusynessMapper.getTextResource(canteen.getBusyness())));
 
         // Opening Hours
+        displayOpeningHours();
+
+        // Description
+        descriptionTextView.setText(canteen.getDescription());
+
+        // Reviews
+        RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
+
+
+
+        // Return view
+        return view;
+    }
+
+    private void displayOpeningHours() {
         for (int i = 0; i < 7; i++) {
             // Check if Canteen is open on day i
             if (canteen.getOperatingTimes().isOpen(Day.values()[i])) {
@@ -99,17 +114,6 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
                 dayHoursTextView[i].setText(getContext().getString(R.string.closed));
             }
         }
-        // Description
-        descriptionTextView.setText(canteen.getDescription());
-        // Reviews
-        RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
-
-
-
-
-
-        // Return view
-        return view;
     }
 
     @Override
@@ -161,12 +165,18 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
 
     @Override
     public void onChangeCanteen(OperatingTimes times){
-        RemoteStorage.get().updateCanteen(PasswordStorage.get().getPassword(),canteen.getId(),canteen.getName(),canteen.getDescription(),times,this,this);
+        RemoteStorage.get().updateCanteen(PasswordStorage.get().getPassword(),canteen.getId(),canteen.getName(),canteen.getDescription(),times,() -> {
+            canteen.setOperatingTimes(times);
+            displayOpeningHours();
+        },this);
     }
 
     @Override
     public void onChangeCanteen(String description){
-        RemoteStorage.get().updateCanteen(PasswordStorage.get().getPassword(),canteen.getId(),canteen.getName(),description,canteen.getOperatingTimes(),this,this);
+        RemoteStorage.get().updateCanteen(PasswordStorage.get().getPassword(),canteen.getId(),canteen.getName(),description,canteen.getOperatingTimes(),() -> {
+            canteen.setDescription(description);
+            descriptionTextView.setText(canteen.getDescription());
+        },this);
     }
 
     @Override

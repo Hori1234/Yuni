@@ -4,6 +4,7 @@
     <string name="minutes">minutes</string>
     <string name="favsAvailable">favs</string>
     <string name="favAvailable">fav</string>
+    <string name="selectMenuItem">Select Menu Item</string>
 
     <!--MenuItemFragment Related-->
     <string name="done">Done</string>

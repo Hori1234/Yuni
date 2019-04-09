@@ -16,8 +16,8 @@ public class Canteen implements Parcelable {
 
     private final int id;
     private final String name;
-    private final String description;
-    private final OperatingTimes operatingTimes;
+    private String description;
+    private OperatingTimes operatingTimes;
     private final Location location;
     private final String building;
     private final int imageResourceId;
@@ -48,6 +48,14 @@ public class Canteen implements Parcelable {
         this.rating = rating;
         this.busyness = busyness;
         this.menuItems = menuItems;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOperatingTimes(OperatingTimes operatingTimes) {
+        this.operatingTimes = operatingTimes;
     }
 
     public int getId() {
