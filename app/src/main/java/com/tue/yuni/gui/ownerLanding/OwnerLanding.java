@@ -26,7 +26,7 @@ import com.tue.yuni.storage.RemoteStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//this class handles the landing page for canteen employees
 public class OwnerLanding extends Fragment implements View.OnClickListener, RemoteStorage.MenuItemsDataHandler, RemoteStorage.ErrorHandler {
     Canteen canteen;
     List<MenuItem> menuItems;

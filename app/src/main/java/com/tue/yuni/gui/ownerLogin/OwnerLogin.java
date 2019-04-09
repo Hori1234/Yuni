@@ -23,6 +23,7 @@ import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
+//this class handles the login functionality of employees
 
 public class OwnerLogin extends Fragment implements RemoteStorage.CanteensDataHandler, RemoteStorage.ErrorHandler, View.OnClickListener {
     List<Canteen> canteens;
@@ -65,12 +66,16 @@ public class OwnerLogin extends Fragment implements RemoteStorage.CanteensDataHa
         if (!NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
             return;
         }
+        //connection to the network is tested. if no connection is available, an error message will be shown (as described in the networkAvailabilityHandler)
+        //the onClick will be ended there
 
         if (v != loginButton) {
             return;
         }
+        // it is checked if it was the loginbutton that was pressed
         String passInput = editPassword.getText().toString();
         RemoteStorage.get().authenticate(
+                //the input is saved as passinput and authenticated
                 passInput,
                 authenticated -> {
                     if (authenticated) {

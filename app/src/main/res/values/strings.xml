@@ -66,33 +66,44 @@
     <string name="remove_dish">remove item</string>
     <string name="set_availability">Set availabilty:</string>
     <string name="set_schedule">set schedule</string>
+
+    <!--help tab-->
     <string name="if_you_are_a_vitam_employee_please_login_using_the_button_below">If you are a VITAM employee, please login using the button below</string>
-    <string name="helptext">The app Yuni is made for VITAM, the company that runs the canteens on the Tu/e campus. It allows the VITAM to communicate information about the different daily menus to the students and staff who visit the canteen. The visitors can track their favourite menu items and see where the closed canteens are. They can leave and read reviews on canteens and dishes as well as seeing general information about canteens, including opening times. The app will always start on the list tab of this page. You can navigate via the top bar to access either the map or the list section where you can select a canteen to view. If you need any help, come to this section for information on how to use the app. If you click on a canteen it will open on this information page. You can view the reviews and description of the canteen, as well as opening hours and the latest reported busyness.</string>
+    <string name="helptextone">The app Yuni is made for VITAM, the company that runs the canteens on the Tu/e campus. It allows VITAM to communicate information about the different daily menus to the students and staff who visit the canteens. Visitors can track their favourite menu items and see which canteens are opened. They can leave and read reviews on canteens and dishes as well as seeing general information about canteens, including opening times. The app will always start on the list tab of this page. You can navigate via the top bar to access either the map or the list section where you can select a canteen to view. If you need any help, come to this section for information on how to use the app. </string>
+    <string name="helptexttwo">Viewing a canteen</string>
+    <string name="helptextthree">If you click on a canteen it will open on the information tab. You can view the reviews and description of the canteen, as well as opening hours and the latest reported busyness. In the top section you can navigate between information and menu categories. Select a Category to view the menu in that section. If you click on a menu item, it will expand and show reviews, as well as the option to leave a review.</string>
+    <string name="helptextfour">Changing the general information</string>
+    <string name="helptextfive">This funtionality is just for VITAM employees. When in the owner main menu (the one with 4 blue bottoms) you can click "general information" (C in figure 6 of the user manual). This button will lead to a menu where you can chang different items by clicking on the pencil. The top pencil will change the header image. The second pencil will allow you to change the opening times. Lastly, the third button will edit the description of the canteen. For all "pencils": pressing them will lead to a pop-up that allows you to change the content and save or cancel the changes. </string>
+    <string name="login">Login</string>
+
+    <!--add items-->
     <string name="itemtitle">Name</string>
     <string name="add_dish">Add Item</string>
     <string name="upload_photo">Upload Photo</string>
-    string>
+
 
     <!--MenuItemEditList-->
     <string name="confirmDeleteMessage">Are you sure you wish to delete this item?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
 
+    <!--canteen info-->
     <string name="availability">Availability</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
     <string name="set_description">set description</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="canteen_name">Canteen Name</string>
     <string name="open">Open</string>
-    <string name="favs_1">Favs: 1</string>
     <string name="quiet">Quiet</string>
+
+    <!--miscellaneous-->
+    <string name="canteen_name">Canteen Name</string>
     <string name="building_name">Building Name</string>
-    <string name="_10_minutes">10 minutes</string>
     <string name="item_description">Item Description</string>
     <string name="description">Description</string>
+
+    <!--owner landing-->
     <string name="change">switch</string>
     <string name="menu">Menu</string>
     <string name="general_info">General Info</string>
@@ -100,9 +111,12 @@
     <string name="add_item">Add Item</string>
     <string name="review_text">Review Text</string>
     <string name="product_name">Product name</string>
-    <string name="button">Button</string>
 
-    <!-- Thijs -->
+    <!--test string-->
+    <string name="button">Button</string>
+    <string name="_10_minutes">10 minutes</string>
+    <string name="favs_1">Favs: 1</string>
+
     <string-array name="canteen_array">
         <item>Atlas canteen</item>
         <item>Atlas sateh place</item>
