@@ -97,6 +97,7 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
 
     private void displayOpeningHours() {
         for (int i = 0; i < 7; i++) {
+            final int index = i;
             // Check if Canteen is open on day i
             if (canteen.getOperatingTimes().isOpen(Day.values()[i])) {
                 // Parse Time
@@ -110,9 +111,19 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
                 open = (hOpen > 12) ? (hOpen - 12) + ":" + String.format("%02d", mOpen) + " PM" : hOpen + ":" + String.format("%02d", mOpen) + " AM";
                 close = (hClose > 12) ? (hClose - 12) + ":" + String.format("%02d", mClose) + " PM" : hClose + ":" + String.format("%02d", mClose) + " AM";
                 // Display Time
-                dayHoursTextView[i].setText(open + " - " + close);
+                dayHoursTextView[i].post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dayHoursTextView[index].setText(open + " - " + close);
+                    }
+                });
             } else {
-                dayHoursTextView[i].setText(getContext().getString(R.string.closed));
+                dayHoursTextView[i].post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dayHoursTextView[index].setText(getContext().getString(R.string.closed));
+                    }
+                });
             }
         }
     }
