@@ -14,6 +14,13 @@ import com.tue.yuni.R;
 import com.tue.yuni.models.Availability;
 import com.tue.yuni.models.ExtendedMenuItem;
 
+
+/*
+ * Changes the availability of a menuItem in a certain canteen
+ * ExtebdedMenuItem holdsboth canteen and dish ids
+ * parent handles the actual posting of the availability
+ *
+ */
 public class availabilityDialog implements View.OnClickListener {
     private Context ctx;
     private AlertDialog dialog;
@@ -45,6 +52,10 @@ public class availabilityDialog implements View.OnClickListener {
 
             availabilityGroup = view.findViewById(R.id.availabilityGroup);
 
+            /*
+             * each Radio button when pressed clears everything and then toggles itself to be certain
+             * only one is pressed at any given time
+             */
             inStockButton = view.findViewById(R.id.inStockButton);
             inStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -53,6 +64,10 @@ public class availabilityDialog implements View.OnClickListener {
                     inStockButton.toggle();
                 }
             });
+            /*
+             * each Radio button when pressed clears everything and then toggles itself to be certain
+             * only one is pressed at any given time
+             */
             lowStockButton = view.findViewById(R.id.lowStockButton);
             lowStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,6 +76,10 @@ public class availabilityDialog implements View.OnClickListener {
                     lowStockButton.toggle();
                 }
             });
+            /*
+             * each Radio button when pressed clears everything and then toggles itself to be certain
+             * only one is pressed at any given time
+             */
             noStockButton = view.findViewById(R.id.outStockButton);
             noStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,6 +89,7 @@ public class availabilityDialog implements View.OnClickListener {
                 }
             });
 
+            // toggle the correct button given the menuItem that was given as input
             switch(menuItem.getAvailability()){
                 case IN_STOCK:
                     inStockButton.toggle();
@@ -102,14 +122,21 @@ public class availabilityDialog implements View.OnClickListener {
         }
     }
 
+
+    /*
+     * Notify the parent of the availability given
+     */
     @Override
     public void onClick(View v) {
-        // Notify the parent of the feedback given
+        //retrieve the id of the checked button
         int radioButtonId = availabilityGroup.getCheckedRadioButtonId();
+        // retrieve the view at this ID
         View radioButton = availabilityGroup.findViewById(radioButtonId);
+        //check what position this view at in the group
         int idx = availabilityGroup.indexOfChild(radioButton);
         Availability availability = null;
 
+        // Set availability to be passed based on the position of the checked button
         switch (idx) {
             case 0:
                 availability = Availability.OUT_OF_STOCK;
@@ -123,6 +150,7 @@ public class availabilityDialog implements View.OnClickListener {
         }
         dismiss();
 
+        // pass the availability and extended menu item to parent to handle posting
         parent.onChangeMenuItem(menuItem, availability);
     }
 }
