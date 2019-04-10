@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnShakeListener {
                     });
                 } else {
                     // Run through all canteens to find out in which canteen we are
+                    Log.d("PhoneLoc", location.getLatitude() + ", " + location.getLongitude());
                     for (int i = 0; i < canteens.size(); i++) {
                         // Get distance to canteen in Km
                         float d = LocationService.distanceInKm(location, canteens.get(i).getLocation());
