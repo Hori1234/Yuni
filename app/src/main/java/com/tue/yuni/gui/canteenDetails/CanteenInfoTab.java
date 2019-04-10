@@ -112,7 +112,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Restore State
         if (savedInstanceState != null) {
             restoreScroll = savedInstanceState.getInt("ScrollY");
-            restorePage = savedInstanceState.getInt("ReviewsPage");
+            restorePage = savedInstanceState.getInt("ReviewsPage", 0);
         }
 
         // Return view
@@ -122,7 +122,8 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("ReviewsPage", reviewBox.getReviewsPage());
+        if (reviewBox != null)
+            outState.putInt("ReviewsPage", reviewBox.getReviewsPage());
         outState.putInt("ScrollY", ((ScrollView)view.findViewById(R.id.scrollView)).getScrollY());
     }
 

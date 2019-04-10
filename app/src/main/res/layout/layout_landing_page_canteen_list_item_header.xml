@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/locationDistance"
         android:layout_alignParentEnd="true"
-        android:text="@string/_10_minutes"
+        android:text=""
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

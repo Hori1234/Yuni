@@ -18,6 +18,7 @@ import com.tue.yuni.R;
 import com.tue.yuni.gui.addItemToTheListMenu.MenuItemFragment;
 import com.tue.yuni.gui.util.CustomFragment;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                return menuItemCategories.get(position);
+                return menuItemCategories != null ? menuItemCategories.get(position) : "";
             }
         });
         // Check if this is a new instance or not
@@ -83,10 +84,12 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == btn) {
-            // Save ViewPager Page Index
-            pageToRestore = viewPager.getCurrentItem();
-            // Open Fragment to Edit / Add menuItem
-            transitionToEditMenuItem();
+            if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
+                // Save ViewPager Page Index
+                pageToRestore = viewPager.getCurrentItem();
+                // Open Fragment to Edit / Add menuItem
+                transitionToEditMenuItem();
+            }
         }
     }
 
@@ -103,7 +106,8 @@ public class MenuEditView extends Fragment implements View.OnClickListener {
         MenuItemFragment menuItemFragment = new MenuItemFragment();
         // Create Arguments
         Bundle arguments = new Bundle();
-        arguments.putStringArray("categories", menuItemCategories.toArray(new String[0]));
+        if (menuItemCategories != null)
+            arguments.putStringArray("categories", menuItemCategories.toArray(new String[0]));
         arguments.putString("category", (String) viewPager.getAdapter().getPageTitle(viewPager.getCurrentItem()));
         menuItemFragment.setArguments(arguments);
         // Transition to Fragment
