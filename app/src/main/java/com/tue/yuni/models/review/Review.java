@@ -5,11 +5,26 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Review model
+ */
 public class Review {
 
+    /**
+     * Unique identification number
+     */
     protected final int id;
+    /**
+     * Numerical rating
+     */
     protected final float rating;
+    /**
+     * Textual review
+     */
     protected final String description;
+    /**
+     * Created at
+     */
     protected final String createdAt;
 
     /**
@@ -41,6 +56,11 @@ public class Review {
         return createdAt;
     }
 
+    /**
+     * Comparator implementation to compare ISO 8601 date time formats
+     *
+     * @link https://en.wikipedia.org/wiki/ISO_8601
+     */
     public static class CustomComparator implements Comparator<Review> {
         @Override
         public int compare(Review o1, Review o2) {
@@ -51,8 +71,7 @@ public class Review {
                 Date d2 = simpleDateFormat.parse(o2.getCreatedAt());
                 if (d1.after(d2)) return -1;
                 else if (d1.before(d2)) return 1;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
 
             }
 

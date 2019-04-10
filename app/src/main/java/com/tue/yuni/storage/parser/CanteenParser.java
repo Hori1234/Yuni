@@ -12,6 +12,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for parsing canteens from JSON
+ */
 public class CanteenParser {
 
     /**
@@ -22,13 +25,16 @@ public class CanteenParser {
      * @throws JSONException If json is not in the correct format
      */
     public static Canteen parse(JSONObject data) throws JSONException {
+        // Initialisation
         List<ExtendedMenuItem> menuItems = new ArrayList<>();
         JSONArray menuItemsData = data.getJSONArray("menu_items");
 
+        // Parse all menu items first
         for (int i = 0; i < menuItemsData.length(); i++) {
             menuItems.add(MenuItemParser.parseExtended(menuItemsData.getJSONObject(i)));
         }
 
+        // Create canteen object and return
         return new Canteen(
                 data.getInt("id"),
                 data.getString("name"),

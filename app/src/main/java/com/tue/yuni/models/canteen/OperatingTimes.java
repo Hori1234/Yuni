@@ -11,11 +11,24 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Opening times model
+ */
 public class OperatingTimes implements Parcelable {
 
+    /**
+     * Mapping day -> opening time
+     */
     private Map<Day, Integer> openingTimes;
+    /**
+     * Mapping day -> closing time
+     */
     private Map<Day, Integer> closingTimes;
 
+    /**
+     * @param openingTimes Opening times
+     * @param closingTimes Closing times
+     */
     public OperatingTimes(Map<Day, Integer> openingTimes, Map<Day, Integer> closingTimes) {
         this.openingTimes = openingTimes;
         this.closingTimes = closingTimes;
@@ -65,24 +78,30 @@ public class OperatingTimes implements Parcelable {
 
         return closingTimes.get(day);
     }
+
     public void setClosingTime(Day day, int time) {
-        this.closingTimes.put(day,time);
+        this.closingTimes.put(day, time);
     }
 
     public void setOpeningTime(Day day, int time) {
-        this.openingTimes.put(day,time);
+        this.openingTimes.put(day, time);
     }
 
-    public void removeDay(Day day){
-        if(openingTimes.containsKey(day)){
+    public void removeDay(Day day) {
+        if (openingTimes.containsKey(day)) {
             openingTimes.remove(day);
         }
-        if(closingTimes.containsKey(day)){
+        if (closingTimes.containsKey(day)) {
             closingTimes.remove(day);
         }
-
     }
 
+    /**
+     * Converts the model to a JSON representation
+     *
+     * @return JSONobject representing the operating times model
+     * @throws JSONException If the JSON cannot be properly created
+     */
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
 
@@ -120,31 +139,52 @@ public class OperatingTimes implements Parcelable {
         return new OperatingTimes(openingTimes, closingTimes);
     }
 
-    /**
+    /*
      * Parcelable Implementation
+     */
+
+    /**
+     * Parcelable constructor
+     *
+     * @param in Parcel
      */
     protected OperatingTimes(Parcel in) {
         in.readMap(this.openingTimes, Integer.class.getClassLoader());
         in.readMap(this.closingTimes, Integer.class.getClassLoader());
     }
 
+    /**
+     * @see Parcelable
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * @see Parcelable
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeMap(openingTimes);
         dest.writeMap(closingTimes);
     }
 
+    /**
+     * @see android.os.Parcelable.Creator
+     */
     public static final Creator<OperatingTimes> CREATOR = new Creator<OperatingTimes>() {
+        /**
+         * @see android.os.Parcelable.Creator
+         */
         @Override
         public OperatingTimes createFromParcel(Parcel source) {
             return new OperatingTimes(source);
         }
 
+        /**
+         * @see android.os.Parcelable.Creator
+         */
         @Override
         public OperatingTimes[] newArray(int size) {
             return new OperatingTimes[size];

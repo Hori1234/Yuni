@@ -8,8 +8,18 @@ import com.tue.yuni.models.Schedule;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Utility class to parse menu items from JSON
+ */
 public class MenuItemParser {
 
+    /**
+     * Parses a menu item from JSON data
+     *
+     * @param data JSON data
+     * @return Menu item model
+     * @throws JSONException If the JSON could not be parsed
+     */
     public static MenuItem parse(JSONObject data) throws JSONException {
         return new MenuItem(
                 data.getInt("id"),
@@ -22,6 +32,13 @@ public class MenuItemParser {
         );
     }
 
+    /**
+     * Parses an extended menu item from JSON data
+     *
+     * @param data JSON data
+     * @return Extended menu item model
+     * @throws JSONException If the JSON could not be parsed
+     */
     public static ExtendedMenuItem parseExtended(JSONObject data) throws JSONException {
         return new ExtendedMenuItem(
                 data.getInt("id"),

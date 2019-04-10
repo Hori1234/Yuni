@@ -3,29 +3,71 @@ package com.tue.yuni.models.canteen;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.tue.yuni.R;
 import com.tue.yuni.models.Day;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.Location;
-import com.tue.yuni.models.MenuItem;
 
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Canteen model
+ */
 public class Canteen implements Parcelable {
 
+    /**
+     * Unique identification number
+     */
     private final int id;
+    /**
+     * Name
+     */
     private final String name;
+    /**
+     * Description
+     */
     private String description;
+    /**
+     * Operating times
+     */
     private OperatingTimes operatingTimes;
+    /**
+     * Location
+     */
     private final Location location;
+    /**
+     * Building
+     */
     private final String building;
+    /**
+     * Image resource ID (NOT IMPLEMENTED)
+     */
     private final int imageResourceId;
+    /**
+     * Average rating
+     */
     private float rating;
+    /**
+     * Busyness
+     */
     private final int busyness;
-
+    /**
+     * Menu items
+     */
     private List<ExtendedMenuItem> menuItems;
 
+    /**
+     * @param id              ID
+     * @param name            Name
+     * @param description     Description
+     * @param operatingTimes  Operating times
+     * @param location        Location
+     * @param building        Building
+     * @param imageResourceId Image resouce ID
+     * @param rating          Average rating
+     * @param busyness        Busyness
+     * @param menuItems       Menu items
+     */
     public Canteen(
             int id,
             String name,
@@ -94,6 +136,9 @@ public class Canteen implements Parcelable {
         return busyness;
     }
 
+    /**
+     * @deprecated
+     */
     public int getImageResourceId() {
         return imageResourceId;
     }
@@ -102,8 +147,14 @@ public class Canteen implements Parcelable {
         return menuItems;
     }
 
-    /**
+    /*
      * Parcelable Implementation
+     */
+
+    /**
+     * Parcelable constructor
+     *
+     * @param in Parcel
      */
     protected Canteen(Parcel in) {
         this.id = in.readInt();
@@ -118,11 +169,17 @@ public class Canteen implements Parcelable {
         in.readTypedList(menuItems, ExtendedMenuItem.CREATOR);
     }
 
+    /**
+     * @see Parcelable
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * @see Parcelable
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -137,20 +194,34 @@ public class Canteen implements Parcelable {
         dest.writeTypedList(menuItems);
     }
 
+    /**
+     * @see android.os.Parcelable.Creator
+     */
     public static final Creator<Canteen> CREATOR = new Creator<Canteen>() {
+        /**
+         * @see android.os.Parcelable.Creator
+         */
         @Override
         public Canteen createFromParcel(Parcel source) {
             return new Canteen(source);
         }
 
+        /**
+         * @see android.os.Parcelable.Creator
+         */
         @Override
         public Canteen[] newArray(int size) {
             return new Canteen[size];
         }
     };
 
-    //0 = Closed, 1 = Closing, 2 = Open
-    public static int getCanteenCurrentOpenStatus(Canteen canteen){
+    /**
+     * 0 = Closed, 1 = Closing, 2 = Open
+     *
+     * @param canteen Canteen
+     * @return Open status
+     */
+    public static int getCanteenCurrentOpenStatus(Canteen canteen) {
         // Canteen Status Processing
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
