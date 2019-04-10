@@ -41,7 +41,9 @@ public class timesCanteenDialog implements View.OnClickListener {
 
     @SuppressWarnings({"all"})
     public void show(CanteenDialogContent parent, Canteen canteen){
+        // array for seven days and two times
         dayTimes = new EditText[7][2];
+        // delete buttons for all 7 days
         deleteButtons = new ImageButton[7];
         // Instantiate dialog only if it doesn't already exist
         if (dialog == null) {
@@ -54,6 +56,7 @@ public class timesCanteenDialog implements View.OnClickListener {
             alertDialog.setView(view);
             // Get View UI Elements
 
+            //initialize delete buttons for all days
             deleteButtons[0]  =  view.findViewById(R.id.deleteTime0);
             deleteButtons[1]  =  view.findViewById(R.id.deleteTime1);
             deleteButtons[2]  =  view.findViewById(R.id.deleteTime2);
@@ -62,6 +65,7 @@ public class timesCanteenDialog implements View.OnClickListener {
             deleteButtons[5]  =  view.findViewById(R.id.deleteTime5);
             deleteButtons[6]  =  view.findViewById(R.id.deleteTime6);
 
+            // initilaize edit fields for both openin and closing in a two dimetional array
             dayTimes[0][0]  =  view.findViewById(R.id.mondayMorningEdit);
             dayTimes[0][1]  =  view.findViewById(R.id.mondayEveningEdit);
             dayTimes[1][0]  =  view.findViewById(R.id.tuesdayMorningEdit);
@@ -77,21 +81,23 @@ public class timesCanteenDialog implements View.OnClickListener {
             dayTimes[6][0]  =  view.findViewById(R.id.sundayMorningEdit);
             dayTimes[6][1]  =  view.findViewById(R.id.sundayEveningEdit);
 
+
             times =  canteen.getOperatingTimes();
+            //for all days if the canteen has opening times set them else set from 00:00 to 00:00
             for(int d = 0; d < 7; d++){
                 deleteButtons[d].setOnClickListener(this);
                 if(times.isOpen(Day.values()[d])) {
                         dayTimes[d][0].setText(String.format("%02d", times.getOpeningTime(Day.values()[d]) / 100) + ":" + String.format("%02d", times.getOpeningTime(Day.values()[d]) % 100));
 
-                    dayTimes[d][0].setOnClickListener(this);
+//                    dayTimes[d][0].setOnClickListener(this);
                         dayTimes[d][1].setText(String.format("%02d", times.getClosingTime(Day.values()[d]) / 100) + ":" + String.format("%02d", times.getClosingTime(Day.values()[d]) % 100));
 
-                    dayTimes[d][0].setOnClickListener(this);
+//                    dayTimes[d][1].setOnClickListener(this);
                 }else{
                     dayTimes[d][0].setText("00:00");
-                    dayTimes[d][0].setOnClickListener(this);
+//                    dayTimes[d][0].setOnClickListener(this);
                     dayTimes[d][1].setText("00:00");
-                    dayTimes[d][0].setOnClickListener(this);
+//                    dayTimes[d][1].setOnClickListener(this);
                 }
             }
 
@@ -164,8 +170,11 @@ public class timesCanteenDialog implements View.OnClickListener {
                         hourOfDay   = 0;
                         minute      = 0;
                     } else {
-                        hourOfDay   = times.getClosingTime(Day.values()[day])/100;
-                        minute      = times.getClosingTime(Day.values()[day])%100;
+                        String[]  getTime = dayTimes[day][time].getText().toString().split(":");
+//                        hourOfDay   = times.getClosingTime(Day.values()[day])/100;
+                        hourOfDay   = Integer.parseInt(getTime[0]);
+//                        minute      = times.getClosingTime(Day.values()[day])%100;
+                        minute      = Integer.parseInt(getTime[1]);
                     }
                     final int d = day, t = time;
                     TimePickerDialog timePickerDialog = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
