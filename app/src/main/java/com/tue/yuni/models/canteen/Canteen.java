@@ -21,7 +21,7 @@ public class Canteen implements Parcelable {
     private final Location location;
     private final String building;
     private final int imageResourceId;
-    private final float rating;
+    private float rating;
     private final int busyness;
 
     private List<ExtendedMenuItem> menuItems;
@@ -48,6 +48,10 @@ public class Canteen implements Parcelable {
         this.rating = rating;
         this.busyness = busyness;
         this.menuItems = menuItems;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public void setDescription(String description) {

@@ -25,6 +25,7 @@ import com.tue.yuni.models.canteen.OperatingTimes;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.Review;
 import com.tue.yuni.services.mapper.BusynessMapper;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
@@ -132,13 +133,15 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
 
     @Override
     public void onClick(View v) {
-        if (v == changeImage) {
-            //TODO new timesCanteenDialog(getContext()).show(this, canteen);
-        }else  if(v == editCanteenTimes){
-            new timesCanteenDialog(getContext()).show(this,canteen);
+        if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
+            if (v == changeImage) {
+                //TODO new timesCanteenDialog(getContext()).show(this, canteen);
+            } else if (v == editCanteenTimes) {
+                new timesCanteenDialog(getContext()).show(this, canteen);
 
-        }else if(v == editDescription){
-            new descriptionCanteenDialog(getContext()).show(this,canteen);
+            } else if (v == editDescription) {
+                new descriptionCanteenDialog(getContext()).show(this, canteen);
+            }
         }
     }
 

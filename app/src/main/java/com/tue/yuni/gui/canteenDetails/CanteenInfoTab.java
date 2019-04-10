@@ -96,7 +96,12 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Description
         descriptionTextView.setText(canteen.getDescription());
         // Overall Canteen Rating
-        ratingBar.setRating(canteen.getRating());
+        ratingBar.post(new Runnable() { // Workaround to ratingBar somehow not updating
+            @Override
+            public void run() {
+                ratingBar.setRating(canteen.getRating());
+            }
+        });
         // Reviews
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
             RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
@@ -107,7 +112,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Restore State
         if (savedInstanceState != null) {
             restoreScroll = savedInstanceState.getInt("ScrollY");
-            restorePage = savedInstanceState.getInt("ReviewsPage");
+            restorePage = savedInstanceState.getInt("ReviewsPage", 0);
         }
 
         // Return view
@@ -117,7 +122,8 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("ReviewsPage", reviewBox.getReviewsPage());
+        if (reviewBox != null)
+            outState.putInt("ReviewsPage", reviewBox.getReviewsPage());
         outState.putInt("ScrollY", ((ScrollView)view.findViewById(R.id.scrollView)).getScrollY());
     }
 
@@ -143,7 +149,10 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                                 () -> {
                                     if (NetworkService.networkAvailabilityHandler((getActivity().getApplicationContext()))){
                                         RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
-                                        RemoteStorage.get().getCanteen(canteen.getId(), canteen1 -> ratingBar.setRating(canteen1.getRating()), e -> {});
+                                        RemoteStorage.get().getCanteen(canteen.getId(), canteen1 -> {
+                                            canteen.setRating(canteen1.getRating());
+                                            ratingBar.setRating(canteen1.getRating());
+                                        }, e -> {});
                                     }
                                 },
                                 e -> {

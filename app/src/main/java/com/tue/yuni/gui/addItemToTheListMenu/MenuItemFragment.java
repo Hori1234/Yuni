@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.tue.yuni.R;
 import com.tue.yuni.models.MenuItem;
+import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.PasswordStorage;
 import com.tue.yuni.storage.RemoteStorage;
 
@@ -133,30 +134,31 @@ public class MenuItemFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v == addItem) {
-            if (descriptionTxt.getText().toString().equals("") || nameTxt.getText().toString().equals("") || imageView.getDrawable() == null) {
-                final String error = "All the fields must be completed";
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Error");
-                builder.setMessage(error);
-                builder.show();
-            }
-            else {
-                //Getting parameters
-                itemDescription = descriptionTxt.getText().toString();
-                itemName = nameTxt.getText().toString();
-                itemCategory = spinner.getAdapter().getItem(spinner.getSelectedItemPosition()).toString();
-
-                // Post Item To Database
-                if (menuItem != null) {
-                    RemoteStorage.get().updateMenuItem(PasswordStorage.get().getPassword(),
-                            menuItem.getId(), itemName, itemDescription, itemCategory,
-                            this, this);
+            if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
+                if (descriptionTxt.getText().toString().equals("") || nameTxt.getText().toString().equals("") || imageView.getDrawable() == null) {
+                    final String error = "All the fields must be completed";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Error");
+                    builder.setMessage(error);
+                    builder.show();
                 } else {
-                    RemoteStorage.get().createMenuItem(PasswordStorage.get().getPassword(),
-                            itemName, itemDescription, itemCategory, this, this);
+                    //Getting parameters
+                    itemDescription = descriptionTxt.getText().toString();
+                    itemName = nameTxt.getText().toString();
+                    itemCategory = spinner.getAdapter().getItem(spinner.getSelectedItemPosition()).toString();
+
+                    // Post Item To Database
+                    if (menuItem != null) {
+                        RemoteStorage.get().updateMenuItem(PasswordStorage.get().getPassword(),
+                                menuItem.getId(), itemName, itemDescription, itemCategory,
+                                this, this);
+                    } else {
+                        RemoteStorage.get().createMenuItem(PasswordStorage.get().getPassword(),
+                                itemName, itemDescription, itemCategory, this, this);
+                    }
+
+
                 }
-
-
             }
         }
     }

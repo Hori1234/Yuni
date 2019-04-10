@@ -64,86 +64,94 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemToAdd = -1;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(getContext().getString(R.string.selectMenuItem));
-                // Remove menuItems already in the Canteen
-                menuItemsToAdd = new ArrayList<>(allItems.size());
-                boolean match;
-                for (MenuItem item : allItems) {
-                    match = false;
-                    if (item.getCategory().equals(category)) {
-                        for (MenuItem preExistingItem : menuItems) {
-                            // Remove already added items to the canteen
-                            if (item.getId() == preExistingItem.getId())
-                                match = true;
+                if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
+                    itemToAdd = -1;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getContext().getString(R.string.selectMenuItem));
+                    // Remove menuItems already in the Canteen
+                    if (allItems != null) {
+                        menuItemsToAdd = new ArrayList<>(allItems.size());
+                        boolean match;
+                        for (MenuItem item : allItems) {
+                            match = false;
+                            if (item.getCategory().equals(category)) {
+                                for (MenuItem preExistingItem : menuItems) {
+                                    // Remove already added items to the canteen
+                                    if (item.getId() == preExistingItem.getId())
+                                        match = true;
+                                }
+                                if (!match) menuItemsToAdd.add(item);
+                            }
                         }
-                        if (!match) menuItemsToAdd.add(item);
+                        // Sort items alphabetically
+                        menuItemsToAdd.sort(new MenuItem.CustomComparator());
+                    } else {
+                        menuItemsToAdd = new ArrayList<>();
                     }
-                }
-                // Sort items alphabetically
-                menuItemsToAdd.sort(new MenuItem.CustomComparator());
-                // Create Array of Names
-                final String[] menuItemsToAddNames = new String[menuItemsToAdd.size()];
-                for (int i = 0; i < menuItemsToAdd.size(); i++) menuItemsToAddNames[i] = menuItemsToAdd.get(i).getName();
-                // Set Adapter
-                builder.setSingleChoiceItems(menuItemsToAddNames, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        itemToAdd = which;
-                    }
-                });
-                // Set Confirm Button
-                builder.setPositiveButton(getContext().getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (itemToAdd != - 1) {
-                            HashMap<Day, Boolean> dayMap = new HashMap<>();
-                            dayMap.put(Day.MONDAY, true);
-                            dayMap.put(Day.TUESDAY, true);
-                            dayMap.put(Day.WEDNESDAY, true);
-                            dayMap.put(Day.THURSDAY, true);
-                            dayMap.put(Day.FRIDAY, true);
-                            dayMap.put(Day.SATURDAY, true);
-                            dayMap.put(Day.SUNDAY, true);
-                            RemoteStorage.get().addItemToMenu(canteen.getId(), menuItemsToAdd.get(itemToAdd).getId(), new Schedule(dayMap), PasswordStorage.get().getPassword(), () -> {
-                                ExtendedMenuItem newMenuItem = new ExtendedMenuItem(
-                                        menuItemsToAdd.get(itemToAdd).getId(),
-                                        menuItemsToAdd.get(itemToAdd).getName(),
-                                        menuItemsToAdd.get(itemToAdd).getDescription(),
-                                        menuItemsToAdd.get(itemToAdd).getCategory(),
-                                        0.0f,
-                                        Availability.IN_STOCK,
-                                        canteen.getId(),
-                                        new Schedule(dayMap)
-                                        );
-                                menuItems.add(newMenuItem);
-                                listAdapter.notifyDataSetChanged();
-                                // Delete Data
-                                menuItemsToAdd = null;
-                                itemToAdd = -1;
-                                // Close dialog
+                    // Create Array of Names
+                    final String[] menuItemsToAddNames = new String[menuItemsToAdd.size()];
+                    for (int i = 0; i < menuItemsToAdd.size(); i++)
+                        menuItemsToAddNames[i] = menuItemsToAdd.get(i).getName();
+                    // Set Adapter
+                    builder.setSingleChoiceItems(menuItemsToAddNames, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            itemToAdd = which;
+                        }
+                    });
+                    // Set Confirm Button
+                    builder.setPositiveButton(getContext().getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (itemToAdd != -1) {
+                                HashMap<Day, Boolean> dayMap = new HashMap<>();
+                                dayMap.put(Day.MONDAY, true);
+                                dayMap.put(Day.TUESDAY, true);
+                                dayMap.put(Day.WEDNESDAY, true);
+                                dayMap.put(Day.THURSDAY, true);
+                                dayMap.put(Day.FRIDAY, true);
+                                dayMap.put(Day.SATURDAY, true);
+                                dayMap.put(Day.SUNDAY, true);
+                                RemoteStorage.get().addItemToMenu(canteen.getId(), menuItemsToAdd.get(itemToAdd).getId(), new Schedule(dayMap), PasswordStorage.get().getPassword(), () -> {
+                                    ExtendedMenuItem newMenuItem = new ExtendedMenuItem(
+                                            menuItemsToAdd.get(itemToAdd).getId(),
+                                            menuItemsToAdd.get(itemToAdd).getName(),
+                                            menuItemsToAdd.get(itemToAdd).getDescription(),
+                                            menuItemsToAdd.get(itemToAdd).getCategory(),
+                                            0.0f,
+                                            Availability.IN_STOCK,
+                                            canteen.getId(),
+                                            new Schedule(dayMap)
+                                    );
+                                    menuItems.add(newMenuItem);
+                                    menuItems.sort(new MenuItem.CustomComparator());
+                                    listAdapter.notifyDataSetChanged();
+                                    // Delete Data
+                                    menuItemsToAdd = null;
+                                    itemToAdd = -1;
+                                    // Close dialog
+                                    dialog.dismiss();
+                                }, (error) -> {
+                                    // Delete Data
+                                    menuItemsToAdd = null;
+                                    itemToAdd = -1;
+                                    // Close dialog
+                                    dialog.dismiss();
+                                });
+                            } else {
                                 dialog.dismiss();
-                            }, (error) -> {
-                                // Delete Data
-                                menuItemsToAdd = null;
-                                itemToAdd = -1;
-                                // Close dialog
-                                dialog.dismiss();
-                            });
-                        } else {
+                            }
+                        }
+                    });
+                    builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
-                    }
-                });
-                builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setCancelable(false);
-                builder.show();
+                    });
+                    builder.setCancelable(false);
+                    builder.show();
+                }
             }
         });
         // Restore List State
@@ -181,6 +189,7 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
         // Read Arguments From Bundle
         if (args != null && args.containsKey("menuItems")) {
             menuItems = args.getParcelableArrayList("menuItems");
+            menuItems.sort(new MenuItem.CustomComparator());
         }
         if (args != null && args.containsKey("canteen")) {
             canteen = args.getParcelable("canteen");
