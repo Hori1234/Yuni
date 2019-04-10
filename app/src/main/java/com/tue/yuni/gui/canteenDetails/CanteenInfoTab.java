@@ -57,6 +57,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         scrollView = view.findViewById(R.id.scrollView);
         busyness = view.findViewById(R.id.busyness);
         busynessText = view.findViewById(R.id.busynessText);
+        //Retrieve all UI elements displaying the canteen opening times
         dayHoursTextView[0] = view.findViewById(R.id.mondayHours);
         dayHoursTextView[1] = view.findViewById(R.id.tuesdayHours);
         dayHoursTextView[2] = view.findViewById(R.id.wednesdayHours);
@@ -85,6 +86,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                 int hClose = closeTime / 100;
                 int mClose = openTime % 100;
                 String open, close;
+                //Format opening times correctly to facilitate propper viewing
                 open = (hOpen > 12) ? (hOpen - 12) + ":" + String.format("%02d", mOpen) + " PM" : hOpen + ":" + String.format("%02d", mOpen) + " AM";
                 close = (hClose > 12) ? (hClose - 12) + ":" + String.format("%02d", mClose) + " PM" : hClose + ":" + String.format("%02d", mClose) + " AM";
                 // Display Time
@@ -124,6 +126,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
+        //Retrieve the canteen passed which the fragment will display info about
         if (args != null && args.containsKey("Canteen")) {
             canteen = args.getParcelable("Canteen");
         }
@@ -178,6 +181,6 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
 
     @Override
     public void onError(Exception e) {
-
+        //TODO
     }
 }
