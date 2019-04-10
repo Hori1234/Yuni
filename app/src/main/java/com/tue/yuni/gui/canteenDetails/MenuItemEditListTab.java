@@ -118,6 +118,7 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
                                         new Schedule(dayMap)
                                         );
                                 menuItems.add(newMenuItem);
+                                menuItems.sort(new MenuItem.CustomComparator());
                                 listAdapter.notifyDataSetChanged();
                                 // Delete Data
                                 menuItemsToAdd = null;
@@ -181,6 +182,7 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
         // Read Arguments From Bundle
         if (args != null && args.containsKey("menuItems")) {
             menuItems = args.getParcelableArrayList("menuItems");
+            menuItems.sort(new MenuItem.CustomComparator());
         }
         if (args != null && args.containsKey("canteen")) {
             canteen = args.getParcelable("canteen");

@@ -96,7 +96,12 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
         // Description
         descriptionTextView.setText(canteen.getDescription());
         // Overall Canteen Rating
-        ratingBar.setRating(canteen.getRating());
+        ratingBar.post(new Runnable() { // Workaround to ratingBar somehow not updating
+            @Override
+            public void run() {
+                ratingBar.setRating(canteen.getRating());
+            }
+        });
         // Reviews
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())){
             RemoteStorage.get().getCanteenReviews(canteen.getId(), this, this);
@@ -143,7 +148,10 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                                 () -> {
                                     if (NetworkService.networkAvailabilityHandler((getActivity().getApplicationContext()))){
                                         RemoteStorage.get().getCanteenReviews(canteen.getId(), CanteenInfoTab.this, CanteenInfoTab.this);
-                                        RemoteStorage.get().getCanteen(canteen.getId(), canteen1 -> ratingBar.setRating(canteen1.getRating()), e -> {});
+                                        RemoteStorage.get().getCanteen(canteen.getId(), canteen1 -> {
+                                            canteen.setRating(canteen1.getRating());
+                                            ratingBar.setRating(canteen1.getRating());
+                                        }, e -> {});
                                     }
                                 },
                                 e -> {
