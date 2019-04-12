@@ -14,11 +14,14 @@ import android.widget.ListView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.gui.review.FeedbackDialog;
+import com.tue.yuni.models.Day;
 import com.tue.yuni.models.ExtendedMenuItem;
 import com.tue.yuni.models.MenuItem;
 import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MenuItemListTab extends Fragment implements AdapterView.OnItemClickListener, View.OnTouchListener, FeedbackDialog.DialogContent {
@@ -37,6 +40,16 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
         listView.setFastScrollAlwaysVisible(false);
         // Sort Menu items alphabetically
         menuItems.sort(new MenuItem.CustomComparator());
+        // Remove Items not available for the day
+        List<ExtendedMenuItem> menuItemsCopy = new ArrayList<>(menuItems);
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : calendar.get(Calendar.DAY_OF_WEEK) - 2;
+        for (int i = 0; i < menuItemsCopy.size(); i++) {
+            boolean available = menuItemsCopy.get(i).getSchedule().getDay(Day.values()[day]);
+            if (!available) {
+                menuItems.remove(menuItemsCopy.get(i));
+            }
+        }
         // List View Adapter
         listAdapter = new MenuItemListViewAdapter(getContext(), menuItems, this);
         listView.setAdapter(listAdapter);
