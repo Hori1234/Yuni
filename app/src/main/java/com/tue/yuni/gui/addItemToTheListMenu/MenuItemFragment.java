@@ -6,17 +6,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -114,7 +112,23 @@ public class MenuItemFragment extends Fragment implements View.OnClickListener, 
         //Initialization of Add Dish button
         addItem.setOnClickListener(this);
 
+        // Restore data if screen was rotated
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("img")) {
+                imageUri = savedInstanceState.getParcelable("img");
+                imageView.setImageURI(imageUri);
+            }
+        }
+
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (imageUri != null) {
+            outState.putParcelable("img", imageUri);
+        }
     }
 
     @Override
@@ -191,7 +205,7 @@ public class MenuItemFragment extends Fragment implements View.OnClickListener, 
                 Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new
                         Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                openCamera();
             } else {
                 Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
             }
@@ -201,13 +215,11 @@ public class MenuItemFragment extends Fragment implements View.OnClickListener, 
     @Override
     public  void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE){
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-        }else {
-            if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-                setPic();
-            }
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            setPic();
         }
     }
 
@@ -297,27 +309,7 @@ public class MenuItemFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void setPic() {
-        // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        imageView.setImageBitmap(bitmap);
+        imageUri = Uri.fromFile(new File(mCurrentPhotoPath));
+        imageView.setImageURI(imageUri);
     }
-
 }
