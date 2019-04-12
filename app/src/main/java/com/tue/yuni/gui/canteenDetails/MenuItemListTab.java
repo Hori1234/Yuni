@@ -35,6 +35,8 @@ public class MenuItemListTab extends Fragment implements AdapterView.OnItemClick
         // General ListView Settings
         listView.setFastScrollEnabled(false);
         listView.setFastScrollAlwaysVisible(false);
+        // Sort Menu items alphabetically
+        menuItems.sort(new MenuItem.CustomComparator());
         // List View Adapter
         listAdapter = new MenuItemListViewAdapter(getContext(), menuItems, this);
         listView.setAdapter(listAdapter);
