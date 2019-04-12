@@ -2,8 +2,10 @@ package com.tue.yuni.services.location;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +13,10 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.tue.yuni.models.Location;
@@ -67,7 +73,7 @@ public class LocationService {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 ActivityCompat.requestPermissions(activity,
-                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                         MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
                             }
                         })
@@ -87,27 +93,30 @@ public class LocationService {
     }
 
     public void requestLocation(final LocationReceivedListener listener) {
-        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mFusedLocationClient.getLastLocation().addOnSuccessListener(
-                    // Activity,
-                    location -> {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-
-                            // Notify listener
-                            listener.onLocationReceived(new Location(longitude, latitude));
-                        }
-                    });
-            mFusedLocationClient.getLastLocation().addOnFailureListener(new OnFailureListener() {
+            // Request a location update
+            mFusedLocationClient.requestLocationUpdates(new LocationRequest(), new LocationCallback(){
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("LocationService", "Failuire");
+                public void onLocationResult(LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    if (locationResult.getLocations().size() > 0) {
+                        android.location.Location loc = locationResult.getLocations().get(locationResult.getLocations().size() - 1);
+                        Log.d("LocationService", "Accuracy: " + loc.getAccuracy());
+                        // Logic to handle location object
+                        double latitude = loc.getLatitude();
+                        double longitude = loc.getLongitude();
+
+                        // Notify listener
+                        listener.onLocationReceived(new Location(longitude, latitude));
+                    }
                 }
-            });
+
+                @Override
+                public void onLocationAvailability(LocationAvailability locationAvailability) {
+                    super.onLocationAvailability(locationAvailability);
+                }
+            }, null);
         }
     }
 
