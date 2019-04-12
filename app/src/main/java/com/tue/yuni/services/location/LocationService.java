@@ -92,7 +92,7 @@ public class LocationService {
         }
     }
 
-    public void requestLocation(final LocationReceivedListener listener) {
+    public boolean requestLocation(final LocationReceivedListener listener) {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             // Request a location update
@@ -117,6 +117,9 @@ public class LocationService {
                     super.onLocationAvailability(locationAvailability);
                 }
             }, null);
+            return true;
+        } else {
+            return false;
         }
     }
 

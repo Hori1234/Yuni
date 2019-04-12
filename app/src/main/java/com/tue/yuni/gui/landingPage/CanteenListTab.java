@@ -1,6 +1,7 @@
 package com.tue.yuni.gui.landingPage;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.tue.yuni.services.network.NetworkService;
 import com.tue.yuni.storage.RemoteStorage;
 
 import java.util.List;
+import java.util.TimerTask;
 
 public class CanteenListTab extends Fragment implements AdapterView.OnItemClickListener, RemoteStorage.CanteensDataHandler, RemoteStorage.ErrorHandler {
     private ListView listView;
@@ -38,7 +40,17 @@ public class CanteenListTab extends Fragment implements AdapterView.OnItemClickL
         // List View Adapter
         listAdapter = new CanteenListAdapter(getContext());
         // Location
-        LocationService.get().requestLocation((location -> listAdapter.setLocation(location)));
+        if (!LocationService.get().requestLocation((location -> listAdapter.setLocation(location)))){
+            // Create Runnable that query for location every 250ms until the location is received
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!LocationService.get().requestLocation((location -> listAdapter.setLocation(location))))
+                        handler.postDelayed(this, 250);
+                }
+            }, 250);
+        }
         // Set Adapter to ListView
         listView.setAdapter(listAdapter);
         // Query Server for canteens, if network is available
