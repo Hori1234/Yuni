@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.tue.yuni.R;
 import com.tue.yuni.models.MenuItem;
-import com.tue.yuni.models.Product;
 
 /**
  * To Be Improved upon, potentially handle image downloading.
