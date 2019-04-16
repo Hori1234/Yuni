@@ -123,6 +123,9 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
                                             canteen.getId(),
                                             new Schedule(dayMap)
                                     );
+                                    // Necessary to sync Canteen Data without re-downloading the data
+                                    canteen.getMenuItems().add(newMenuItem);
+                                    // Add item to the listview
                                     menuItems.add(newMenuItem);
                                     menuItems.sort(new MenuItem.CustomComparator());
                                     listAdapter.notifyDataSetChanged();
@@ -165,7 +168,6 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Ensure the extended item will fully be in view
         listView.smoothScrollToPosition(position);
-        //TODO enter edit dish
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -203,8 +205,8 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     @Override
     public void onChangeMenuItem(ExtendedMenuItem menuItem) {
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
-            //todo: test this check
             RemoteStorage.get().removeItemFromMenu(menuItem.getMenuId(), PasswordStorage.get().getPassword(), () -> {
+                canteen.getMenuItems().remove(menuItem);
                 menuItems.remove(menuItem);
                 listAdapter.notifyDataSetChanged();
             }, this);
@@ -214,7 +216,6 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     @Override
     public void onChangeMenuItem(ExtendedMenuItem menuItem, Schedule schedule) {
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
-            //todo: test this check
             RemoteStorage.get().updateMenuItemSchedule(PasswordStorage.get().getPassword(), menuItem.getMenuId(), schedule, () -> {
                 menuItem.setSchedule(schedule);
             }, this);
@@ -224,7 +225,6 @@ public class MenuItemEditListTab extends Fragment implements AdapterView.OnItemC
     @Override
     public void onChangeMenuItem(ExtendedMenuItem menuItem, Availability availability) {
         if (NetworkService.networkAvailabilityHandler(getActivity().getApplicationContext())) {
-            //todo: test this check
             RemoteStorage.get().updateMenuItemAvailability(PasswordStorage.get().getPassword(), menuItem.getMenuId(), availability, () -> {
                 menuItem.setAvailability(availability);
             }, this);
