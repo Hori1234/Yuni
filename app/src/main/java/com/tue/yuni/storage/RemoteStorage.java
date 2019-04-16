@@ -3,10 +3,8 @@ package com.tue.yuni.storage;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tue.yuni.models.Availability;
@@ -16,14 +14,11 @@ import com.tue.yuni.models.canteen.Canteen;
 import com.tue.yuni.models.canteen.OperatingTimes;
 import com.tue.yuni.models.review.CanteenReview;
 import com.tue.yuni.models.review.MenuItemReview;
-import com.tue.yuni.storage.parser.CanteenParser;
-import com.tue.yuni.storage.parser.MenuItemParser;
-import com.tue.yuni.storage.parser.ReviewParser;
+import com.tue.yuni.storage.remote.OwnerStorage;
+import com.tue.yuni.storage.remote.VisitorStorage;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +38,13 @@ public class RemoteStorage {
      */
     private RequestQueue queue;
 
+    private VisitorStorage visitorStorage;
+    private OwnerStorage ownerStorage;
+
     private RemoteStorage(Context context) {
         this.queue = Volley.newRequestQueue(context);
+        this.visitorStorage = new VisitorStorage(BASE_URL, queue);
+        this.ownerStorage = new OwnerStorage(BASE_URL, queue);
     }
 
     /**
@@ -76,26 +76,7 @@ public class RemoteStorage {
      * @param errorHandler        Error handler
      */
     public void getCanteens(final CanteensDataHandler canteensDataHandler, final ErrorHandler errorHandler) {
-        queue.add(
-                new JsonArrayRequest(
-                        Request.Method.GET,
-                        BASE_URL + "/canteens",
-                        null,
-                        response -> {
-                            List<Canteen> canteens = new ArrayList<>();
-                            try {
-                                for (int i = 0; i < response.length(); i++) {
-                                    canteens.add(CanteenParser.parse(response.getJSONObject(i)));
-                                }
-
-                                canteensDataHandler.onReceive(canteens);
-                            } catch (JSONException e) {
-                                errorHandler.onError(e);
-                            }
-                        },
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.getCanteens(canteensDataHandler, errorHandler);
     }
 
     /**
@@ -106,21 +87,7 @@ public class RemoteStorage {
      * @param errorHandler Error handler
      */
     public void getCanteen(int id, CanteenDataHandler handler, ErrorHandler errorHandler) {
-        queue.add(
-                new JsonObjectRequest(
-                        Request.Method.GET,
-                        BASE_URL + "/canteens/" + id,
-                        null,
-                        response -> {
-                            try {
-                                handler.onReceive(CanteenParser.parse(response));
-                            } catch (JSONException e) {
-                                errorHandler.onError(e);
-                            }
-                        },
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.getCanteen(id, handler, errorHandler);
     }
 
     /**
@@ -135,26 +102,7 @@ public class RemoteStorage {
             MenuItemReviewsDataHandler handler,
             ErrorHandler errorHandler
     ) {
-        queue.add(
-                new JsonArrayRequest(
-                        Request.Method.GET,
-                        BASE_URL + "/menu_items/" + menuItemId + "/reviews",
-                        null,
-                        response -> {
-                            try {
-                                List<MenuItemReview> reviews = new ArrayList<>();
-                                for (int i = 0; i < response.length(); i++) {
-                                    reviews.add(ReviewParser.parseMenuItemReview(response.getJSONObject(i)));
-                                }
-
-                                handler.onReceive(reviews);
-                            } catch (JSONException e) {
-                                errorHandler.onError(e);
-                            }
-                        },
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.getMenuItemReviews(menuItemId, handler, errorHandler);
     }
 
     /**
@@ -172,27 +120,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build post data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("rating", rating);
-            data.put("description", description);
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Send request
-        queue.add(
-                new JsonObjectRequest(
-                        Request.Method.POST,
-                        BASE_URL + "/menu_items/" + menuItemId + "/reviews",
-                        data,
-                        response -> handler.onCompleted(),
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.createMenuItemReview(menuItemId, rating, description, handler, errorHandler);
     }
 
     /**
@@ -207,26 +135,7 @@ public class RemoteStorage {
             CanteenReviewsDataHandler handler,
             ErrorHandler errorHandler
     ) {
-        queue.add(
-                new JsonArrayRequest(
-                        Request.Method.GET,
-                        BASE_URL + "/canteens/" + canteenId + "/reviews",
-                        null,
-                        response -> {
-                            try {
-                                List<CanteenReview> reviews = new ArrayList<>();
-                                for (int i = 0; i < response.length(); i++) {
-                                    reviews.add(ReviewParser.parseCanteenReview(response.getJSONObject(i)));
-                                }
-
-                                handler.onReceive(reviews);
-                            } catch (JSONException e) {
-                                errorHandler.onError(e);
-                            }
-                        },
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.getCanteenReviews(canteenId, handler, errorHandler);
     }
 
     /**
@@ -244,27 +153,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build post data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("rating", rating);
-            data.put("description", description);
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Send request
-        queue.add(
-                new JsonObjectRequest(
-                        Request.Method.POST,
-                        BASE_URL + "/canteens/" + canteenId + "/reviews",
-                        data,
-                        response -> handler.onCompleted(),
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.createCanteenReview(canteenId, rating, description, handler, errorHandler);
     }
 
     /**
@@ -274,26 +163,7 @@ public class RemoteStorage {
      * @param errorHandler Error handler
      */
     public void getAllMenuItems(MenuItemsDataHandler handler, ErrorHandler errorHandler) {
-        queue.add(
-                new JsonArrayRequest(
-                        Request.Method.GET,
-                        BASE_URL + "/menu/all",
-                        null,
-                        response -> {
-                            try {
-                                List<MenuItem> menuItems = new ArrayList<>();
-                                for (int i = 0; i < response.length(); i++) {
-                                    menuItems.add(MenuItemParser.parse(response.getJSONObject(i)));
-                                }
-
-                                handler.onReceive(menuItems);
-                            } catch (JSONException e) {
-                                errorHandler.onError(e);
-                            }
-                        },
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.getAllMenuItems(handler, errorHandler);
     }
 
     /**
@@ -308,15 +178,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        queue.add(
-                new JsonObjectRequest(
-                        Request.Method.POST,
-                        BASE_URL + "/canteens/" + canteenId + "/busyness",
-                        null,
-                        response -> handler.onCompleted(),
-                        errorHandler::onError
-                )
-        );
+        visitorStorage.createBusynessEntry(canteenId, handler, errorHandler);
     }
 
     /**
@@ -329,20 +191,7 @@ public class RemoteStorage {
             AuthenticateHandler authenticateHandler,
             ErrorHandler errorHandler
     ) {
-        authenticatedObjectRequest(
-                Request.Method.GET,
-                BASE_URL + "/authenticate",
-                null,
-                response -> {
-                    try {
-                        authenticateHandler.onReceive(response.getBoolean("authenticated"));
-                    } catch (JSONException e) {
-                        errorHandler.onError(e);
-                    }
-                },
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.authenticate(password, authenticateHandler, errorHandler);
     }
 
     /**
@@ -363,27 +212,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("name", name);
-            data.put("description", description);
-            data.put("category", category.toUpperCase());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Perform request
-        authenticatedObjectRequest(
-                Request.Method.POST,
-                BASE_URL + "/menu_items",
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.createMenuItem(password, name, description, category, handler, errorHandler);
     }
 
     /**
@@ -406,27 +235,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("name", name);
-            data.put("description", description);
-            data.put("category", category.toUpperCase());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Perform request
-        authenticatedObjectRequest(
-                Request.Method.PATCH,
-                BASE_URL + "/menu_items/" + menuItemId,
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.updateMenuItem(password, menuItemId, name, description, category, handler, errorHandler);
     }
 
     /**
@@ -447,27 +256,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build post data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("canteen_id", canteenId);
-            data.put("menu_item_id", menuItemId);
-            data.put("schedule", schedule.toBitmask());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Perform request
-        authenticatedObjectRequest(
-                Request.Method.POST,
-                BASE_URL + "/menu",
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.addItemToMenu(canteenId, menuItemId, schedule, password, handler, errorHandler);
     }
 
     /**
@@ -485,14 +274,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        authenticatedObjectRequest(
-                Request.Method.DELETE,
-                BASE_URL + "/menu/" + menuId,
-                null,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.removeItemFromMenu(menuId, password, handler, errorHandler);
     }
 
     public void updateCanteen(
@@ -504,27 +286,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("name", name);
-            data.put("description", description);
-            data.put("operating_times", operatingTimes.toJson());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Perform request
-        authenticatedObjectRequest(
-                Request.Method.PATCH,
-                BASE_URL + "/canteens/" + canteenId,
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.updateCanteen(password, canteenId, name, description, operatingTimes, handler, errorHandler);
     }
 
     /**
@@ -543,23 +305,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build patch data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("schedule", schedule.toBitmask());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-        }
-
-        // Send request
-        authenticatedObjectRequest(
-                Request.Method.PATCH,
-                BASE_URL + "/menu/" + menuId + "/schedule",
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.updateMenuItemSchedule(password, menuId, schedule, handler, errorHandler);
     }
 
     /**
@@ -578,25 +324,7 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        // Build data
-        JSONObject data = new JSONObject();
-        try {
-            data.put("availability", availability.name());
-        } catch (JSONException e) {
-            errorHandler.onError(e);
-
-            return;
-        }
-
-        // Perform request
-        authenticatedObjectRequest(
-                Request.Method.PATCH,
-                BASE_URL + "/menu/" + menuId + "/availability",
-                data,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
+        ownerStorage.updateMenuItemAvailability(password, menuId, availability, handler, errorHandler);
     }
 
     /**
@@ -613,76 +341,38 @@ public class RemoteStorage {
             RequestCompletedHandler handler,
             ErrorHandler errorHandler
     ) {
-        authenticatedObjectRequest(
-                Request.Method.DELETE,
-                BASE_URL + "/menu_items/" + menuItemId,
-                null,
-                response -> handler.onCompleted(),
-                errorHandler::onError,
-                password
-        );
-    }
-
-    /**
-     * Performs an authenticated request by setting the X-api-key header in the request.
-     *
-     * @param method        HTTP method
-     * @param url           Url
-     * @param data          Post data
-     * @param listener      Success listener
-     * @param errorListener Error listener
-     * @param password      Password (api-key)
-     */
-    private void authenticatedObjectRequest(
-            int method,
-            String url,
-            JSONObject data,
-            Response.Listener<JSONObject> listener,
-            Response.ErrorListener errorListener,
-            String password
-    ) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url, data, listener, errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("X-api-key", password);
-
-                return headers;
-            }
-        };
-
-        queue.add(jsonObjectRequest);
+        ownerStorage.removeMenuItem(password, menuItemId, handler, errorHandler);
     }
 
     public interface ErrorHandler {
-        public void onError(Exception e);
+        void onError(Exception e);
     }
 
     public interface RequestCompletedHandler {
-        public void onCompleted();
+        void onCompleted();
     }
 
     public interface CanteensDataHandler {
-        public void onReceive(List<Canteen> canteens);
+        void onReceive(List<Canteen> canteens);
     }
 
     public interface AuthenticateHandler {
-        public void onReceive(boolean authenticated);
+        void onReceive(boolean authenticated);
     }
 
     public interface CanteenDataHandler {
-        public void onReceive(Canteen canteen);
+        void onReceive(Canteen canteen);
     }
 
     public interface MenuItemReviewsDataHandler {
-        public void onReceive(List<MenuItemReview> reviews);
+        void onReceive(List<MenuItemReview> reviews);
     }
 
     public interface CanteenReviewsDataHandler {
-        public void onReceive(List<CanteenReview> reviews);
+        void onReceive(List<CanteenReview> reviews);
     }
 
     public interface MenuItemsDataHandler {
-        public void onReceive(List<MenuItem> menuItems);
+        void onReceive(List<MenuItem> menuItems);
     }
 }
