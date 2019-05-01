@@ -84,7 +84,7 @@ public class CanteenInfoTab extends Fragment implements RemoteStorage.CanteenRev
                 int hOpen = openTime / 100;
                 int mOpen = openTime % 100;
                 int hClose = closeTime / 100;
-                int mClose = openTime % 100;
+                int mClose = closeTime % 100;
                 String open, close;
                 //Format opening times correctly to facilitate propper viewing
                 open = (hOpen > 12) ? (hOpen - 12) + ":" + String.format("%02d", mOpen) + " PM" : hOpen + ":" + String.format("%02d", mOpen) + " AM";

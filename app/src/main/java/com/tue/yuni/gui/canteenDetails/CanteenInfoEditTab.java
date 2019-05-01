@@ -106,7 +106,7 @@ public class CanteenInfoEditTab extends Fragment implements RemoteStorage.Cantee
                 int hOpen = openTime / 100;
                 int mOpen = openTime % 100;
                 int hClose = closeTime / 100;
-                int mClose = openTime % 100;
+                int mClose = closeTime % 100;
                 String open, close;
                 open = (hOpen > 12) ? (hOpen - 12) + ":" + String.format("%02d", mOpen) + " PM" : hOpen + ":" + String.format("%02d", mOpen) + " AM";
                 close = (hClose > 12) ? (hClose - 12) + ":" + String.format("%02d", mClose) + " PM" : hClose + ":" + String.format("%02d", mClose) + " AM";
