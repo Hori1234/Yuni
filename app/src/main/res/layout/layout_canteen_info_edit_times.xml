@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/monday" />
+
+        <EditText
+            android:id="@+id/mondayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/mondayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="time" />
+
+        <ImageButton
+            android:id="@+id/deleteTime0"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tuesday" />
+
+        <EditText
+            android:id="@+id/tuesdayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/tuesdayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <ImageButton
+            android:id="@+id/deleteTime1"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wednesday" />
+
+        <EditText
+            android:id="@+id/wednesdayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashwednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/wednesdayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+
+        <ImageButton
+            android:id="@+id/deleteTime2"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/thursday" />
+
+        <EditText
+            android:id="@+id/thursdayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashthursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/thursdayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+
+        <ImageButton
+            android:id="@+id/deleteTime3"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/friday" />
+
+        <EditText
+            android:id="@+id/fridayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashfriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/fridayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <ImageButton
+            android:id="@+id/deleteTime4"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/saturday" />
+
+        <EditText
+            android:id="@+id/saturdayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashsaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/saturdayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <ImageButton
+            android:id="@+id/deleteTime5"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sunday" />
+
+        <EditText
+            android:id="@+id/sundayMorningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/dashsunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="   -   " />
+
+        <EditText
+            android:id="@+id/sundayEveningEdit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="time" />
+
+        <ImageButton
+            android:id="@+id/deleteTime6"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/setSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/set_schedule" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,135 @@
+<resources>
+    <string name="app_name">Yuni</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="minutes">minuten</string>
+    <string name="favsAvailable">favs</string>
+    <string name="favAvailable">fav</string>
+    <string name="selectMenuItem">Selecteer Menu Item</string>
+
+    <!--MenuItemFragment Related-->
+    <string name="done">Done</string>
+    <string name="itemAdded">Item is toegevoegd aan de database</string>
+    <string name="itemModified">Item is aangepast</string>
+
+    <!--MenuItemListTab Related-->
+    <string name="legacyAvailability">Beschikbaarheid</string>
+    <string name="feedback">Feedback</string>
+    <string name="view_more">Meer bekijken</string>
+    <string name="next">Volgende</string>
+    <string name="prev">Vorige</string>
+    <string name="no_reviews">No geen recencies beschikbaar!</string>
+
+    <!--Feedback Dialog Related-->
+    <string name="stars_0">Vermijden</string>
+    <string name="stars_1">Heel slecht</string>
+    <string name="stars_2">Slecht</string>
+    <string name="stars_3">Goed</string>
+    <string name="stars_4">Heel goed</string>
+    <string name="stars_5">Geweldig!</string>
+    <string name="hintFeedback">Vertel ons wat je er van vond</string>
+    <string name="sendFeedback">Verstuur recensie</string>
+
+    <!--Info Page-->
+    <string name="info">Info</string>
+    <string name="openingHours">Openingstijden</string>
+    <string name="busyness">Drukte</string>
+    <string name="thursday">Donderdag</string>
+    <string name="friday">Vrijdag</string>
+    <string name="saturday">Zaterdag</string>
+    <string name="sunday">Zondag</string>
+    <string name="textview">Textview</string>
+    <string name="name">Naam</string>
+
+    <!-- Favorites -->
+    <string name="favoritesAbbreviation">Favs</string>
+
+    <!--Canteens page-->
+    <string name="map">Kaart</string>
+    <string name="list">Lijst</string>
+    <string name="help">Help</string>
+    <string name="descriptionBox">Vul de beschrijving hier in</string>
+
+    <!--Busyness Ratings-->
+    <string name="busy">Druk</string>
+    <string name="moderate">Gemiddeld</string>
+    <string name="unknown">Onbekend</string>
+
+    <!--Operating Status-->
+    <string name="closing">Gaat sluiten</string>
+    <string name="closed">Gesloten</string>
+    <string name="nameDescrition" />
+    <string name="stock_high">op voorraad</string>
+    <string name="stock_low">lage voorraad</string>
+    <string name="stock_out">uitverkocht</string>
+    <string name="stock">Voorraad:</string>
+    <string name="set_availability_button">meld beschikbaarheid</string>
+    <string name="certainty">Weet je het zeker?</string>
+    <string name="remove_dish">verwijder item</string>
+    <string name="set_availability">meld beschikbaarheid:</string>
+    <string name="set_schedule">sla tijden op</string>
+
+    <!--Help tab-->
+    <string name="if_you_are_a_vitam_employee_please_login_using_the_button_below">Als u een medewerker van VITAM bent, log dan in met de knop hier beneden</string>
+    <string name="helptextone">De app Yuni is gemaakt voor het bedrijf VITAM. Zij verzorgen de kantines op de TU/e campus. De app zorgt ervoor dat VITAM informatie over the verschillende dagelijkse menus kan communiceren naar de studenten en staff die de kantines bezoeken. Bezoekers kunnen hun favoriete menu items bijhouden en zien welke kantines open zijn. Ze kunnen recensies achterlaten en lezen over zowel de kantines als de gerechten. Ookkunnen zij informatie zien over kantines, zoals openingstijden. De app zal altijd beginnen op het "lijst overzicht" van deze pagina. Via de bovenste navigatie strook kun je naar de kaart en de lijst sectie waar je een kantine kan kiezen. Als je hulp nodig hebt kun je naar deze sectie komen voor informatie over het gebruik van de app. </string>
+    <string name="helptexttwo">Een kantine bekijken</string>
+    <string name="helptextthree">Als je op een kantine klikt zal deze openen op het informatie tablad. Je kunt hier reviews en een beschrijving van de kantine bekijken, net als openingstijden en de laatst bekende drukte van deze kantine. Met de bovenste navigatie strook kun je navigeren tussen de informatie en menu categoriën. Selecteer een categorie om het menu van dat onderdeel te bekijken. Als je op een menu item klikt zal deze uitbreiden en reviews laten zien, net als de optie om zelf een review achter te laten. </string>
+    <string name="helptextfour">De algemene informatie aanpassen</string>
+    <string name="helptextfive">Deze funtie is alleen voor medewerkers van VITAM. Als je in het hoofdmenu voor mederwerkers bent (het menu met 4 blauwe knoppen), kun je klikken op "algemene informatie" (C in figure 6 van de user manual). Deze knop zal leiden naar een menu waar je verschillende onderdelen kunt aanpassen door te klikken op het potlood. Het bovenste potloos is om de afbeelding te veranderen. Het tweede potlood past de openingstijden aan. De derde knop is voor de beschrijving van de kantine. Alle "potloden" openen een pop-up waarin je de inhoud van aanpassen en deze wijzigigen kan aanpassen of annuleren.  </string>
+    <string name="login">Login</string>
+
+    <!--addItem-->
+    <string name="itemtitle">Naam</string>
+    <string name="add_dish">Voeg item toe</string>
+    <string name="upload_photo">Upload foto</string>
+
+
+    <!--MenuItemEditList-->
+    <string name="confirmDeleteMessage">Weet u zeker dat u dit item wil verwijderen?</string>
+    <string name="confirm">Bevestigen</string>
+    <string name="cancel">Annuleren</string>
+
+    <!--canteen info-->
+    <string name="availability">Beschikbaarheid</string>
+    <string name="monday">Maandag</string>
+    <string name="tuesday">Dinsdag</string>
+    <string name="wednesday">Woensdag</string>
+    <string name="set_description">stel beschrijving in</string>
+    <string name="password">Wachtwoord</string>
+    <string name="canteen_name">Kantine Naam</string>
+    <string name="open">Open</string>
+
+    <!--miscellanous-->
+    <string name="quiet">Rustig</string>
+    <string name="building_name">Gebouw Naam</string>
+    <string name="item_description">Beschrijving item</string>
+    <string name="description">Beschrijving</string>
+
+    <!--owner landing-->
+    <string name="change">wisselen</string>
+    <string name="menu">Menu</string>
+    <string name="general_info">Algemene Info</string>
+    <string name="reviews">Reviews</string>
+    <string name="add_item">Voeg Item Toe</string>
+    <string name="review_text">Review Tekst</string>
+    <string name="product_name">Product naam</string>
+
+
+    <!-- test strings -->
+    <string name="_10_minutes">10 minuten</string>
+    <string name="favs_1">Favs: 1</string>
+    <string name="button">Knop</string>
+    <string-array name="canteen_array">
+        <item>Atlas kantine</item>
+        <item>Atlas sate zaak</item>
+        <item>Atlas veggie shop</item>
+        <item>Auditorium kantine</item>
+        <item>Auditorium grillz</item>
+        <item>Flux kantine</item>
+        <item>Gemini kantine</item>
+        <item>Helix kantine</item>
+        <item>Laplace kantine</item>
+        <item>Metaforum kantine</item>
+        <item>Traverse kantine</item>
+        <item>Vertigo kantine</item>
+    </string-array>
+</resources>
